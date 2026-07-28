@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Droplets, Shield, FlaskConical, Leaf, ArrowLeft, Clock, CheckCircle } from "lucide-react";
 
 const fallbackImage =
   "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80";
@@ -18,72 +19,104 @@ const treatmentServices = [
   { name: "Premium Repair Package", price: "Rs. 28,000", duration: "5 hrs", tag: "Luxury", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" },
 ];
 
+const benefits = [
+  { icon: Leaf, title: "Natural Products", desc: "We use only premium, gentle products on your hair." },
+  { icon: FlaskConical, title: "Expert Analysis", desc: "Each treatment starts with a free hair health analysis." },
+  { icon: CheckCircle, title: "Long-lasting Results", desc: "Treatments are designed to last months, not days." },
+];
+
 function bookingLink(category, price) {
   return `/booking?service=${encodeURIComponent("Hair Treatment")}&category=${encodeURIComponent(category)}&price=${encodeURIComponent(price)}`;
 }
 
 export default function HairTreatment() {
   return (
-    <div className="page-container" style={styles.page}>
+    <div className="min-h-[80vh]">
       {/* Hero */}
-      <section style={styles.hero}>
-        <span className="badge">Hair Treatment</span>
-        <h1 style={styles.heroTitle}>Hair Treatment Services</h1>
-        <p style={styles.heroSubtext}>
+      <section className="text-center py-16 px-5 bg-gradient-to-br from-bg to-primary-light/30 rounded-2xl border border-border mb-10">
+        <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary-dark text-xs font-bold tracking-wider uppercase mb-4">
+          Hair Treatment
+        </span>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          Hair Treatment Services
+        </h1>
+        <p className="text-text-muted text-base max-w-[560px] mx-auto mb-8 leading-relaxed">
           Restore, repair, and transform your hair. Our expert therapists use only premium products for lasting results.
         </p>
-        <div style={styles.heroStats}>
-          <div style={styles.heroStat}><strong>12+</strong><span>Treatments</span></div>
-          <div style={styles.heroStat}><strong>900+</strong><span>Sessions Done</span></div>
-          <div style={styles.heroStat}><strong>Kavindi</strong><span>Lead Specialist</span></div>
+        <div className="flex justify-center gap-10 flex-wrap">
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">12+</strong>
+            <span className="text-xs text-text-muted font-semibold">Treatments</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">900+</strong>
+            <span className="text-xs text-text-muted font-semibold">Sessions Done</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">Kavindi</strong>
+            <span className="text-xs text-text-muted font-semibold">Lead Specialist</span>
+          </div>
         </div>
       </section>
 
-      {/* Why Treatment Banner */}
-      <div style={styles.benefitsRow}>
-        {[
-          { icon: "🌿", title: "Natural Products", desc: "We use only premium, gentle products on your hair." },
-          { icon: "🔬", title: "Expert Analysis", desc: "Each treatment starts with a free hair health analysis." },
-          { icon: "✅", title: "Long-lasting Results", desc: "Treatments are designed to last months, not days." },
-        ].map((b) => (
-          <div style={styles.benefitCard} key={b.title}>
-            <span style={styles.benefitIcon}>{b.icon}</span>
-            <div>
-              <strong style={styles.benefitTitle}>{b.title}</strong>
-              <p style={styles.benefitDesc}>{b.desc}</p>
+      {/* Benefits Row */}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5 mb-12">
+        {benefits.map((b) => {
+          const Icon = b.icon;
+          return (
+            <div
+              className="flex gap-4 items-start p-5 px-6 bg-bg-alt border border-border rounded-xl"
+              key={b.title}
+            >
+              <span className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Icon className="w-5 h-5 text-primary-dark" />
+              </span>
+              <div>
+                <strong className="block text-[15px] mb-1">{b.title}</strong>
+                <p className="m-0 text-xs text-text-muted leading-relaxed">{b.desc}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Service Grid */}
       <section>
-        <div style={styles.sectionHeader}>
-          <h2 style={styles.sectionTitle}>All Hair Treatments</h2>
-          <p style={styles.sectionDesc}>From routine care to intensive repair — find your perfect treatment.</p>
+        <div className="text-center mb-9">
+          <h2 className="text-3xl font-extrabold mb-2">All Hair Treatments</h2>
+          <p className="text-text-muted m-0">From routine care to intensive repair — find your perfect treatment.</p>
         </div>
 
-        <div style={styles.itemGrid}>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6">
           {treatmentServices.map((item) => (
-            <div style={styles.itemCard} key={item.name} className="gallery-card">
-              <div style={styles.imgWrapper}>
+            <div
+              className="rounded-2xl overflow-hidden border border-border bg-bg-alt"
+              key={item.name}
+            >
+              <div className="relative">
                 <img
                   src={item.image}
                   alt={item.name}
-                  style={styles.itemImg}
+                  className="w-full h-50 object-cover block"
                   onError={(e) => { e.currentTarget.src = fallbackImage; }}
                 />
-                {item.tag && <span style={styles.itemTag}>{item.tag}</span>}
+                {item.tag && (
+                  <span className="absolute top-3 left-3 bg-primary text-white text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    {item.tag}
+                  </span>
+                )}
               </div>
-              <div style={styles.itemBody}>
-                <h3 style={styles.itemName}>{item.name}</h3>
-                <span style={styles.duration}>⏱ {item.duration}</span>
-                <div style={styles.itemFooter}>
-                  <span style={styles.price}>{item.price}</span>
+              <div className="p-4.5">
+                <h3 className="text-base font-bold mb-2">{item.name}</h3>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Clock className="w-3.5 h-3.5 text-text-muted" />
+                  <span className="text-xs text-text-muted font-semibold">{item.duration}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[15px] font-extrabold text-primary-dark">{item.price}</span>
                   <Link
                     to={bookingLink(item.name, item.price)}
-                    className="btn-primary"
-                    style={styles.bookBtn}
+                    className="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200 shadow-none"
                   >
                     Book
                   </Link>
@@ -94,67 +127,15 @@ export default function HairTreatment() {
         </div>
       </section>
 
-      <div style={styles.backWrapper}>
-        <Link to="/service-menu" className="btn-outline">← Back to Service Menu</Link>
+      <div className="text-center mt-16 mb-16">
+        <Link
+          to="/service-menu"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-xl text-text font-semibold text-sm hover:bg-bg-dark hover:text-white hover:border-bg-dark transition-all duration-200"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Service Menu
+        </Link>
       </div>
     </div>
   );
 }
-
-const styles = {
-  page: { minHeight: "80vh" },
-  hero: {
-    textAlign: "center",
-    padding: "60px 20px 50px",
-    background: "linear-gradient(135deg, #FDFBF7 0%, #FFF9EE 100%)",
-    borderRadius: "var(--radius-lg)",
-    marginBottom: "40px",
-    border: "1px solid var(--color-border)",
-  },
-  heroTitle: { fontSize: "40px", fontWeight: "800", margin: "0 0 16px", letterSpacing: "-0.5px" },
-  heroSubtext: { color: "var(--color-text-muted)", fontSize: "16px", maxWidth: "560px", margin: "0 auto 30px" },
-  heroStats: { display: "flex", justifyContent: "center", gap: "40px", flexWrap: "wrap" },
-  heroStat: { display: "flex", flexDirection: "column", gap: "4px", alignItems: "center" },
-  benefitsRow: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-    gap: "20px",
-    marginBottom: "50px",
-  },
-  benefitCard: {
-    display: "flex",
-    gap: "16px",
-    alignItems: "flex-start",
-    padding: "20px 24px",
-    background: "#FFF",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-md)",
-  },
-  benefitIcon: { fontSize: "28px", flexShrink: 0 },
-  benefitTitle: { display: "block", fontSize: "15px", marginBottom: "4px" },
-  benefitDesc: { margin: 0, fontSize: "13px", color: "var(--color-text-muted)" },
-  sectionHeader: { textAlign: "center", marginBottom: "36px" },
-  sectionTitle: { fontSize: "28px", fontWeight: "800", margin: "0 0 8px" },
-  sectionDesc: { color: "var(--color-text-muted)", margin: 0 },
-  itemGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-    gap: "24px",
-  },
-  itemCard: { borderRadius: "var(--radius-lg)", overflow: "hidden", border: "1px solid var(--color-border)", background: "#FFF" },
-  imgWrapper: { position: "relative" },
-  itemImg: { width: "100%", height: "200px", objectFit: "cover", display: "block" },
-  itemTag: {
-    position: "absolute", top: "12px", left: "12px",
-    background: "var(--color-primary)", color: "white",
-    fontSize: "11px", fontWeight: "700", padding: "4px 10px",
-    borderRadius: "var(--radius-pill)", textTransform: "uppercase", letterSpacing: "0.5px",
-  },
-  itemBody: { padding: "18px" },
-  itemName: { margin: "0 0 8px", fontSize: "16px", fontWeight: "700" },
-  duration: { display: "block", fontSize: "12px", color: "var(--color-text-muted)", fontWeight: "600", marginBottom: "12px" },
-  itemFooter: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  price: { fontSize: "15px", fontWeight: "800", color: "var(--color-primary-dark)" },
-  bookBtn: { padding: "8px 16px", fontSize: "13px", boxShadow: "none" },
-  backWrapper: { textAlign: "center", marginTop: "60px" },
-};

@@ -1,146 +1,182 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { Scissors, Menu, X, LogOut } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const NAV_LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/service-menu", label: "Menu" },
+  { to: "/team", label: "Team" },
+  { to: "/gallery", label: "Gallery" },
+  { to: "/blog", label: "Blog" },
+];
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { pathname } = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav style={styles.navbar}>
-      <Link to="/" style={styles.logoLink}>
-        <h2 style={styles.logo}>
-          <span style={styles.logoIcon}>💇‍♀️</span> Orchid Salon
-        </h2>
-      </Link>
-
-      <div style={styles.links}>
-        <Link to="/" style={styles.link}>
-          Home
-        </Link>
-        <Link to="/service-menu" style={styles.link}>
-          Menu
-        </Link>
-        <Link to="/team" style={styles.link}>
-          Team
-        </Link>
-        <Link to="/gallery" style={styles.link}>
-          Gallery
-        </Link>
-        <Link to="/blog" style={styles.link}>
-          Blog
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "py-3 glass shadow-2xl shadow-black/50"
+          : "py-5 bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center gap-5">
+        <Link to="/" className="no-underline group">
+          <h2 className="m-0 text-xl font-extrabold text-white flex items-center gap-2 tracking-tight group-hover:text-primary-light transition-colors">
+            <Scissors className="w-6 h-6 text-primary group-hover:rotate-12 transition-transform duration-300" />
+            Orchid Salon
+          </h2>
         </Link>
 
-        {user ? (
-          <>
-            <div style={styles.divider}></div>
-            <Link to="/customers" style={styles.staffLink}>
-              Customers
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-7">
+          {NAV_LINKS.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`relative font-semibold text-sm transition-colors duration-200 ${
+                pathname === to ? "text-primary" : "text-text-muted hover:text-white"
+              }`}
+            >
+              {label}
+              {pathname === to && (
+                <motion.div
+                  layoutId="navbar-indicator"
+                  className="absolute -bottom-2 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
             </Link>
-            <Link to="/check-in" style={styles.staffLink}>
-              Kiosk
-            </Link>
-            <div style={styles.userBadge}>
-              <span style={styles.userRole}>{user.role}</span>
-            </div>
-            <button onClick={logout} style={styles.logoutBtn}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" style={styles.staffLink}>
-              Staff Login
-            </Link>
-            <Link to="/booking" className="btn-primary" style={styles.bookingBtn}>
-              Book Now
-            </Link>
-          </>
-        )}
+          ))}
+
+          {user ? (
+            <>
+              <div className="w-px h-6 bg-border" />
+              <Link
+                to="/customers"
+                className={`font-semibold text-sm ${
+                  pathname === "/customers" ? "text-primary" : "text-text-muted hover:text-white"
+                }`}
+              >
+                Customers
+              </Link>
+              <Link
+                to="/check-in"
+                className={`font-semibold text-sm ${
+                  pathname === "/check-in" ? "text-primary" : "text-text-muted hover:text-white"
+                }`}
+              >
+                Kiosk
+              </Link>
+              <span className="inline-block px-3 py-1 bg-primary/20 rounded-full text-xs font-bold text-primary border border-primary/30 uppercase">
+                {user.role}
+              </span>
+              <button
+                onClick={logout}
+                className="px-4 py-2 bg-transparent text-white border border-border rounded-full font-semibold text-xs cursor-pointer hover:bg-white/10 hover:border-white/30 transition-all"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="font-semibold text-sm text-text-muted hover:text-white transition-colors"
+              >
+                Staff Login
+              </Link>
+              <Link
+                to="/booking"
+                className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-sm shadow-lg shadow-primary/25 hover:-translate-y-0.5 hover:shadow-primary/40 transition-all duration-200"
+              >
+                Book Now
+              </Link>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden p-2 text-white bg-transparent border-none cursor-pointer"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
-    </nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden glass border-t border-border mt-3"
+          >
+            <div className="flex flex-col gap-4 p-6">
+              {NAV_LINKS.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`font-semibold text-lg ${
+                    pathname === to ? "text-primary" : "text-white"
+                  }`}
+                >
+                  {label}
+                </Link>
+              ))}
+              {user ? (
+                <>
+                  <div className="w-full h-px bg-border my-2" />
+                  <Link to="/customers" onClick={() => setMobileOpen(false)} className="font-semibold text-lg text-text-muted">
+                    Customers
+                  </Link>
+                  <Link to="/check-in" onClick={() => setMobileOpen(false)} className="font-semibold text-lg text-text-muted">
+                    Kiosk
+                  </Link>
+                  <button onClick={() => { logout(); setMobileOpen(false); }} className="flex items-center gap-2 px-4 py-3 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl font-bold text-sm cursor-pointer w-fit mt-2">
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="w-full h-px bg-border my-2" />
+                  <Link to="/login" onClick={() => setMobileOpen(false)} className="font-semibold text-lg text-text-muted">
+                    Staff Login
+                  </Link>
+                  <Link
+                    to="/booking"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-base mt-2 shadow-lg shadow-primary/25"
+                  >
+                    Book Now
+                  </Link>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }
-
-const styles = {
-  navbar: {
-    position: "sticky",
-    top: 0,
-    zIndex: 1000,
-    background: "rgba(255, 255, 255, 0.9)",
-    backdropFilter: "blur(12px)",
-    WebkitBackdropFilter: "blur(12px)",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
-    padding: "16px 40px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-    gap: "20px",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
-  },
-  logoLink: {
-    textDecoration: "none",
-  },
-  logo: {
-    margin: 0,
-    fontSize: "22px",
-    fontWeight: "800",
-    color: "var(--color-text)",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    letterSpacing: "-0.5px",
-  },
-  logoIcon: {
-    fontSize: "26px",
-  },
-  links: {
-    display: "flex",
-    gap: "28px",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  link: {
-    color: "var(--color-text)",
-    textDecoration: "none",
-    fontWeight: "600",
-    fontSize: "15px",
-    transition: "color 0.2s ease",
-  },
-  divider: {
-    width: "1px",
-    height: "24px",
-    background: "var(--color-border)",
-  },
-  staffLink: {
-    color: "var(--color-text-muted)",
-    textDecoration: "none",
-    fontWeight: "600",
-    fontSize: "14px",
-  },
-  userBadge: {
-    background: "var(--color-primary-light)",
-    padding: "4px 12px",
-    borderRadius: "20px",
-  },
-  userRole: {
-    color: "var(--color-primary-dark)",
-    fontWeight: "700",
-    fontSize: "12px",
-    textTransform: "uppercase",
-  },
-  logoutBtn: {
-    padding: "8px 16px",
-    background: "transparent",
-    color: "var(--color-text)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-pill)",
-    cursor: "pointer",
-    fontWeight: "600",
-    fontSize: "13px",
-  },
-  bookingBtn: {
-    padding: "10px 24px",
-    fontSize: "14px",
-    marginLeft: "10px",
-  }
-};

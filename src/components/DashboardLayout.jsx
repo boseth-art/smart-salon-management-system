@@ -1,13 +1,28 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth, ROLES } from "../context/AuthContext.jsx";
+import {
+  Scissors,
+  LayoutDashboard,
+  Calendar,
+  Users,
+  ScanLine,
+  BarChart3,
+  Settings,
+  LogOut,
+  Globe,
+  Menu,
+  X,
+  Clock,
+} from "lucide-react";
 
 const NAV_ITEMS = [
-  { path: "/dashboard", label: "Overview", icon: "📊", permission: "dashboard" },
-  { path: "/dashboard/bookings", label: "Bookings", icon: "📅", permission: "bookings" },
-  { path: "/customers", label: "Customers", icon: "👥", permission: "customers" },
-  { path: "/check-in", label: "Kiosk Check-In", icon: "✅", permission: "check-in" },
-  { path: "/dashboard/reports", label: "Reports", icon: "📈", permission: "reports" },
-  { path: "/dashboard/settings", label: "Settings", icon: "⚙️", permission: "settings" },
+  { path: "/dashboard", label: "Overview", icon: LayoutDashboard, permission: "dashboard" },
+  { path: "/dashboard/bookings", label: "Bookings", icon: Calendar, permission: "bookings" },
+  { path: "/customers", label: "Customers", icon: Users, permission: "customers" },
+  { path: "/check-in", label: "Kiosk Check-In", icon: ScanLine, permission: "check-in" },
+  { path: "/dashboard/reports", label: "Reports", icon: BarChart3, permission: "reports" },
+  { path: "/dashboard/settings", label: "Settings", icon: Settings, permission: "settings" },
 ];
 
 export default function DashboardLayout({ children }) {
@@ -15,31 +30,51 @@ export default function DashboardLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const roleConfig = ROLES[user?.role] || {};
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   function handleLogout() {
     logout();
     navigate("/login");
   }
 
+  const currentLabel = NAV_ITEMS.find((i) => i.path === location.pathname)?.label || "Dashboard";
+
   return (
-    <div style={styles.shell}>
+    <div className="flex min-h-screen bg-[#F4F4F7]">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside style={styles.sidebar}>
-        <div style={styles.sidebarTop}>
-          <Link to="/" style={styles.brand}>
-            <span style={styles.brandIcon}>💇‍♀️</span>
+      <aside
+        className={`fixed lg:sticky top-0 left-0 z-50 w-[260px] flex-shrink-0 bg-bg-dark flex flex-col h-screen overflow-y-auto transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        <div className="p-5 border-b border-white/6 mb-3">
+          <Link to="/" className="flex items-center gap-2.5 no-underline mb-5">
+            <Scissors className="w-7 h-7 text-primary" />
             <div>
-              <div style={styles.brandName}>Orchid Salon</div>
-              <div style={styles.brandSub}>Dashboard</div>
+              <div className="text-white font-extrabold text-base tracking-tight">Orchid Salon</div>
+              <div className="text-white/40 text-[11px] font-semibold uppercase">Dashboard</div>
             </div>
           </Link>
 
           {/* User Card */}
-          <div style={styles.userCard}>
-            <div style={styles.userAvatar}>{roleConfig.icon}</div>
-            <div style={styles.userInfo}>
-              <div style={styles.userName}>{user?.name}</div>
-              <span style={{ ...styles.userRoleBadge, background: roleConfig.bg, color: roleConfig.color }}>
+          <div className="flex items-center gap-3 p-3 bg-white/4 rounded-xl border border-white/7">
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
+              {user?.name?.charAt(0) || "U"}
+            </div>
+            <div className="flex flex-col gap-1 min-w-0">
+              <div className="text-white font-bold text-sm truncate">{user?.name}</div>
+              <span
+                className="inline-block px-2 py-0.5 rounded-full text-[11px] font-bold w-fit"
+                style={{ background: roleConfig.bg, color: roleConfig.color }}
+              >
                 {user?.role}
               </span>
             </div>
@@ -47,221 +82,81 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Nav */}
-        <nav style={styles.nav}>
+        <nav className="flex flex-col gap-1 px-3 flex-1">
           {NAV_ITEMS.filter((item) => hasPermission(item.permission)).map((item) => {
             const active = location.pathname === item.path;
+            const Icon = item.icon;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                style={active ? styles.navItemActive : styles.navItem}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 px-3.5 py-2.5 no-underline rounded-[10px] text-sm font-semibold transition-all duration-200 relative ${
+                  active
+                    ? "text-white bg-primary/15 border border-primary/20 font-bold"
+                    : "text-white/50 hover:bg-white/7 hover:text-white/90"
+                }`}
               >
-                <span style={styles.navIcon}>{item.icon}</span>
+                <Icon className="w-[18px] h-[18px] flex-shrink-0" />
                 <span>{item.label}</span>
-                {active && <span style={styles.activePip} />}
+                {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />}
               </Link>
             );
           })}
         </nav>
 
         {/* Session timer */}
-        <div style={styles.sessionInfo}>
-          <div style={styles.sessionLabel}>⏱ Session expires in</div>
-          <div style={styles.sessionTime}>{timeRemaining} min</div>
+        <div className="mx-3 my-4 p-3.5 bg-white/3 rounded-[10px] border border-white/5">
+          <div className="flex items-center gap-2 mb-1">
+            <Clock className="w-3 h-3 text-white/35" />
+            <span className="text-[11px] text-white/35 font-semibold uppercase tracking-wider">Session expires in</span>
+          </div>
+          <div className="text-xl font-extrabold text-primary">{timeRemaining} min</div>
         </div>
 
-        <button onClick={handleLogout} style={styles.logoutBtn}>
-          🚪 Sign Out
+        <button
+          onClick={handleLogout}
+          className="mx-3 mb-5 py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-[10px] cursor-pointer font-bold text-sm flex items-center justify-center gap-2 hover:bg-red-500/20 transition-all"
+        >
+          <LogOut className="w-4 h-4" /> Sign Out
         </button>
       </aside>
 
       {/* Main content */}
-      <div style={styles.mainWrapper}>
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top Bar */}
-        <header style={styles.topBar}>
-          <div style={styles.topBarLeft}>
-            <h2 style={styles.pageTitle}>
-              {NAV_ITEMS.find((i) => i.path === location.pathname)?.label || "Dashboard"}
-            </h2>
+        <header className="bg-white px-8 py-4 flex justify-between items-center border-b border-border sticky top-0 z-[100] shadow-sm">
+          <div className="flex items-center gap-3">
+            <button
+              className="lg:hidden p-2 bg-transparent border-none cursor-pointer text-text"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label="Toggle sidebar"
+            >
+              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+            <h2 className="m-0 text-lg font-extrabold">{currentLabel}</h2>
           </div>
-          <div style={styles.topBarRight}>
-            <Link to="/" style={styles.viewSiteBtn}>🌐 View Site</Link>
-            <div style={styles.topUserBadge}>
-              <span>{roleConfig.icon}</span>
-              <span style={{ fontSize: "13px", fontWeight: "700" }}>{user?.name}</span>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="flex items-center gap-2 px-4 py-2 bg-bg border border-border rounded-full text-xs font-semibold text-text-muted no-underline hover:bg-border/50 transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5" /> View Site
+            </Link>
+            <div className="flex items-center gap-2 px-3.5 py-2 bg-bg border border-border rounded-full">
+              <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[11px] font-bold">
+                {user?.name?.charAt(0) || "U"}
+              </div>
+              <span className="text-[13px] font-bold">{user?.name}</span>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main style={styles.content} className="animate-fade-in">
+        <main className="flex-1 p-8 overflow-y-auto animate-fade-in">
           {children}
         </main>
       </div>
     </div>
   );
 }
-
-const styles = {
-  shell: {
-    display: "flex",
-    minHeight: "100vh",
-    background: "#F4F4F7",
-  },
-  sidebar: {
-    width: "260px",
-    flexShrink: 0,
-    background: "var(--color-bg-dark)",
-    display: "flex",
-    flexDirection: "column",
-    padding: "0 0 24px",
-    position: "sticky",
-    top: 0,
-    height: "100vh",
-    overflowY: "auto",
-  },
-  sidebarTop: {
-    padding: "24px 20px",
-    borderBottom: "1px solid rgba(255,255,255,0.06)",
-    marginBottom: "12px",
-  },
-  brand: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    textDecoration: "none",
-    marginBottom: "20px",
-  },
-  brandIcon: { fontSize: "28px" },
-  brandName: { color: "#FFF", fontWeight: "800", fontSize: "16px", letterSpacing: "-0.3px" },
-  brandSub: { color: "rgba(255,255,255,0.4)", fontSize: "11px", fontWeight: "600", textTransform: "uppercase" },
-  userCard: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    padding: "12px 14px",
-    background: "rgba(255,255,255,0.04)",
-    borderRadius: "12px",
-    border: "1px solid rgba(255,255,255,0.07)",
-  },
-  userAvatar: { fontSize: "24px", flexShrink: 0 },
-  userInfo: { display: "flex", flexDirection: "column", gap: "4px", minWidth: 0 },
-  userName: { color: "#FFF", fontWeight: "700", fontSize: "14px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
-  userRoleBadge: {
-    display: "inline-block",
-    padding: "2px 8px",
-    borderRadius: "20px",
-    fontSize: "11px",
-    fontWeight: "700",
-    width: "fit-content",
-  },
-  nav: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "4px",
-    padding: "0 12px",
-    flex: 1,
-  },
-  navItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    padding: "11px 14px",
-    color: "rgba(255,255,255,0.5)",
-    textDecoration: "none",
-    borderRadius: "10px",
-    fontSize: "14px",
-    fontWeight: "600",
-    transition: "all 0.2s ease",
-    position: "relative",
-  },
-  navItemActive: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    padding: "11px 14px",
-    color: "#FFF",
-    textDecoration: "none",
-    borderRadius: "10px",
-    fontSize: "14px",
-    fontWeight: "700",
-    background: "rgba(212,175,55,0.15)",
-    border: "1px solid rgba(212,175,55,0.2)",
-    position: "relative",
-  },
-  navIcon: { fontSize: "17px", flexShrink: 0 },
-  activePip: {
-    marginLeft: "auto",
-    width: "6px",
-    height: "6px",
-    borderRadius: "50%",
-    background: "var(--color-primary)",
-  },
-  sessionInfo: {
-    margin: "16px 12px 8px",
-    padding: "12px 14px",
-    background: "rgba(255,255,255,0.03)",
-    borderRadius: "10px",
-    border: "1px solid rgba(255,255,255,0.05)",
-  },
-  sessionLabel: { fontSize: "11px", color: "rgba(255,255,255,0.35)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "4px" },
-  sessionTime: { fontSize: "20px", fontWeight: "800", color: "var(--color-primary)" },
-  logoutBtn: {
-    margin: "0 12px",
-    padding: "11px",
-    background: "rgba(239,68,68,0.1)",
-    color: "#F87171",
-    border: "1px solid rgba(239,68,68,0.2)",
-    borderRadius: "10px",
-    cursor: "pointer",
-    fontWeight: "700",
-    fontSize: "14px",
-    fontFamily: "var(--font-sans)",
-    transition: "all 0.2s",
-  },
-  mainWrapper: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-  },
-  topBar: {
-    background: "#FFF",
-    padding: "16px 32px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: "1px solid var(--color-border)",
-    position: "sticky",
-    top: 0,
-    zIndex: 100,
-    boxShadow: "var(--shadow-sm)",
-  },
-  topBarLeft: {},
-  pageTitle: { margin: 0, fontSize: "20px", fontWeight: "800" },
-  topBarRight: { display: "flex", alignItems: "center", gap: "16px" },
-  viewSiteBtn: {
-    padding: "8px 16px",
-    background: "var(--color-bg)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-pill)",
-    fontSize: "13px",
-    fontWeight: "600",
-    color: "var(--color-text-muted)",
-    textDecoration: "none",
-  },
-  topUserBadge: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "8px 14px",
-    background: "var(--color-bg)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-pill)",
-  },
-  content: {
-    flex: 1,
-    padding: "32px",
-    overflowY: "auto",
-  },
-};

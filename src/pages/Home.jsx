@@ -1,30 +1,50 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  Sparkles,
+  Scissors,
+  Palette,
+  Droplets,
+  Heart,
+  Calendar,
+  Monitor,
+  Users,
+  Package,
+  BarChart3,
+  MapPin,
+  Phone,
+  Clock,
+  Leaf,
+  Trophy,
+  ArrowRight,
+  Star
+} from "lucide-react";
 
 const promotions = [
   {
-    icon: "✨",
+    icon: Sparkles,
     badge: "Limited Time",
     title: "20% Off Hair Coloring",
     text: "Transform your look with 20% off all premium balayage and full-head coloring this week.",
     discount: "SAVE 20%",
   },
   {
-    icon: "👰",
+    icon: Heart,
     badge: "Special Package",
     title: "Free Bridal Consultation",
     text: "Book any deluxe bridal package and receive a complimentary trial & skin analysis.",
     discount: "FREE TRIAL",
   },
   {
-    icon: "🧴",
+    icon: Droplets,
     badge: "Trending Spa",
     title: "Keratin & Spa Combo",
     text: "Revitalize damaged hair with deep nourishment and smoothing treatment at 15% off.",
     discount: "SPECIAL COMBO",
   },
   {
-    icon: "💇",
+    icon: Scissors,
     badge: "Weekday Glam",
     title: "Weekday Blowout & Styling",
     text: "Get party-ready with our signature blow-dry and styling package every Mon-Thu.",
@@ -38,7 +58,7 @@ const services = [
     title: "Hair Styling & Cuts",
     tagline: "Precision cuts, blowout & red-carpet styling",
     price: "From $35",
-    icon: "💇‍♀️",
+    icon: Scissors,
     link: "/hair-styling",
     popular: true,
   },
@@ -47,7 +67,7 @@ const services = [
     title: "Luxury Hair Coloring",
     tagline: "Balayage, ombre, highlights & root touch-ups",
     price: "From $65",
-    icon: "🎨",
+    icon: Palette,
     link: "/hair-coloring",
     popular: true,
   },
@@ -56,7 +76,7 @@ const services = [
     title: "Scalp & Hair Treatment",
     tagline: "Organic spa, keratin infusion & deep hydration",
     price: "From $50",
-    icon: "🧴",
+    icon: Droplets,
     link: "/hair-treatment",
     popular: false,
   },
@@ -65,7 +85,7 @@ const services = [
     title: "Bridal & Event Makeup",
     tagline: "HD bridal makeup, saree draping & hair setting",
     price: "From $120",
-    icon: "👰‍♀️",
+    icon: Heart,
     link: "/bridal-makeup",
     popular: true,
   },
@@ -73,35 +93,35 @@ const services = [
 
 const systemFeatures = [
   {
-    icon: "📅",
+    icon: Calendar,
     title: "Online Booking",
     role: "Clients & Staff",
     description: "Book appointments instantly with your favorite stylist and date slot.",
     link: "/booking",
   },
   {
-    icon: "🖥️",
+    icon: Monitor,
     title: "Front Desk Kiosk",
     role: "Front Desk Staff",
     description: "Rapid client check-in, queue management, and service routing.",
     link: "/check-in",
   },
   {
-    icon: "👥",
+    icon: Users,
     title: "Customer Records",
     role: "Salon Staff",
     description: "Track customer history, preferences, hair allergies & past services.",
     link: "/customers",
   },
   {
-    icon: "📦",
+    icon: Package,
     title: "Inventory Tracking",
     role: "Store Manager",
     description: "Monitor real-time salon stock levels, color dyes & hair products.",
     link: "/login",
   },
   {
-    icon: "📊",
+    icon: BarChart3,
     title: "Business Analytics",
     role: "Management",
     description: "Revenue insights, peak booking hours, and stylist performance metrics.",
@@ -116,6 +136,21 @@ const stats = [
   { value: "4.9 ★", label: "Client Rating" },
 ];
 
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const fadeUpItem = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
 export default function Home() {
   const [currentPromotion, setCurrentPromotion] = useState(0);
 
@@ -126,963 +161,420 @@ export default function Home() {
     return () => clearInterval(promotionTimer);
   }, []);
 
+  const PromoIcon = promotions[currentPromotion].icon;
+
   return (
-    <div style={styles.container}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="font-sans text-text bg-bg overflow-x-hidden"
+    >
       {/* ================= HERO SECTION ================= */}
-      <section style={styles.hero}>
-        <div style={styles.heroOverlay}></div>
+      <section className="min-h-screen bg-[url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-fixed bg-center relative flex items-center px-6 py-24 lg:px-10 text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050507]/95 via-[#0A0A0C]/85 to-[#000000]/90 backdrop-blur-[2px]" />
 
-        <div style={styles.heroContent}>
-          <div style={styles.heroTextCol}>
-            <div style={styles.badgeWrapper}>
-              <span style={styles.brandBadge}>✨ Orchid Luxury Smart Salon</span>
-              <span style={styles.ratingBadge}>★ 4.9 Premium Rated</span>
-            </div>
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full mt-10">
+          {/* Hero Text */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-6"
+          >
+            <motion.div variants={fadeUpItem} className="flex flex-wrap gap-3 items-center">
+              <span className="inline-block px-5 py-2 bg-gradient-to-r from-primary-dark to-primary text-bg-darker rounded-full font-bold text-sm tracking-wide shadow-lg shadow-primary/20">
+                <Sparkles className="w-4 h-4 inline mr-1 -mt-0.5" />
+                Orchid Luxury Smart Salon
+              </span>
+              <span className="inline-flex items-center gap-1 px-4 py-2 glass text-primary-light rounded-full text-xs font-semibold">
+                <Star className="w-3 h-3 fill-primary-light" /> 4.9 Premium Rated
+              </span>
+            </motion.div>
 
-            <h1 style={styles.heroTitle}>
-              Elevate Your Natural <span style={styles.goldText}>Beauty & Style</span>
-            </h1>
+            <motion.h1 variants={fadeUpItem} className="text-5xl md:text-6xl lg:text-[64px] leading-[1.1] font-extrabold text-white m-0 tracking-tight">
+              Elevate Your Natural{" "}
+              <span className="block mt-2 bg-gradient-to-r from-primary-light via-primary to-primary-dark bg-clip-text text-transparent">
+                Beauty & Style
+              </span>
+            </motion.h1>
 
-            <p style={styles.heroSubtext}>
+            <motion.p variants={fadeUpItem} className="text-lg lg:text-xl leading-relaxed text-slate-300 m-0 max-w-[580px] font-medium">
               Step into a world of personalized hair care, master styling, and effortless
               smart appointment management tailored to your lifestyle.
-            </p>
+            </motion.p>
 
             {/* Dynamic Glassmorphism Promo Box */}
-            <div style={styles.glassPromoBox}>
-              <div style={styles.promoHeader}>
-                <span style={styles.promoBadge}>{promotions[currentPromotion].badge}</span>
-                <span style={styles.discountTag}>{promotions[currentPromotion].discount}</span>
-              </div>
-
-              <div style={styles.promoBody}>
-                <div style={styles.promoIconContainer}>
-                  {promotions[currentPromotion].icon}
+            <motion.div variants={fadeUpItem} className="mt-4 p-6 glass-card rounded-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex flex-col gap-5">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold uppercase px-3 py-1 bg-primary/20 text-primary-light rounded-xl border border-primary/30">
+                    {promotions[currentPromotion].badge}
+                  </span>
+                  <span className="text-sm font-extrabold text-primary tracking-wide">
+                    {promotions[currentPromotion].discount}
+                  </span>
                 </div>
-                <div>
-                  <h3 style={styles.promoTitle}>{promotions[currentPromotion].title}</h3>
-                  <p style={styles.promoText}>{promotions[currentPromotion].text}</p>
+
+                <div className="flex gap-5 items-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20 animate-float">
+                    <PromoIcon className="w-8 h-8 text-bg-darker" />
+                  </div>
+                  <div>
+                    <h3 className="m-0 text-xl font-bold text-white mb-1">{promotions[currentPromotion].title}</h3>
+                    <p className="m-0 text-sm text-slate-400 leading-snug">{promotions[currentPromotion].text}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 mt-2">
+                  {promotions.map((p, idx) => (
+                    <button
+                      key={p.title}
+                      onClick={() => setCurrentPromotion(idx)}
+                      aria-label={`Go to slide ${idx + 1}`}
+                      className={`h-2.5 rounded-full border-none cursor-pointer transition-all duration-300 ${
+                        idx === currentPromotion ? "w-10 bg-primary" : "w-3 bg-white/20"
+                      }`}
+                    />
+                  ))}
                 </div>
               </div>
+            </motion.div>
 
-              <div style={styles.dotsNav}>
-                {promotions.map((p, idx) => (
-                  <button
-                    key={p.title}
-                    onClick={() => setCurrentPromotion(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    style={idx === currentPromotion ? styles.activeDot : styles.dot}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div style={styles.heroButtons}>
-              <Link to="/booking" style={styles.primaryBtn}>
-                <span>Book Appointment</span> ➔
+            <motion.div variants={fadeUpItem} className="flex gap-5 flex-wrap mt-6">
+              <Link
+                to="/booking"
+                className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-base shadow-xl shadow-primary/20 inline-flex items-center gap-2 hover:scale-105 hover:shadow-primary/40 transition-all duration-300"
+              >
+                <span>Book Appointment</span>
+                <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link to="/service-menu" style={styles.secondaryBtn}>
+              <Link
+                to="/service-menu"
+                className="px-8 py-4 glass text-white rounded-full font-semibold text-base hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+              >
                 Explore Menu
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Hero Feature Card */}
-          <div style={styles.heroCardCol}>
-            <div style={styles.cardGlassWrapper}>
-              <div style={styles.imageContainer}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="flex justify-center lg:justify-end relative"
+          >
+            <div className="absolute -inset-4 bg-gradient-to-br from-primary/30 to-transparent blur-2xl rounded-full opacity-50 animate-pulse" />
+            <div className="w-full max-w-md glass-card rounded-3xl overflow-hidden relative z-10 border border-white/10">
+              <div className="relative h-72 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80"
                   alt="Orchid Salon Sanctuary"
-                  style={styles.heroImage}
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
                 />
-                <div style={styles.imageBadge}>Modern Sanctuary</div>
+                <div className="absolute top-4 right-4 glass text-primary-light px-4 py-2 rounded-full text-xs font-bold border border-white/10">
+                  Modern Sanctuary
+                </div>
               </div>
-
-              <div style={styles.cardContent}>
-                <h3 style={styles.cardHeading}>Luxury Atmosphere</h3>
-                <p style={styles.cardDesc}>
+              <div className="p-8 bg-bg-alt/50 backdrop-blur-md">
+                <h3 className="m-0 mb-3 text-2xl font-bold text-white">Luxury Atmosphere</h3>
+                <p className="text-sm text-slate-400 leading-relaxed m-0 mb-6">
                   Equipped with ergonomic wash chairs, premium organic formulas, and private bridal dressing suites.
                 </p>
-                <div style={styles.cardStatsRow}>
+                <div className="flex gap-8 pt-5 border-t border-white/10">
                   <div>
-                    <strong style={styles.goldText}>100%</strong>
-                    <span style={styles.smallStatLabel}>Organic Care</span>
+                    <strong className="text-xl bg-gradient-to-r from-primary-light to-primary bg-clip-text text-transparent">
+                      100%
+                    </strong>
+                    <span className="block text-xs text-slate-500 uppercase tracking-wider mt-1">Organic Care</span>
                   </div>
                   <div>
-                    <strong style={styles.goldText}>VIP</strong>
-                    <span style={styles.smallStatLabel}>Private Rooms</span>
+                    <strong className="text-xl bg-gradient-to-r from-primary-light to-primary bg-clip-text text-transparent">
+                      VIP
+                    </strong>
+                    <span className="block text-xs text-slate-500 uppercase tracking-wider mt-1">Private Rooms</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= STATS BAR ================= */}
-      <section style={styles.statsBar}>
-        <div style={styles.statsGrid}>
+      <section className="bg-bg-dark py-12 px-6 lg:px-10 border-y border-white/5 relative z-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((item, index) => (
-            <div key={index} style={styles.statItem}>
-              <h2 style={styles.statValue}>{item.value}</h2>
-              <p style={styles.statLabel}>{item.label}</p>
-            </div>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="flex flex-col gap-2"
+            >
+              <h2 className="text-4xl md:text-5xl font-extrabold text-primary m-0">{item.value}</h2>
+              <p className="text-sm text-slate-400 m-0 font-semibold uppercase tracking-wider">{item.label}</p>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* ================= SERVICES SECTION ================= */}
-      <section style={styles.section}>
-        <div style={styles.sectionHeader}>
-          <span style={styles.sectionCategory}>Exclusive Services</span>
-          <h2 style={styles.sectionTitle}>Tailored Beauty Experiences</h2>
-          <p style={styles.sectionSubtitle}>
+      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto relative">
+        {/* Decorative elements */}
+        <div className="absolute top-40 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-40 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <span className="text-xs font-extrabold uppercase tracking-[2px] text-primary block mb-3">
+            Exclusive Services
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white m-0 mb-5">
+            Tailored Beauty Experiences
+          </h2>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto m-0">
             Crafted by certified hair artisans using industry-leading cruelty-free products.
           </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((svc, i) => {
+            const SvcIcon = svc.icon;
+            return (
+              <motion.div
+                key={svc.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Link to={svc.link} className="no-underline group block h-full">
+                  <div className="relative glass-card rounded-2xl p-8 flex flex-col gap-4 h-full transition-all duration-500 group-hover:-translate-y-2 group-hover:border-primary/40 group-hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] overflow-hidden">
+                    <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors duration-500" />
+                    
+                    {svc.popular && (
+                      <span className="absolute top-4 right-4 bg-primary/20 text-primary-light text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider border border-primary/30 z-10">
+                        Popular
+                      </span>
+                    )}
+                    <div className="mb-2 relative z-10">
+                      <div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/30 group-hover:bg-primary/10 transition-colors duration-300">
+                        <SvcIcon className="w-7 h-7 text-primary" strokeWidth={1.5} />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white m-0 relative z-10">{svc.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed m-0 flex-1 relative z-10">{svc.tagline}</p>
+                    <div className="flex justify-between items-center pt-5 border-t border-white/10 relative z-10">
+                      <span className="text-lg font-extrabold text-primary">{svc.price}</span>
+                      <ArrowRight className="w-5 h-5 text-white font-bold group-hover:translate-x-2 group-hover:text-primary transition-all duration-300" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <div style={styles.servicesGrid}>
-          {services.map((svc) => (
-            <Link key={svc.id} to={svc.link} style={styles.serviceCardLink}>
-              <div style={styles.serviceCard}>
-                {svc.popular && <span style={styles.popularTag}>Popular</span>}
-                <div style={styles.serviceIconContainer}>{svc.icon}</div>
-                <h3 style={styles.serviceCardTitle}>{svc.title}</h3>
-                <p style={styles.serviceCardTagline}>{svc.tagline}</p>
-                <div style={styles.serviceFooter}>
-                  <span style={styles.servicePrice}>{svc.price}</span>
-                  <span style={styles.arrowIcon}>→</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        <div style={styles.centerBtnRow}>
-          <Link to="/service-menu" style={styles.outlineBtn}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-16"
+        >
+          <Link
+            to="/service-menu"
+            className="px-10 py-4 border border-primary/50 text-primary rounded-full font-bold text-sm hover:bg-primary hover:text-bg-darker transition-all duration-300 tracking-wide uppercase shadow-[0_0_20px_rgba(212,175,55,0.1)] hover:shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+          >
             View Full Service & Price Menu
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       {/* ================= SMART SYSTEM FEATURES ================= */}
-      <section style={styles.featuresSection}>
-        <div style={styles.sectionHeader}>
-          <span style={styles.sectionCategoryDark}>Smart Salon Platform</span>
-          <h2 style={styles.sectionTitleDark}>Next-Gen Salon Management</h2>
-          <p style={styles.sectionSubtitleDark}>
+      <section className="bg-bg-darker py-24 px-6 lg:px-10 relative overflow-hidden border-y border-white/5">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent opacity-50" />
+        
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 relative z-10"
+        >
+          <span className="text-xs font-extrabold uppercase tracking-[2px] text-primary block mb-3">
+            Smart Salon Platform
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white m-0 mb-5">
+            Next-Gen Management
+          </h2>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto m-0">
             Seamless digital experience connecting clients, stylists, and salon administration.
           </p>
-        </div>
+        </motion.div>
 
-        <div style={styles.featuresGrid}>
-          {systemFeatures.map((feat, i) => (
-            <Link key={i} to={feat.link} style={styles.featureCardLink}>
-              <div style={styles.featureCard}>
-                <div style={styles.featureIconBox}>{feat.icon}</div>
-                <span style={styles.rolePill}>{feat.role}</span>
-                <h3 style={styles.featureTitle}>{feat.title}</h3>
-                <p style={styles.featureDesc}>{feat.description}</p>
-              </div>
-            </Link>
-          ))}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10">
+          {systemFeatures.map((feat, i) => {
+            const FeatIcon = feat.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Link to={feat.link} className="no-underline group block h-full">
+                  <div className="glass bg-[#131317]/50 rounded-2xl p-8 border border-white/5 h-full flex flex-col gap-4 transition-all duration-300 group-hover:-translate-y-2 group-hover:border-primary/30 group-hover:bg-[#1A1A20]/80">
+                    <FeatIcon className="w-9 h-9 text-primary mb-2" strokeWidth={1.5} />
+                    <span className="text-[10px] font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg w-fit uppercase tracking-wider border border-primary/20">
+                      {feat.role}
+                    </span>
+                    <h3 className="text-xl font-bold text-white m-0">{feat.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed m-0">{feat.description}</p>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
       {/* ================= ABOUT SALON ================= */}
-      <section style={styles.aboutSection}>
-        <div style={styles.aboutContainer}>
-          <div style={styles.aboutTextCol}>
-            <span style={styles.sectionCategory}>About Orchid Salon</span>
-            <h2 style={styles.aboutHeading}>Where Artistry Meets Comfort</h2>
-            <p style={styles.aboutParagraph}>
-              Founded with a passion for excellence, Orchid Salon brings together master hair artists, 
-              aesthetic beauty specialists, and cutting-edge salon tech. We specialize in precision hair design, 
-              personalized skin therapies, and high-fashion bridal makeovers.
+      <section className="py-32 px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col gap-6"
+          >
+            <span className="text-xs font-extrabold uppercase tracking-[2px] text-primary block">
+              About Orchid Salon
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white m-0 leading-tight">
+              Where Artistry <br/>
+              <span className="text-slate-500">Meets Comfort</span>
+            </h2>
+            <p className="text-lg text-slate-400 leading-relaxed m-0 font-medium">
+              Founded with a passion for excellence, Orchid Salon brings together master hair artists,
+              aesthetic beauty specialists, and cutting-edge salon tech.
             </p>
-            <p style={styles.aboutParagraph}>
-              Our commitment to sustainability means we exclusively use non-toxic, vegan hair treatments 
-              that keep your hair naturally radiant and healthy.
+            <p className="text-base text-slate-500 leading-relaxed m-0">
+              Our commitment to sustainability means we exclusively use non-toxic, vegan hair treatments
+              that keep your hair naturally radiant and healthy while protecting the environment.
             </p>
 
-            <div style={styles.aboutHighlightsGrid}>
-              <div style={styles.highlightCard}>
-                <div style={styles.highlightIcon}>🌿</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-6">
+              <div className="flex gap-4 items-start p-6 glass-card rounded-2xl">
+                <Leaf className="w-8 h-8 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
                 <div>
-                  <h4 style={styles.highlightTitle}>100% Eco Formulations</h4>
-                  <p style={styles.highlightText}>Sulfate-free, vegan & cruelty-free hair care products.</p>
+                  <h4 className="m-0 mb-2 text-lg font-bold text-white">Eco Formulations</h4>
+                  <p className="m-0 text-sm text-slate-400 leading-relaxed">Sulfate-free, vegan & cruelty-free products.</p>
                 </div>
               </div>
-              <div style={styles.highlightCard}>
-                <div style={styles.highlightIcon}>🏆</div>
+              <div className="flex gap-4 items-start p-6 glass-card rounded-2xl">
+                <Trophy className="w-8 h-8 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
                 <div>
-                  <h4 style={styles.highlightTitle}>Award-Winning Team</h4>
-                  <p style={styles.highlightText}>Top certified hair colorists & bridal stylists.</p>
+                  <h4 className="m-0 mb-2 text-lg font-bold text-white">Award-Winning</h4>
+                  <p className="m-0 text-sm text-slate-400 leading-relaxed">Top certified hair colorists & bridal stylists.</p>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div style={styles.aboutImageCol}>
-            <div style={styles.aboutImageFrame}>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex justify-center relative"
+          >
+            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
+            <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative z-10 w-full max-w-lg aspect-[4/5]">
               <img
                 src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
                 alt="Stylist work"
-                style={styles.aboutImage}
+                className="w-full h-full object-cover block"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-darker via-transparent to-transparent opacity-80" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= LOCATION & CONTACT ================= */}
-      <section style={styles.locationSection}>
-        <div style={styles.locationCard}>
-          <div style={styles.locationInfo}>
-            <span style={styles.goldBadge}>Visit Our Studio</span>
-            <h2 style={styles.locationTitle}>Orchid Salon & Day Spa</h2>
-            <p style={styles.locationSub}>We look forward to welcoming you into our sanctuary.</p>
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="px-6 lg:px-10 pb-32 max-w-7xl mx-auto"
+      >
+        <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center" />
+          <div className="absolute inset-0 bg-gradient-to-br from-bg-darker/95 via-bg-darker/90 to-primary-dark/40 backdrop-blur-sm" />
+          
+          <div className="relative z-10 px-6 py-20 md:px-16 md:py-24 text-white">
+            <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
+              <span className="text-xs font-extrabold text-primary uppercase tracking-[2px] bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+                Visit Our Studio
+              </span>
+              <h2 className="text-4xl md:text-6xl font-extrabold m-0 tracking-tight">Orchid Salon & Day Spa</h2>
+              <p className="text-lg text-slate-300 m-0 max-w-2xl font-medium">We look forward to welcoming you into our sanctuary of beauty and relaxation.</p>
 
-            <div style={styles.contactDetailsList}>
-              <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>📍</span>
-                <div>
-                  <strong>Location</strong>
-                  <p>123 Beauty Street, Colombo 03, Sri Lanka</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-10 text-left">
+                <div className="flex flex-col gap-4 glass-card p-8 rounded-3xl group hover:border-primary/50 transition-colors">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                    <MapPin className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="text-lg block mb-2">Location</strong>
+                    <p className="m-0 text-sm text-slate-400 leading-relaxed">123 Beauty Street,<br/>Colombo 03, Sri Lanka</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 glass-card p-8 rounded-3xl group hover:border-primary/50 transition-colors">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                    <Phone className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="text-lg block mb-2">Contact</strong>
+                    <p className="m-0 text-sm text-slate-400 leading-relaxed">+94 77 123 4567<br/>+94 11 987 6543</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 glass-card p-8 rounded-3xl group hover:border-primary/50 transition-colors">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                    <Clock className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <strong className="text-lg block mb-2">Hours</strong>
+                    <p className="m-0 text-sm text-slate-400 leading-relaxed">Monday - Sunday<br/>9:00 AM - 7:30 PM</p>
+                  </div>
                 </div>
               </div>
 
-              <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>📞</span>
-                <div>
-                  <strong>Phone / WhatsApp</strong>
-                  <p>+94 77 123 4567 | +94 11 987 6543</p>
-                </div>
+              <div className="mt-12">
+                <Link
+                  to="/booking"
+                  className="px-10 py-5 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-lg shadow-[0_0_40px_rgba(212,175,55,0.3)] inline-flex items-center gap-3 hover:scale-105 hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] transition-all duration-300"
+                >
+                  Reserve Appointment Now
+                </Link>
               </div>
-
-              <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>⏰</span>
-                <div>
-                  <strong>Working Hours</strong>
-                  <p>Monday - Sunday: 9:00 AM - 7:30 PM</p>
-                </div>
-              </div>
-            </div>
-
-            <div style={styles.locationButtons}>
-              <Link to="/booking" style={styles.primaryBtn}>
-                Reserve Appointment Now
-              </Link>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ================= FOOTER ================= */}
-      <footer style={styles.footer}>
-        <div style={styles.footerContainer}>
-          <div style={styles.footerBrandCol}>
-            <h3 style={styles.footerLogo}>💇‍♀️ Orchid Salon</h3>
-            <p style={styles.footerTagline}>
-              Redefining beauty care through craftsmanship and modern smart technology.
-            </p>
-            <p style={styles.copyright}>© {new Date().getFullYear()} Orchid Salon. All Rights Reserved.</p>
-          </div>
-
-          <div style={styles.footerCol}>
-            <h4 style={styles.footerHeader}>Quick Navigation</h4>
-            <Link to="/" style={styles.footerLink}>Home</Link>
-            <Link to="/service-menu" style={styles.footerLink}>Service Menu</Link>
-            <Link to="/team" style={styles.footerLink}>Team Portfolio</Link>
-            <Link to="/search" style={styles.footerLink}>Search Services</Link>
-            <Link to="/gallery" style={styles.footerLink}>Gallery</Link>
-          </div>
-
-          <div style={styles.footerCol}>
-            <h4 style={styles.footerHeader}>Staff Portal</h4>
-            <Link to="/login" style={styles.footerLink}>Staff Login</Link>
-            <Link to="/check-in" style={styles.footerLink}>Front Desk Kiosk</Link>
-            <Link to="/customers" style={styles.footerLink}>Client Records</Link>
-          </div>
-
-          <div style={styles.footerCol}>
-            <h4 style={styles.footerHeader}>Contact Info</h4>
-            <p style={styles.footerText}>📞 +94 77 123 4567</p>
-            <p style={styles.footerText}>📧 hello@orchidsalon.com</p>
-            <p style={styles.footerText}>📍 Colombo, Sri Lanka</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 }
-
-const styles = {
-  container: {
-    fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
-    color: "#2C2A29",
-    backgroundColor: "#FDFBF7",
-    overflowX: "hidden",
-  },
-  hero: {
-    minHeight: "92vh",
-    backgroundImage: "url(https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1800&q=80)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    padding: "60px 40px",
-    color: "#FFFFFF",
-  },
-  heroOverlay: {
-    position: "absolute",
-    inset: 0,
-    background: "linear-gradient(135deg, rgba(15,15,20,0.92) 0%, rgba(20,20,30,0.75) 50%, rgba(15,15,20,0.85) 100%)",
-  },
-  heroContent: {
-    position: "relative",
-    zIndex: 2,
-    maxWidth: "1280px",
-    margin: "0 auto",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-    gap: "50px",
-    alignItems: "center",
-    width: "100%",
-  },
-  heroTextCol: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-  },
-  badgeWrapper: {
-    display: "flex",
-    gap: "12px",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-  brandBadge: {
-    display: "inline-block",
-    padding: "8px 18px",
-    background: "linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%)",
-    color: "#FFFFFF",
-    borderRadius: "30px",
-    fontWeight: "700",
-    fontSize: "14px",
-    letterSpacing: "0.5px",
-    boxShadow: "0 4px 15px rgba(212,175,55,0.3)",
-  },
-  ratingBadge: {
-    display: "inline-block",
-    padding: "8px 16px",
-    background: "rgba(255,255,255,0.15)",
-    backdropFilter: "blur(10px)",
-    color: "#F3E5AB",
-    borderRadius: "30px",
-    fontSize: "13px",
-    fontWeight: "600",
-    border: "1px solid rgba(255,255,255,0.2)",
-  },
-  heroTitle: {
-    fontSize: "48px",
-    lineHeight: "1.15",
-    fontWeight: "800",
-    color: "#FFFFFF",
-    margin: 0,
-  },
-  goldText: {
-    background: "linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #C59D5F 100%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  },
-  heroSubtext: {
-    fontSize: "17px",
-    lineHeight: "1.6",
-    color: "#E2E8F0",
-    margin: 0,
-    maxWidth: "580px",
-  },
-  glassPromoBox: {
-    padding: "24px",
-    background: "rgba(255, 255, 255, 0.08)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
-    borderRadius: "20px",
-    backdropFilter: "blur(16px)",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-    display: "flex",
-    flexDirection: "column",
-    gap: "14px",
-  },
-  promoHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  promoBadge: {
-    fontSize: "12px",
-    fontWeight: "700",
-    textTransform: "uppercase",
-    padding: "4px 12px",
-    background: "rgba(212, 175, 55, 0.25)",
-    color: "#F3E5AB",
-    borderRadius: "12px",
-    border: "1px solid rgba(212, 175, 55, 0.4)",
-  },
-  discountTag: {
-    fontSize: "13px",
-    fontWeight: "800",
-    color: "#D4AF37",
-    letterSpacing: "0.5px",
-  },
-  promoBody: {
-    display: "flex",
-    gap: "16px",
-    alignItems: "center",
-  },
-  promoIconContainer: {
-    width: "56px",
-    height: "56px",
-    borderRadius: "16px",
-    background: "linear-gradient(135deg, #D4AF37 0%, #8C6211 100%)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "28px",
-    flexShrink: 0,
-    boxShadow: "0 8px 20px rgba(212, 175, 55, 0.3)",
-  },
-  promoTitle: {
-    margin: "0 0 4px",
-    fontSize: "20px",
-    fontWeight: "700",
-    color: "#FFFFFF",
-  },
-  promoText: {
-    margin: 0,
-    fontSize: "14px",
-    color: "#CBD5E1",
-    lineHeight: "1.5",
-  },
-  dotsNav: {
-    display: "flex",
-    gap: "8px",
-    marginTop: "4px",
-  },
-  dot: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "50%",
-    border: "none",
-    background: "rgba(255, 255, 255, 0.3)",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-  },
-  activeDot: {
-    width: "30px",
-    height: "10px",
-    borderRadius: "10px",
-    border: "none",
-    background: "#D4AF37",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-  },
-  heroButtons: {
-    display: "flex",
-    gap: "16px",
-    flexWrap: "wrap",
-    marginTop: "10px",
-  },
-  primaryBtn: {
-    padding: "16px 32px",
-    background: "linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)",
-    color: "#FFFFFF",
-    textDecoration: "none",
-    borderRadius: "30px",
-    fontWeight: "700",
-    fontSize: "16px",
-    boxShadow: "0 10px 25px rgba(212, 175, 55, 0.35)",
-    transition: "transform 0.2s ease, boxShadow 0.2s ease",
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "8px",
-  },
-  secondaryBtn: {
-    padding: "16px 32px",
-    background: "rgba(255,255,255,0.12)",
-    backdropFilter: "blur(10px)",
-    color: "#FFFFFF",
-    textDecoration: "none",
-    borderRadius: "30px",
-    fontWeight: "600",
-    fontSize: "16px",
-    border: "1px solid rgba(255,255,255,0.3)",
-    transition: "all 0.2s ease",
-  },
-  heroCardCol: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  cardGlassWrapper: {
-    width: "100%",
-    maxWidth: "420px",
-    background: "#FFFFFF",
-    borderRadius: "24px",
-    overflow: "hidden",
-    boxShadow: "0 25px 50px rgba(0,0,0,0.35)",
-    border: "1px solid rgba(255,255,255,0.4)",
-  },
-  imageContainer: {
-    position: "relative",
-    height: "260px",
-    overflow: "hidden",
-  },
-  heroImage: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
-  imageBadge: {
-    position: "absolute",
-    top: "16px",
-    right: "16px",
-    background: "rgba(15, 15, 20, 0.8)",
-    backdropFilter: "blur(8px)",
-    color: "#D4AF37",
-    padding: "6px 14px",
-    borderRadius: "20px",
-    fontSize: "12px",
-    fontWeight: "700",
-  },
-  cardContent: {
-    padding: "24px",
-    color: "#1F2937",
-  },
-  cardHeading: {
-    margin: "0 0 8px",
-    fontSize: "22px",
-    fontWeight: "700",
-  },
-  cardDesc: {
-    fontSize: "14px",
-    color: "#6B7280",
-    lineHeight: "1.5",
-    margin: "0 0 16px",
-  },
-  cardStatsRow: {
-    display: "flex",
-    gap: "24px",
-    paddingTop: "16px",
-    borderTop: "1px solid #F3F4F6",
-  },
-  smallStatLabel: {
-    display: "block",
-    fontSize: "12px",
-    color: "#9CA3AF",
-  },
-  statsBar: {
-    backgroundColor: "#16161E",
-    padding: "36px 40px",
-    color: "#FFFFFF",
-  },
-  statsGrid: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: "30px",
-    textAlign: "center",
-  },
-  statItem: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "4px",
-  },
-  statValue: {
-    fontSize: "36px",
-    fontWeight: "800",
-    color: "#D4AF37",
-    margin: 0,
-  },
-  statLabel: {
-    fontSize: "14px",
-    color: "#94A3B8",
-    margin: 0,
-    fontWeight: "500",
-  },
-  section: {
-    padding: "80px 40px",
-    maxWidth: "1280px",
-    margin: "0 auto",
-  },
-  sectionHeader: {
-    textAlign: "center",
-    marginBottom: "50px",
-  },
-  sectionCategory: {
-    fontSize: "13px",
-    fontWeight: "800",
-    textTransform: "uppercase",
-    letterSpacing: "1.5px",
-    color: "#D4AF37",
-    display: "block",
-    marginBottom: "8px",
-  },
-  sectionTitle: {
-    fontSize: "36px",
-    fontWeight: "800",
-    color: "#1E1B18",
-    margin: "0 0 12px",
-  },
-  sectionSubtitle: {
-    fontSize: "16px",
-    color: "#78716C",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  servicesGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
-    gap: "28px",
-  },
-  serviceCardLink: {
-    textDecoration: "none",
-  },
-  serviceCard: {
-    position: "relative",
-    background: "#FFFFFF",
-    borderRadius: "20px",
-    padding: "32px 24px",
-    border: "1px solid #E7E5E4",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-    height: "100%",
-    boxSizing: "border-box",
-    transition: "transform 0.3s ease, boxShadow 0.3s ease",
-  },
-  popularTag: {
-    position: "absolute",
-    top: "16px",
-    right: "16px",
-    background: "#FEF3C7",
-    color: "#92400E",
-    fontSize: "11px",
-    fontWeight: "800",
-    padding: "4px 10px",
-    borderRadius: "12px",
-    textTransform: "uppercase",
-  },
-  serviceIconContainer: {
-    fontSize: "40px",
-    marginBottom: "4px",
-  },
-  serviceCardTitle: {
-    fontSize: "20px",
-    fontWeight: "700",
-    color: "#1C1917",
-    margin: 0,
-  },
-  serviceCardTagline: {
-    fontSize: "14px",
-    color: "#78716C",
-    lineHeight: "1.5",
-    margin: 0,
-    flexGrow: 1,
-  },
-  serviceFooter: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: "16px",
-    borderTop: "1px solid #F5F5F4",
-  },
-  servicePrice: {
-    fontSize: "16px",
-    fontWeight: "800",
-    color: "#D4AF37",
-  },
-  arrowIcon: {
-    fontSize: "18px",
-    color: "#1C1917",
-    fontWeight: "700",
-  },
-  centerBtnRow: {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "48px",
-  },
-  outlineBtn: {
-    padding: "14px 32px",
-    border: "2px solid #D4AF37",
-    color: "#D4AF37",
-    borderRadius: "30px",
-    textDecoration: "none",
-    fontWeight: "700",
-    fontSize: "15px",
-    transition: "all 0.2s ease",
-  },
-  featuresSection: {
-    background: "#16161E",
-    padding: "80px 40px",
-  },
-  sectionCategoryDark: {
-    fontSize: "13px",
-    fontWeight: "800",
-    textTransform: "uppercase",
-    letterSpacing: "1.5px",
-    color: "#D4AF37",
-    display: "block",
-    marginBottom: "8px",
-  },
-  sectionTitleDark: {
-    fontSize: "36px",
-    fontWeight: "800",
-    color: "#FFFFFF",
-    margin: "0 0 12px",
-  },
-  sectionSubtitleDark: {
-    fontSize: "16px",
-    color: "#94A3B8",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  featuresGrid: {
-    maxWidth: "1280px",
-    margin: "0 auto",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-    gap: "24px",
-  },
-  featureCardLink: {
-    textDecoration: "none",
-  },
-  featureCard: {
-    background: "#20202B",
-    borderRadius: "20px",
-    padding: "28px 24px",
-    border: "1px solid rgba(255,255,255,0.08)",
-    height: "100%",
-    boxSizing: "border-box",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  featureIconBox: {
-    fontSize: "32px",
-  },
-  rolePill: {
-    fontSize: "11px",
-    fontWeight: "700",
-    color: "#D4AF37",
-    background: "rgba(212, 175, 55, 0.15)",
-    padding: "4px 10px",
-    borderRadius: "8px",
-    width: "fit-content",
-  },
-  featureTitle: {
-    fontSize: "18px",
-    fontWeight: "700",
-    color: "#FFFFFF",
-    margin: 0,
-  },
-  featureDesc: {
-    fontSize: "14px",
-    color: "#94A3B8",
-    lineHeight: "1.5",
-    margin: 0,
-  },
-  aboutSection: {
-    padding: "90px 40px",
-    maxWidth: "1280px",
-    margin: "0 auto",
-  },
-  aboutContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-    gap: "60px",
-    alignItems: "center",
-  },
-  aboutTextCol: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-  },
-  aboutHeading: {
-    fontSize: "36px",
-    fontWeight: "800",
-    color: "#1C1917",
-    margin: 0,
-  },
-  aboutParagraph: {
-    fontSize: "16px",
-    color: "#57534E",
-    lineHeight: "1.7",
-    margin: 0,
-  },
-  aboutHighlightsGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr",
-    gap: "16px",
-    marginTop: "16px",
-  },
-  highlightCard: {
-    display: "flex",
-    gap: "16px",
-    alignItems: "center",
-    padding: "16px 20px",
-    background: "#FFFFFF",
-    borderRadius: "16px",
-    border: "1px solid #E7E5E4",
-  },
-  highlightIcon: {
-    fontSize: "28px",
-  },
-  highlightTitle: {
-    margin: "0 0 2px",
-    fontSize: "16px",
-    fontWeight: "700",
-    color: "#1C1917",
-  },
-  highlightText: {
-    margin: 0,
-    fontSize: "13px",
-    color: "#78716C",
-  },
-  aboutImageCol: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  aboutImageFrame: {
-    borderRadius: "24px",
-    overflow: "hidden",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-    border: "4px solid #FFFFFF",
-    maxHeight: "450px",
-  },
-  aboutImage: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    display: "block",
-  },
-  locationSection: {
-    padding: "60px 40px 90px",
-    maxWidth: "1280px",
-    margin: "0 auto",
-  },
-  locationCard: {
-    background: "linear-gradient(135deg, #1C1917 0%, #0C0A09 100%)",
-    borderRadius: "28px",
-    padding: "50px 40px",
-    color: "#FFFFFF",
-    boxShadow: "0 25px 50px rgba(0,0,0,0.2)",
-  },
-  locationInfo: {
-    maxWidth: "750px",
-    margin: "0 auto",
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "16px",
-  },
-  goldBadge: {
-    fontSize: "12px",
-    fontWeight: "800",
-    color: "#D4AF37",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-  },
-  locationTitle: {
-    fontSize: "36px",
-    fontWeight: "800",
-    margin: 0,
-  },
-  locationSub: {
-    color: "#A8A29E",
-    fontSize: "16px",
-    margin: 0,
-  },
-  contactDetailsList: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "24px",
-    width: "100%",
-    marginTop: "20px",
-    textAlign: "left",
-  },
-  contactItem: {
-    display: "flex",
-    gap: "14px",
-    background: "rgba(255,255,255,0.05)",
-    padding: "20px",
-    borderRadius: "16px",
-    border: "1px solid rgba(255,255,255,0.1)",
-  },
-  contactIcon: {
-    fontSize: "24px",
-  },
-  locationButtons: {
-    marginTop: "24px",
-  },
-  footer: {
-    background: "#09090D",
-    color: "#FFFFFF",
-    padding: "60px 40px 30px",
-    borderTop: "1px solid rgba(255,255,255,0.1)",
-  },
-  footerContainer: {
-    maxWidth: "1280px",
-    margin: "0 auto",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: "40px",
-  },
-  footerBrandCol: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  footerLogo: {
-    fontSize: "22px",
-    fontWeight: "800",
-    color: "#D4AF37",
-    margin: 0,
-  },
-  footerTagline: {
-    fontSize: "14px",
-    color: "#94A3B8",
-    lineHeight: "1.6",
-    margin: 0,
-  },
-  copyright: {
-    fontSize: "12px",
-    color: "#64748B",
-    marginTop: "auto",
-  },
-  footerCol: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-  },
-  footerHeader: {
-    fontSize: "16px",
-    fontWeight: "700",
-    color: "#FFFFFF",
-    margin: "0 0 8px",
-  },
-  footerLink: {
-    color: "#94A3B8",
-    textDecoration: "none",
-    fontSize: "14px",
-    transition: "color 0.2s ease",
-  },
-  footerText: {
-    color: "#94A3B8",
-    fontSize: "14px",
-    margin: 0,
-  },
-};

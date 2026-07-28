@@ -54,7 +54,13 @@ const galleryImages = [
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Interior", "Hair Styling", "Hair Coloring", "Bridal Makeup"];
+  const categories = [
+    "All",
+    "Interior",
+    "Hair Styling",
+    "Hair Coloring",
+    "Bridal Makeup",
+  ];
 
   const filteredImages = galleryImages.filter((img) => {
     if (activeCategory === "All") return true;
@@ -62,23 +68,30 @@ export default function Gallery() {
   });
 
   return (
-    <div className="page-container" style={styles.page}>
-      <section style={styles.header}>
+    <div className="page-container min-h-[80vh]">
+      <section className="text-center mb-10">
         <span className="badge">Portfolio</span>
-        <h1 style={styles.title}>Salon Gallery</h1>
-        <p style={styles.subtitle}>
-          Take a glimpse into our luxurious space, stunning bridal transformations, 
-          and signature hair styling moments crafted by our experts.
+        <h1 className="text-[42px] font-extrabold m-0 mb-4 tracking-tight text-text">
+          Salon Gallery
+        </h1>
+        <p className="text-text-muted text-base max-w-[600px] mx-auto">
+          Take a glimpse into our luxurious space, stunning bridal
+          transformations, and signature hair styling moments crafted by our
+          experts.
         </p>
       </section>
 
-      <section style={styles.filterSection}>
-        <div style={styles.filterGroup}>
+      <section className="flex justify-center mb-[50px]">
+        <div className="flex gap-3 flex-wrap justify-center bg-bg-alt p-2 rounded-full shadow-sm border border-border">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              style={activeCategory === cat ? styles.activeFilterBtn : styles.filterBtn}
+              className={`px-6 py-2.5 rounded-full font-semibold text-sm cursor-pointer border-none ${
+                activeCategory === cat
+                  ? "bg-bg-dark text-white shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                  : "bg-transparent text-text-muted"
+              }`}
             >
               {cat}
             </button>
@@ -86,11 +99,15 @@ export default function Gallery() {
         </div>
       </section>
 
-      <section style={styles.galleryGrid}>
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 max-w-[1200px] mx-auto">
         {filteredImages.map((img) => (
           <div key={img.id} className="gallery-card">
-            <div style={styles.imageWrapper}>
-              <img src={img.src} alt={img.alt} />
+            <div className="relative w-full pt-[100%] overflow-hidden rounded-[--radius-lg]">
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-400"
+              />
               <div className="gallery-overlay">
                 <span className="gallery-overlay-text">{img.category}</span>
               </div>
@@ -100,123 +117,10 @@ export default function Gallery() {
       </section>
 
       {filteredImages.length === 0 && (
-        <div style={styles.noResult}>
+        <div className="text-center py-10 text-text-muted">
           <p>No images found in this category.</p>
         </div>
       )}
     </div>
   );
 }
-
-const styles = {
-  page: {
-    minHeight: "80vh",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "40px",
-  },
-  title: {
-    fontSize: "42px",
-    fontWeight: "800",
-    margin: "0 0 16px",
-    letterSpacing: "-0.5px",
-    color: "var(--color-text)",
-  },
-  subtitle: {
-    color: "var(--color-text-muted)",
-    fontSize: "16px",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  filterSection: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "50px",
-  },
-  filterGroup: {
-    display: "flex",
-    gap: "12px",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    background: "#FFF",
-    padding: "8px",
-    borderRadius: "var(--radius-pill)",
-    boxShadow: "var(--shadow-sm)",
-    border: "1px solid var(--color-border)",
-  },
-  filterBtn: {
-    padding: "10px 24px",
-    background: "transparent",
-    border: "none",
-    color: "var(--color-text-muted)",
-    fontWeight: "600",
-    fontSize: "14px",
-    cursor: "pointer",
-    borderRadius: "var(--radius-pill)",
-  },
-  activeFilterBtn: {
-    padding: "10px 24px",
-    background: "var(--color-bg-dark)",
-    border: "none",
-    color: "#FFF",
-    fontWeight: "600",
-    fontSize: "14px",
-    cursor: "pointer",
-    borderRadius: "var(--radius-pill)",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-  },
-  galleryGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-    gap: "24px",
-    maxWidth: "1200px",
-    margin: "0 auto",
-  },
-  imageCard: {
-    borderRadius: "var(--radius-lg)",
-    overflow: "hidden",
-    boxShadow: "var(--shadow-sm)",
-    background: "#FFF",
-    position: "relative",
-  },
-  imageWrapper: {
-    position: "relative",
-    width: "100%",
-    paddingTop: "100%", // 1:1 Aspect Ratio (Square)
-    overflow: "hidden",
-  },
-  image: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    transition: "transform 0.4s ease",
-  },
-  overlay: {
-    position: "absolute",
-    inset: 0,
-    background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)",
-    display: "flex",
-    alignItems: "flex-end",
-    padding: "20px",
-    opacity: 0,
-    transition: "opacity 0.3s ease",
-  },
-  overlayText: {
-    color: "var(--color-primary-light)",
-    fontWeight: "700",
-    fontSize: "14px",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-    transform: "translateY(10px)",
-    transition: "transform 0.3s ease",
-  },
-  noResult: {
-    textAlign: "center",
-    padding: "40px",
-    color: "var(--color-text-muted)",
-  }
-};

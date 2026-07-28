@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { User, Phone, Calendar, Clock } from "lucide-react";
 
 const STORAGE_KEY = "salonBookings";
 
@@ -106,9 +107,8 @@ export default function Booking() {
     setBookings(updatedBookings);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedBookings));
     setErrors({});
-    
-    // Quick custom alert replacement (for simplicity, using standard alert)
-    alert("✨ Appointment booked successfully!");
+
+    alert("Appointment booked successfully!");
 
     setFormData({
       customerName: "",
@@ -124,72 +124,118 @@ export default function Booking() {
 
   return (
     <div className="page-container">
-      <div style={styles.header}>
+      <div className="text-center mb-[50px]">
         <span className="badge">Reservations</span>
-        <h1 style={styles.title}>Book Your Experience</h1>
-        <p style={styles.subtitle}>
+        <h1 className="text-[36px] tracking-tight mb-3 font-extrabold">
+          Book Your Experience
+        </h1>
+        <p className="text-text-muted text-base max-w-[500px] mx-auto">
           Secure your appointment with our master stylists and therapists.
         </p>
       </div>
 
-      <div style={styles.grid}>
-        <div style={styles.formContainer}>
-          <div className="glass-panel" style={styles.glassWrapper}>
+      <div className="flex flex-col gap-[50px] items-center">
+        <div className="w-full max-w-[700px]">
+          <div className="glass-panel p-10">
             {(formData.service || formData.category || formData.price) && (
-              <div style={styles.preSelectedBox}>
-                <h4 style={styles.preSelectedTitle}>Selected Service</h4>
-                <div style={styles.preSelectedDetails}>
+              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 mb-[30px]">
+                <h4 className="m-0 mb-3 text-sm uppercase tracking-widest text-primary-dark font-semibold">
+                  Selected Service
+                </h4>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-4">
                   <div>
-                    <small>Category</small>
-                    <p>{formData.service || "N/A"}</p>
+                    <small className="text-text-muted">Category</small>
+                    <p className="font-semibold">{formData.service || "N/A"}</p>
                   </div>
                   <div>
-                    <small>Treatment</small>
-                    <p>{formData.category || "N/A"}</p>
+                    <small className="text-text-muted">Treatment</small>
+                    <p className="font-semibold">
+                      {formData.category || "N/A"}
+                    </p>
                   </div>
                   <div>
-                    <small>Price</small>
-                    <p style={styles.priceHighlight}>{formData.price || "N/A"}</p>
+                    <small className="text-text-muted">Price</small>
+                    <p className="font-extrabold text-primary-dark">
+                      {formData.price || "N/A"}
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
-            <form onSubmit={handleBooking} style={styles.form}>
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Full Name</label>
-                <input
-                  type="text"
-                  name="customerName"
-                  placeholder="e.g. Jane Doe"
-                  value={formData.customerName}
-                  onChange={handleChange}
-                  style={errors.customerName ? {...styles.input, ...styles.inputError} : styles.input}
-                />
-                {errors.customerName && <span style={styles.errorText}>{errors.customerName}</span>}
+            <form onSubmit={handleBooking} className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-semibold text-text">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User
+                    size={16}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+                  />
+                  <input
+                    type="text"
+                    name="customerName"
+                    placeholder="e.g. Jane Doe"
+                    value={formData.customerName}
+                    onChange={handleChange}
+                    className={`w-full py-3.5 pl-10 pr-4 rounded-xl border bg-stone-50 text-[15px] outline-none transition-all duration-200 ${
+                      errors.customerName
+                        ? "border-error bg-error-bg"
+                        : "border-border"
+                    }`}
+                  />
+                </div>
+                {errors.customerName && (
+                  <span className="text-error text-xs font-semibold">
+                    {errors.customerName}
+                  </span>
+                )}
               </div>
 
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="10 digit mobile number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  style={errors.phone ? {...styles.input, ...styles.inputError} : styles.input}
-                />
-                {errors.phone && <span style={styles.errorText}>{errors.phone}</span>}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-semibold text-text">
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <Phone
+                    size={16}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="10 digit mobile number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`w-full py-3.5 pl-10 pr-4 rounded-xl border bg-stone-50 text-[15px] outline-none transition-all duration-200 ${
+                      errors.phone
+                        ? "border-error bg-error-bg"
+                        : "border-border"
+                    }`}
+                  />
+                </div>
+                {errors.phone && (
+                  <span className="text-error text-xs font-semibold">
+                    {errors.phone}
+                  </span>
+                )}
               </div>
 
-              <div style={styles.row}>
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Service Type</label>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-text">
+                    Service Type
+                  </label>
                   <select
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
-                    style={errors.service ? {...styles.input, ...styles.inputError} : styles.input}
+                    className={`w-full py-3.5 px-4 rounded-xl border bg-stone-50 text-[15px] outline-none transition-all duration-200 ${
+                      errors.service
+                        ? "border-error bg-error-bg"
+                        : "border-border"
+                    }`}
                   >
                     <option value="">Select Option</option>
                     <option value="Hair Styling">Hair Styling</option>
@@ -197,16 +243,22 @@ export default function Booking() {
                     <option value="Hair Treatment">Hair Treatment</option>
                     <option value="Bridal Makeup">Bridal Makeup</option>
                   </select>
-                  {errors.service && <span style={styles.errorText}>{errors.service}</span>}
+                  {errors.service && (
+                    <span className="text-error text-xs font-semibold">
+                      {errors.service}
+                    </span>
+                  )}
                 </div>
 
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Preferred Stylist</label>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-text">
+                    Preferred Stylist
+                  </label>
                   <select
                     name="stylist"
                     value={formData.stylist}
                     onChange={handleChange}
-                    style={styles.input}
+                    className="w-full py-3.5 px-4 rounded-xl border border-border bg-stone-50 text-[15px] outline-none transition-all duration-200"
                   >
                     <option value="">Any Available</option>
                     <option value="Imasha">Imasha</option>
@@ -217,33 +269,68 @@ export default function Booking() {
                 </div>
               </div>
 
-              <div style={styles.row}>
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Date</label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    style={errors.date ? {...styles.input, ...styles.inputError} : styles.input}
-                  />
-                  {errors.date && <span style={styles.errorText}>{errors.date}</span>}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-text">
+                    Date
+                  </label>
+                  <div className="relative">
+                    <Calendar
+                      size={16}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+                    />
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      className={`w-full py-3.5 pl-10 pr-4 rounded-xl border bg-stone-50 text-[15px] outline-none transition-all duration-200 ${
+                        errors.date
+                          ? "border-error bg-error-bg"
+                          : "border-border"
+                      }`}
+                    />
+                  </div>
+                  {errors.date && (
+                    <span className="text-error text-xs font-semibold">
+                      {errors.date}
+                    </span>
+                  )}
                 </div>
 
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Time</label>
-                  <input
-                    type="time"
-                    name="time"
-                    value={formData.time}
-                    onChange={handleChange}
-                    style={errors.time ? {...styles.input, ...styles.inputError} : styles.input}
-                  />
-                  {errors.time && <span style={styles.errorText}>{errors.time}</span>}
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-text">
+                    Time
+                  </label>
+                  <div className="relative">
+                    <Clock
+                      size={16}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+                    />
+                    <input
+                      type="time"
+                      name="time"
+                      value={formData.time}
+                      onChange={handleChange}
+                      className={`w-full py-3.5 pl-10 pr-4 rounded-xl border bg-stone-50 text-[15px] outline-none transition-all duration-200 ${
+                        errors.time
+                          ? "border-error bg-error-bg"
+                          : "border-border"
+                      }`}
+                    />
+                  </div>
+                  {errors.time && (
+                    <span className="text-error text-xs font-semibold">
+                      {errors.time}
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <button type="submit" className="btn-primary" style={styles.submitBtn}>
+              <button
+                type="submit"
+                className="btn-primary mt-4 w-full py-4"
+              >
                 Confirm Reservation
               </button>
             </form>
@@ -251,43 +338,66 @@ export default function Booking() {
         </div>
 
         {bookings.length > 0 && (
-          <div style={styles.historyContainer}>
-            <div style={styles.historyHeader}>
-              <h2 style={styles.historyTitle}>Your Bookings</h2>
-              <p style={styles.historySub}>Track your upcoming and past appointments.</p>
+          <div className="w-full max-w-[1000px]">
+            <div className="mb-6">
+              <h2 className="text-2xl mb-1 font-bold">Your Bookings</h2>
+              <p className="text-text-muted m-0 text-sm">
+                Track your upcoming and past appointments.
+              </p>
             </div>
 
-            <div style={styles.tableWrapper}>
-              <table style={styles.table}>
+            <div className="bg-bg-alt rounded-2xl border border-border shadow-sm overflow-x-auto">
+              <table className="w-full border-collapse text-left">
                 <thead>
                   <tr>
-                    <th style={styles.th}>Details</th>
-                    <th style={styles.th}>Stylist</th>
-                    <th style={styles.th}>Schedule</th>
-                    <th style={styles.th}>Status</th>
+                    <th className="py-4 px-6 bg-bg text-text-muted font-semibold text-xs uppercase tracking-wider border-b border-border">
+                      Details
+                    </th>
+                    <th className="py-4 px-6 bg-bg text-text-muted font-semibold text-xs uppercase tracking-wider border-b border-border">
+                      Stylist
+                    </th>
+                    <th className="py-4 px-6 bg-bg text-text-muted font-semibold text-xs uppercase tracking-wider border-b border-border">
+                      Schedule
+                    </th>
+                    <th className="py-4 px-6 bg-bg text-text-muted font-semibold text-xs uppercase tracking-wider border-b border-border">
+                      Status
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {bookings.map((booking) => (
-                    <tr key={booking.id} style={styles.tr}>
-                      <td style={styles.td}>
-                        <div style={styles.tablePrimary}>{booking.customerName}</div>
-                        <div style={styles.tableSecondary}>{booking.category || booking.service}</div>
+                    <tr
+                      key={booking.id}
+                      className="border-b border-stone-100"
+                    >
+                      <td className="py-4 px-6 align-middle">
+                        <div className="font-semibold text-[15px] text-text mb-1">
+                          {booking.customerName}
+                        </div>
+                        <div className="text-[13px] text-text-muted">
+                          {booking.category || booking.service}
+                        </div>
                       </td>
-                      <td style={styles.td}>
-                        <div style={styles.tablePrimary}>{booking.stylist || "Any"}</div>
+                      <td className="py-4 px-6 align-middle">
+                        <div className="font-semibold text-[15px] text-text mb-1">
+                          {booking.stylist || "Any"}
+                        </div>
                       </td>
-                      <td style={styles.td}>
-                        <div style={styles.tablePrimary}>{booking.date}</div>
-                        <div style={styles.tableSecondary}>{booking.time}</div>
+                      <td className="py-4 px-6 align-middle">
+                        <div className="font-semibold text-[15px] text-text mb-1">
+                          {booking.date}
+                        </div>
+                        <div className="text-[13px] text-text-muted">
+                          {booking.time}
+                        </div>
                       </td>
-                      <td style={styles.td}>
+                      <td className="py-4 px-6 align-middle">
                         <span
-                          style={
+                          className={`inline-block py-1.5 px-3 rounded-full text-xs font-bold ${
                             booking.status === "Arrived / Checked-In"
-                              ? styles.statusPillSuccess
-                              : styles.statusPillPending
-                          }
+                              ? "bg-success-bg text-success-text"
+                              : "bg-warning-bg text-warning-text"
+                          }`}
                         >
                           {booking.status}
                         </span>
@@ -303,174 +413,3 @@ export default function Booking() {
     </div>
   );
 }
-
-const styles = {
-  header: {
-    textAlign: "center",
-    marginBottom: "50px",
-  },
-  title: {
-    fontSize: "36px",
-    letterSpacing: "-0.5px",
-    marginBottom: "12px",
-  },
-  subtitle: {
-    color: "var(--color-text-muted)",
-    fontSize: "16px",
-    maxWidth: "500px",
-    margin: "0 auto",
-  },
-  grid: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "50px",
-    alignItems: "center",
-  },
-  formContainer: {
-    width: "100%",
-    maxWidth: "700px",
-  },
-  glassWrapper: {
-    padding: "40px",
-  },
-  preSelectedBox: {
-    background: "rgba(212, 175, 55, 0.05)",
-    border: "1px solid rgba(212, 175, 55, 0.2)",
-    borderRadius: "16px",
-    padding: "20px",
-    marginBottom: "30px",
-  },
-  preSelectedTitle: {
-    margin: "0 0 12px",
-    fontSize: "14px",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-    color: "var(--color-primary-dark)",
-  },
-  preSelectedDetails: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-    gap: "16px",
-  },
-  priceHighlight: {
-    fontWeight: "800",
-    color: "var(--color-primary-dark)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "24px",
-  },
-  row: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "24px",
-  },
-  inputGroup: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-  },
-  label: {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: "var(--color-text)",
-  },
-  input: {
-    padding: "14px 16px",
-    borderRadius: "12px",
-    border: "1px solid var(--color-border)",
-    background: "#FAFAFA",
-    fontSize: "15px",
-    fontFamily: "var(--font-sans)",
-    outline: "none",
-    transition: "border-color 0.2s, box-shadow 0.2s",
-  },
-  inputError: {
-    border: "1px solid #EF4444",
-    background: "#FEF2F2",
-  },
-  errorText: {
-    color: "#EF4444",
-    fontSize: "12px",
-    fontWeight: "600",
-  },
-  submitBtn: {
-    marginTop: "16px",
-    width: "100%",
-    padding: "16px",
-  },
-  historyContainer: {
-    width: "100%",
-    maxWidth: "1000px",
-  },
-  historyHeader: {
-    marginBottom: "24px",
-  },
-  historyTitle: {
-    fontSize: "24px",
-    marginBottom: "4px",
-  },
-  historySub: {
-    color: "var(--color-text-muted)",
-    margin: 0,
-    fontSize: "14px",
-  },
-  tableWrapper: {
-    background: "#FFFFFF",
-    borderRadius: "16px",
-    border: "1px solid var(--color-border)",
-    boxShadow: "var(--shadow-sm)",
-    overflowX: "auto",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-    textAlign: "left",
-  },
-  th: {
-    padding: "16px 24px",
-    background: "var(--color-bg)",
-    color: "var(--color-text-muted)",
-    fontWeight: "600",
-    fontSize: "13px",
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
-    borderBottom: "1px solid var(--color-border)",
-  },
-  tr: {
-    borderBottom: "1px solid #F5F5F4",
-  },
-  td: {
-    padding: "16px 24px",
-    verticalAlign: "middle",
-  },
-  tablePrimary: {
-    fontWeight: "600",
-    fontSize: "15px",
-    color: "var(--color-text)",
-    marginBottom: "4px",
-  },
-  tableSecondary: {
-    fontSize: "13px",
-    color: "var(--color-text-muted)",
-  },
-  statusPillPending: {
-    background: "#FEF3C7",
-    color: "#92400E",
-    padding: "6px 12px",
-    borderRadius: "var(--radius-pill)",
-    fontSize: "12px",
-    fontWeight: "700",
-    display: "inline-block",
-  },
-  statusPillSuccess: {
-    background: "#D1FAE5",
-    color: "#065F46",
-    padding: "6px 12px",
-    borderRadius: "var(--radius-pill)",
-    fontSize: "12px",
-    fontWeight: "700",
-    display: "inline-block",
-  },
-};

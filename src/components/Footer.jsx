@@ -1,155 +1,77 @@
 import { Link } from "react-router-dom";
+import { Scissors, MapPin, Phone, Mail, Clock, Globe, AtSign, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer style={styles.footer}>
-      <div style={styles.container}>
+    <footer className="bg-bg-dark text-white/70 mt-auto">
+      <div className="max-w-7xl mx-auto px-10 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
         {/* Brand */}
-        <div style={styles.brand}>
-          <h3 style={styles.logo}>💇‍♀️ Orchid Salon</h3>
-          <p style={styles.tagline}>
+        <div className="flex flex-col gap-4">
+          <h3 className="m-0 text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <Scissors className="w-5 h-5 text-primary" /> Orchid Salon
+          </h3>
+          <p className="m-0 text-sm leading-relaxed text-white/55 max-w-[280px]">
             Where beauty meets luxury. Sri Lanka's premier destination for hair,
             bridal, and wellness services.
           </p>
-          <div style={styles.socials}>
-            <a href="#" style={styles.socialIcon} aria-label="Facebook">📘</a>
-            <a href="#" style={styles.socialIcon} aria-label="Instagram">📸</a>
-            <a href="#" style={styles.socialIcon} aria-label="WhatsApp">💬</a>
+          <div className="flex gap-3 mt-2">
+            <a href="#" className="text-white/50 hover:text-primary transition-colors" aria-label="Facebook">
+              <Globe className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-white/50 hover:text-primary transition-colors" aria-label="Instagram">
+              <AtSign className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-white/50 hover:text-primary transition-colors" aria-label="WhatsApp">
+              <MessageCircle className="w-5 h-5" />
+            </a>
           </div>
         </div>
 
         {/* Services */}
-        <div style={styles.column}>
-          <h4 style={styles.columnTitle}>Services</h4>
-          <Link to="/hair-styling" style={styles.footerLink}>Hair Styling</Link>
-          <Link to="/hair-coloring" style={styles.footerLink}>Hair Coloring</Link>
-          <Link to="/hair-treatment" style={styles.footerLink}>Hair Treatment</Link>
-          <Link to="/bridal-makeup" style={styles.footerLink}>Bridal Makeup</Link>
+        <div className="flex flex-col gap-3">
+          <h4 className="text-white font-bold text-sm uppercase tracking-wider m-0 mb-2">Services</h4>
+          <Link to="/hair-styling" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Hair Styling</Link>
+          <Link to="/hair-coloring" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Hair Coloring</Link>
+          <Link to="/hair-treatment" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Hair Treatment</Link>
+          <Link to="/bridal-makeup" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Bridal Makeup</Link>
         </div>
 
         {/* Quick Links */}
-        <div style={styles.column}>
-          <h4 style={styles.columnTitle}>Quick Links</h4>
-          <Link to="/" style={styles.footerLink}>Home</Link>
-          <Link to="/team" style={styles.footerLink}>Our Team</Link>
-          <Link to="/gallery" style={styles.footerLink}>Gallery</Link>
-          <Link to="/blog" style={styles.footerLink}>Blog</Link>
-          <Link to="/booking" style={styles.footerLink}>Book Now</Link>
+        <div className="flex flex-col gap-3">
+          <h4 className="text-white font-bold text-sm uppercase tracking-wider m-0 mb-2">Quick Links</h4>
+          <Link to="/" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Home</Link>
+          <Link to="/team" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Our Team</Link>
+          <Link to="/gallery" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Gallery</Link>
+          <Link to="/blog" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Blog</Link>
+          <Link to="/booking" className="text-white/55 hover:text-white text-sm font-medium transition-colors">Book Now</Link>
         </div>
 
         {/* Contact */}
-        <div style={styles.column}>
-          <h4 style={styles.columnTitle}>Contact Us</h4>
-          <p style={styles.contactItem}>📍 123 Flower Road, Colombo 7</p>
-          <p style={styles.contactItem}>📞 +94 11 234 5678</p>
-          <p style={styles.contactItem}>✉️ hello@orchidsalon.lk</p>
-          <p style={styles.contactItem}>🕐 Mon–Sat: 9AM – 7PM</p>
+        <div className="flex flex-col gap-3">
+          <h4 className="text-white font-bold text-sm uppercase tracking-wider m-0 mb-2">Contact Us</h4>
+          <p className="m-0 text-sm text-white/55 flex items-start gap-2">
+            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /> 123 Flower Road, Colombo 7
+          </p>
+          <p className="m-0 text-sm text-white/55 flex items-center gap-2">
+            <Phone className="w-4 h-4 flex-shrink-0" /> +94 11 234 5678
+          </p>
+          <p className="m-0 text-sm text-white/55 flex items-center gap-2">
+            <Mail className="w-4 h-4 flex-shrink-0" /> hello@orchidsalon.lk
+          </p>
+          <p className="m-0 text-sm text-white/55 flex items-center gap-2">
+            <Clock className="w-4 h-4 flex-shrink-0" /> Mon–Sat: 9AM – 7PM
+          </p>
         </div>
       </div>
 
-      <div style={styles.bottomBar}>
-        <p style={styles.copyright}>
+      <div className="border-t border-white/8 max-w-7xl mx-auto px-10 py-5 flex justify-between items-center flex-wrap gap-3">
+        <p className="m-0 text-xs text-white/35">
           © {new Date().getFullYear()} Orchid Salon. All rights reserved.
         </p>
-        <p style={styles.madeWith}>
-          Crafted with ❤️ in Sri Lanka
+        <p className="m-0 text-xs text-white/35">
+          Crafted with care in Sri Lanka
         </p>
       </div>
     </footer>
   );
 }
-
-const styles = {
-  footer: {
-    background: "var(--color-bg-dark)",
-    color: "rgba(255,255,255,0.7)",
-    marginTop: "auto",
-  },
-  container: {
-    maxWidth: "1280px",
-    margin: "0 auto",
-    padding: "60px 40px",
-    display: "grid",
-    gridTemplateColumns: "2fr 1fr 1fr 1.5fr",
-    gap: "50px",
-    flexWrap: "wrap",
-  },
-  brand: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-  },
-  logo: {
-    margin: 0,
-    fontSize: "22px",
-    fontWeight: "800",
-    color: "#FFFFFF",
-    letterSpacing: "-0.5px",
-  },
-  tagline: {
-    margin: 0,
-    fontSize: "14px",
-    lineHeight: "1.7",
-    color: "rgba(255,255,255,0.55)",
-    maxWidth: "280px",
-  },
-  socials: {
-    display: "flex",
-    gap: "12px",
-    marginTop: "8px",
-  },
-  socialIcon: {
-    fontSize: "22px",
-    textDecoration: "none",
-    transition: "transform 0.2s ease",
-    cursor: "pointer",
-  },
-  column: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  columnTitle: {
-    color: "#FFFFFF",
-    fontWeight: "700",
-    fontSize: "15px",
-    margin: "0 0 8px",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-  },
-  footerLink: {
-    color: "rgba(255,255,255,0.55)",
-    textDecoration: "none",
-    fontSize: "14px",
-    fontWeight: "500",
-    transition: "color 0.2s",
-  },
-  contactItem: {
-    margin: 0,
-    fontSize: "14px",
-    color: "rgba(255,255,255,0.55)",
-    lineHeight: "1.6",
-  },
-  bottomBar: {
-    borderTop: "1px solid rgba(255,255,255,0.08)",
-    padding: "20px 40px",
-    maxWidth: "1280px",
-    margin: "0 auto",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-    gap: "12px",
-    width: "100%",
-  },
-  copyright: {
-    margin: 0,
-    fontSize: "13px",
-    color: "rgba(255,255,255,0.35)",
-  },
-  madeWith: {
-    margin: 0,
-    fontSize: "13px",
-    color: "rgba(255,255,255,0.35)",
-  },
-};

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout.jsx";
+import { Users, Plus, Search, X, Phone, Mail, Scissors, Calendar, FileText } from "lucide-react";
 
 const INITIAL_CUSTOMERS = [
   { id: 1, name: "Nimali Perera", phone: "0771234567", email: "nimali@gmail.com", service: "Hair Styling", stylist: "Imasha", date: "2026-07-10", notes: "Layer cut customer" },
@@ -48,56 +49,70 @@ export default function CustomerRecords() {
     return c.name.toLowerCase().includes(s) || c.phone.includes(s) || c.service.toLowerCase().includes(s) || (c.stylist || "").toLowerCase().includes(s);
   });
 
+  const stats = [
+    { label: "Total Customers", value: customers.length, icon: Users },
+    { label: "This Month", value: customers.filter((c) => c.date?.startsWith("2026-07")).length, icon: Calendar },
+    { label: "Services", value: new Set(customers.map((c) => c.service)).size, icon: Scissors },
+  ];
+
   return (
     <DashboardLayout>
       {/* Header */}
-      <div style={styles.pageHeader}>
+      <div className="flex justify-between items-start mb-6 flex-wrap gap-4">
         <div>
-          <h1 style={styles.pageTitle}>Customer Records</h1>
-          <p style={styles.pageSub}>Manage customer details, service history, and appointments.</p>
+          <h1 className="text-2xl font-extrabold m-0 mb-1">Customer Records</h1>
+          <p className="text-text-muted m-0 text-sm">Manage customer details, service history, and appointments.</p>
         </div>
-        <button className="btn-primary" style={styles.addBtn} onClick={() => setShowForm((p) => !p)}>
-          {showForm ? "✕ Cancel" : "+ Add Customer"}
+        <button
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-sm shadow-lg shadow-primary/25 cursor-pointer border-none hover:-translate-y-0.5 transition-all"
+          onClick={() => setShowForm((p) => !p)}
+        >
+          {showForm ? <><X className="w-4 h-4" /> Cancel</> : <><Plus className="w-4 h-4" /> Add Customer</>}
         </button>
       </div>
 
       {/* Success */}
       {successMsg && (
-        <div style={styles.successBanner} className="animate-fade-in">✅ {successMsg}</div>
+        <div className="p-3.5 bg-success-bg border border-success-border rounded-xl text-success-text font-bold mb-5 animate-fade-in flex items-center gap-2">
+          ✓ {successMsg}
+        </div>
       )}
 
       {/* Stats Row */}
-      <div style={styles.statsRow}>
-        {[
-          { label: "Total Customers", value: customers.length, icon: "👥" },
-          { label: "This Month", value: customers.filter((c) => c.date?.startsWith("2026-07")).length, icon: "📅" },
-          { label: "Services", value: new Set(customers.map((c) => c.service)).size, icon: "💇" },
-        ].map((s) => (
-          <div key={s.label} style={styles.statCard}>
-            <span style={styles.statIcon}>{s.icon}</span>
-            <div style={styles.statValue}>{s.value}</div>
-            <div style={styles.statLabel}>{s.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {stats.map((s) => {
+          const Icon = s.icon;
+          return (
+            <div key={s.label} className="bg-white border border-border rounded-[14px] p-5 text-center shadow-sm">
+              <Icon className="w-6 h-6 text-primary mx-auto mb-2" />
+              <div className="text-[28px] font-extrabold text-text">{s.value}</div>
+              <div className="text-xs text-text-muted font-semibold uppercase mt-1">{s.label}</div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Add Form */}
       {showForm && (
-        <div style={styles.formCard} className="animate-fade-in">
-          <h2 style={styles.formTitle}>New Customer Record</h2>
-          <form onSubmit={handleSubmit} style={styles.form} noValidate>
-            <div style={styles.formGrid}>
+        <div className="bg-white border border-border rounded-2xl p-7 mb-6 shadow-sm animate-fade-in">
+          <h2 className="m-0 mb-6 text-lg font-extrabold">New Customer Record</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field label="Customer Name *" error={errors.name}>
-                <input name="name" value={formData.name} onChange={handleChange} placeholder="Full name" style={{ ...inputSt, ...(errors.name ? inputErrSt : {}) }} />
+                <input name="name" value={formData.name} onChange={handleChange} placeholder="Full name"
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.name ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Phone Number *" error={errors.phone}>
-                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="10 digit mobile" style={{ ...inputSt, ...(errors.phone ? inputErrSt : {}) }} />
+                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="10 digit mobile"
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.phone ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Email Address" error={errors.email}>
-                <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Optional" style={{ ...inputSt, ...(errors.email ? inputErrSt : {}) }} />
+                <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Optional"
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.email ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Service *" error={errors.service}>
-                <select name="service" value={formData.service} onChange={handleChange} style={{ ...inputSt, ...(errors.service ? inputErrSt : {}) }}>
+                <select name="service" value={formData.service} onChange={handleChange}
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.service ? "border-error bg-error-bg" : "border-border"}`}>
                   <option value="">Select Service</option>
                   <option>Hair Styling</option>
                   <option>Hair Coloring</option>
@@ -106,7 +121,8 @@ export default function CustomerRecords() {
                 </select>
               </Field>
               <Field label="Stylist">
-                <select name="stylist" value={formData.stylist} onChange={handleChange} style={inputSt}>
+                <select name="stylist" value={formData.stylist} onChange={handleChange}
+                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border">
                   <option value="">Select Stylist</option>
                   <option>Imasha</option>
                   <option>Nethmi</option>
@@ -115,55 +131,61 @@ export default function CustomerRecords() {
                 </select>
               </Field>
               <Field label="Appointment Date">
-                <input name="date" type="date" value={formData.date} onChange={handleChange} style={inputSt} />
+                <input name="date" type="date" value={formData.date} onChange={handleChange}
+                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border" />
               </Field>
             </div>
             <Field label="Special Notes">
-              <textarea name="notes" value={formData.notes} onChange={handleChange} placeholder="Allergy notes, preferences..." style={{ ...inputSt, minHeight: "80px", resize: "vertical" }} />
+              <textarea name="notes" value={formData.notes} onChange={handleChange} placeholder="Allergy notes, preferences..."
+                className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] min-h-[80px] resize-vertical box-border" />
             </Field>
-            <button type="submit" className="btn-primary" style={styles.submitBtn}>Save Customer Record</button>
+            <button type="submit" className="self-start px-7 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-sm shadow-lg shadow-primary/25 cursor-pointer border-none hover:-translate-y-0.5 transition-all">
+              Save Customer Record
+            </button>
           </form>
         </div>
       )}
 
       {/* Search & Table */}
-      <div style={styles.tableCard}>
-        <div style={styles.tableHeader}>
-          <h2 style={styles.tableTitle}>All Customers ({filtered.length})</h2>
-          <div style={styles.searchWrapper}>
-            <span style={styles.searchIconEl}>🔍</span>
+      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
+        <div className="flex justify-between items-center px-6 py-5 border-b border-border flex-wrap gap-3">
+          <h2 className="m-0 text-base font-extrabold">All Customers ({filtered.length})</h2>
+          <div className="relative flex items-center">
+            <Search className="absolute left-3 w-4 h-4 text-text-muted pointer-events-none" />
             <input
               type="text"
               placeholder="Search name, phone, service..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              style={styles.searchInput}
+              className="py-2.5 px-3 pl-9 border border-border rounded-[10px] text-sm font-sans outline-none w-60 bg-[#FAFAF9]"
             />
           </div>
         </div>
-        <div style={styles.tableWrapper}>
-          <table style={styles.table}>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-left">
             <thead>
               <tr>
                 {["Name", "Phone", "Email", "Service", "Stylist", "Date", "Notes"].map((h) => (
-                  <th key={h} style={styles.th}>{h}</th>
+                  <th key={h} className="px-5 py-3.5 bg-bg text-text-muted text-xs font-bold uppercase tracking-wider border-b border-border">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {filtered.map((c) => (
-                <tr key={c.id} style={styles.tr}>
-                  <td style={styles.td}><strong style={styles.tdPrimary}>{c.name}</strong></td>
-                  <td style={styles.td}>{c.phone}</td>
-                  <td style={styles.td}>{c.email || "—"}</td>
-                  <td style={styles.td}><span style={styles.serviceBadge}>{c.service}</span></td>
-                  <td style={styles.td}>{c.stylist || "—"}</td>
-                  <td style={styles.td}>{c.date || "—"}</td>
-                  <td style={styles.td}><span style={styles.noteText}>{c.notes || "—"}</span></td>
+                <tr key={c.id} className="border-b border-[#F5F5F4] hover:bg-[#FAFAFA] transition-colors">
+                  <td className="px-5 py-3.5 text-sm"><strong className="font-bold">{c.name}</strong></td>
+                  <td className="px-5 py-3.5 text-sm">{c.phone}</td>
+                  <td className="px-5 py-3.5 text-sm">{c.email || "—"}</td>
+                  <td className="px-5 py-3.5 text-sm">
+                    <span className="bg-primary/10 text-primary-dark font-bold px-2.5 py-1 rounded-full text-xs">{c.service}</span>
+                  </td>
+                  <td className="px-5 py-3.5 text-sm">{c.stylist || "—"}</td>
+                  <td className="px-5 py-3.5 text-sm">{c.date || "—"}</td>
+                  <td className="px-5 py-3.5 text-sm text-text-muted text-[13px]">{c.notes || "—"}</td>
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={7} style={{ ...styles.td, textAlign: "center", color: "var(--color-text-muted)", padding: "32px" }}>No records found.</td></tr>
+                <tr><td colSpan={7} className="px-5 py-8 text-center text-text-muted">No records found.</td></tr>
               )}
             </tbody>
           </table>
@@ -175,45 +197,10 @@ export default function CustomerRecords() {
 
 function Field({ label, error, children }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-      <label style={{ fontSize: "13px", fontWeight: "600", color: "var(--color-text)" }}>{label}</label>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[13px] font-semibold text-text">{label}</label>
       {children}
-      {error && <span style={{ color: "#EF4444", fontSize: "12px", fontWeight: "600" }}>{error}</span>}
+      {error && <span className="text-error text-xs font-semibold">{error}</span>}
     </div>
   );
 }
-
-const inputSt = { padding: "11px 14px", border: "1.5px solid var(--color-border)", borderRadius: "10px", fontSize: "14px", fontFamily: "var(--font-sans)", outline: "none", background: "#FAFAF9", width: "100%", boxSizing: "border-box" };
-const inputErrSt = { borderColor: "#EF4444", background: "#FEF2F2" };
-
-const styles = {
-  pageHeader: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px", flexWrap: "wrap", gap: "16px" },
-  pageTitle: { fontSize: "24px", fontWeight: "800", margin: "0 0 4px" },
-  pageSub: { color: "var(--color-text-muted)", margin: 0, fontSize: "14px" },
-  addBtn: { padding: "12px 24px", fontSize: "14px" },
-  successBanner: { padding: "14px 20px", background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "12px", color: "#065F46", fontWeight: "700", marginBottom: "20px" },
-  statsRow: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "16px", marginBottom: "24px" },
-  statCard: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "14px", padding: "20px", textAlign: "center", boxShadow: "var(--shadow-sm)" },
-  statIcon: { fontSize: "26px", display: "block", marginBottom: "8px" },
-  statValue: { fontSize: "28px", fontWeight: "800", color: "var(--color-text)" },
-  statLabel: { fontSize: "12px", color: "var(--color-text-muted)", fontWeight: "600", textTransform: "uppercase", marginTop: "4px" },
-  formCard: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "16px", padding: "28px", marginBottom: "24px", boxShadow: "var(--shadow-sm)" },
-  formTitle: { margin: "0 0 24px", fontSize: "18px", fontWeight: "800" },
-  form: { display: "flex", flexDirection: "column", gap: "16px" },
-  formGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" },
-  submitBtn: { alignSelf: "flex-start", padding: "12px 28px" },
-  tableCard: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "16px", boxShadow: "var(--shadow-sm)", overflow: "hidden" },
-  tableHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px", borderBottom: "1px solid var(--color-border)", flexWrap: "wrap", gap: "12px" },
-  tableTitle: { margin: 0, fontSize: "16px", fontWeight: "800" },
-  searchWrapper: { position: "relative", display: "flex", alignItems: "center" },
-  searchIconEl: { position: "absolute", left: "12px", fontSize: "15px", color: "#A8A29E" },
-  searchInput: { padding: "10px 12px 10px 36px", border: "1px solid var(--color-border)", borderRadius: "10px", fontSize: "14px", fontFamily: "var(--font-sans)", outline: "none", width: "240px", background: "#FAFAF9" },
-  tableWrapper: { overflowX: "auto" },
-  table: { width: "100%", borderCollapse: "collapse", textAlign: "left" },
-  th: { padding: "14px 20px", background: "var(--color-bg)", color: "var(--color-text-muted)", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px", borderBottom: "1px solid var(--color-border)" },
-  tr: { borderBottom: "1px solid #F5F5F4", transition: "background 0.15s" },
-  td: { padding: "14px 20px", fontSize: "14px", verticalAlign: "middle" },
-  tdPrimary: { fontWeight: "700", fontSize: "14px" },
-  serviceBadge: { background: "rgba(212,175,55,0.1)", color: "var(--color-primary-dark)", fontWeight: "700", padding: "3px 10px", borderRadius: "var(--radius-pill)", fontSize: "12px" },
-  noteText: { color: "var(--color-text-muted)", fontSize: "13px" },
-};

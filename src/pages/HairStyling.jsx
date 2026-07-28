@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Scissors, Wind, Sparkles, Gem, ArrowLeft } from "lucide-react";
 
 const fallbackImage =
   "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80";
@@ -6,7 +7,7 @@ const fallbackImage =
 const hairServices = [
   {
     title: "Hair Cuts",
-    icon: "✂️",
+    icon: Scissors,
     description: "Modern and classic hair cuts for every style and personality.",
     items: [
       { name: "Basic Hair Cut", price: "Rs. 2,500", image: "/hair/Basic-Hair-Cut.jfif" },
@@ -27,7 +28,7 @@ const hairServices = [
   },
   {
     title: "Blow Dry",
-    icon: "💨",
+    icon: Wind,
     description: "Smooth and professional blow dry services for every hair length.",
     items: [
       { name: "Short Hair Blow Dry", price: "Rs. 1,500", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80" },
@@ -39,7 +40,7 @@ const hairServices = [
   },
   {
     title: "Styling",
-    icon: "✨",
+    icon: Sparkles,
     description: "Salon styling for casual, party and event occasions.",
     items: [
       { name: "Casual Styling", price: "Rs. 3,000", image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=800&q=80" },
@@ -52,7 +53,7 @@ const hairServices = [
   },
   {
     title: "Finishing",
-    icon: "💎",
+    icon: Gem,
     description: "Final touch-ups and long-lasting salon finish.",
     items: [
       { name: "Hair Setting", price: "Rs. 1,500", image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&q=80" },
@@ -70,100 +71,91 @@ function bookingLink(service, category, price) {
 
 export default function HairStyling() {
   return (
-    <div className="page-container" style={styles.page}>
+    <div className="min-h-[80vh]">
       {/* Hero */}
-      <section style={styles.hero}>
-        <span className="badge">Hair Styling</span>
-        <h1 style={styles.heroTitle}>Hair Styling Services</h1>
-        <p style={styles.heroSubtext}>
+      <section className="text-center py-16 px-5 bg-gradient-to-br from-bg to-primary-light/30 rounded-2xl border border-border mb-16">
+        <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary-dark text-xs font-bold tracking-wider uppercase mb-4">
+          Hair Styling
+        </span>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          Hair Styling Services
+        </h1>
+        <p className="text-text-muted text-base max-w-[550px] mx-auto mb-8 leading-relaxed">
           Precision cuts, silky blow-drys, party styles & finishing touches — crafted by our master stylists.
         </p>
-        <div style={styles.heroStats}>
-          <div style={styles.heroStat}><strong>14+</strong><span>Cuts Available</span></div>
-          <div style={styles.heroStat}><strong>5★</strong><span>Rated Service</span></div>
-          <div style={styles.heroStat}><strong>850+</strong><span>Happy Clients</span></div>
+        <div className="flex justify-center gap-10 flex-wrap">
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">14+</strong>
+            <span className="text-xs text-text-muted font-semibold">Cuts Available</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">5★</strong>
+            <span className="text-xs text-text-muted font-semibold">Rated Service</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <strong className="text-2xl font-extrabold text-primary-dark">850+</strong>
+            <span className="text-xs text-text-muted font-semibold">Happy Clients</span>
+          </div>
         </div>
       </section>
 
       {/* Service Sections */}
-      {hairServices.map((service) => (
-        <section style={styles.serviceSection} key={service.title}>
-          <div style={styles.sectionHeader}>
-            <div style={styles.sectionTitleGroup}>
-              <span style={styles.sectionIcon}>{service.icon}</span>
-              <div>
-                <h2 style={styles.sectionTitle}>{service.title}</h2>
-                <p style={styles.sectionDesc}>{service.description}</p>
-              </div>
-            </div>
-          </div>
-
-          <div style={styles.itemGrid}>
-            {service.items.map((item) => (
-              <div style={styles.itemCard} key={item.name} className="gallery-card">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  style={styles.itemImg}
-                  onError={(e) => { e.currentTarget.src = fallbackImage; }}
-                />
-                <div style={styles.itemBody}>
-                  <h3 style={styles.itemName}>{item.name}</h3>
-                  <div style={styles.itemFooter}>
-                    <span style={styles.price}>{item.price}</span>
-                    <Link
-                      to={bookingLink(service.title, item.name, item.price)}
-                      className="btn-primary"
-                      style={styles.bookBtn}
-                    >
-                      Book
-                    </Link>
-                  </div>
+      {hairServices.map((service) => {
+        const Icon = service.icon;
+        return (
+          <section className="mb-16" key={service.title}>
+            <div className="border-b-2 border-border pb-4 mb-8">
+              <div className="flex items-center gap-4">
+                <span className="bg-bg border border-border rounded-xl w-14 h-14 flex items-center justify-center shrink-0">
+                  <Icon className="w-7 h-7 text-primary-dark" />
+                </span>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-extrabold mb-1">{service.title}</h2>
+                  <p className="text-text-muted text-sm m-0">{service.description}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      ))}
+            </div>
 
-      <div style={styles.backWrapper}>
-        <Link to="/service-menu" className="btn-outline">← Back to Service Menu</Link>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-6">
+              {service.items.map((item) => (
+                <div
+                  className="rounded-2xl overflow-hidden border border-border bg-bg-alt"
+                  key={item.name}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-50 object-cover block"
+                    onError={(e) => { e.currentTarget.src = fallbackImage; }}
+                  />
+                  <div className="p-4.5">
+                    <h3 className="text-base font-bold mb-3">{item.name}</h3>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[15px] font-extrabold text-primary-dark">{item.price}</span>
+                      <Link
+                        to={bookingLink(service.title, item.name, item.price)}
+                        className="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200 shadow-none"
+                      >
+                        Book
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+
+      <div className="text-center mt-10 mb-16">
+        <Link
+          to="/service-menu"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-xl text-text font-semibold text-sm hover:bg-bg-dark hover:text-white hover:border-bg-dark transition-all duration-200"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Service Menu
+        </Link>
       </div>
     </div>
   );
 }
-
-const styles = {
-  page: { minHeight: "80vh" },
-  hero: {
-    textAlign: "center",
-    padding: "60px 20px 50px",
-    background: "linear-gradient(135deg, #FDFBF7 0%, #FFF9EE 100%)",
-    borderRadius: "var(--radius-lg)",
-    marginBottom: "60px",
-    border: "1px solid var(--color-border)",
-  },
-  heroTitle: { fontSize: "40px", fontWeight: "800", margin: "0 0 16px", letterSpacing: "-0.5px" },
-  heroSubtext: { color: "var(--color-text-muted)", fontSize: "16px", maxWidth: "550px", margin: "0 auto 30px" },
-  heroStats: { display: "flex", justifyContent: "center", gap: "40px", flexWrap: "wrap" },
-  heroStat: { display: "flex", flexDirection: "column", gap: "4px", alignItems: "center", "& strong": { fontSize: "24px", fontWeight: "800", color: "var(--color-primary-dark)" }, "& span": { fontSize: "13px", color: "var(--color-text-muted)", fontWeight: "600" } },
-  serviceSection: { marginBottom: "60px" },
-  sectionHeader: { borderBottom: "2px solid var(--color-border)", paddingBottom: "16px", marginBottom: "30px" },
-  sectionTitleGroup: { display: "flex", alignItems: "center", gap: "16px" },
-  sectionIcon: { fontSize: "32px", background: "var(--color-bg)", border: "1px solid var(--color-border)", borderRadius: "12px", width: "56px", height: "56px", display: "flex", alignItems: "center", justifyContent: "center" },
-  sectionTitle: { margin: "0 0 4px", fontSize: "26px", fontWeight: "800" },
-  sectionDesc: { margin: 0, color: "var(--color-text-muted)", fontSize: "14px" },
-  itemGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-    gap: "24px",
-  },
-  itemCard: { borderRadius: "var(--radius-lg)", overflow: "hidden", border: "1px solid var(--color-border)", background: "#FFF" },
-  itemImg: { width: "100%", height: "200px", objectFit: "cover", display: "block" },
-  itemBody: { padding: "18px" },
-  itemName: { margin: "0 0 12px", fontSize: "16px", fontWeight: "700" },
-  itemFooter: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  price: { fontSize: "15px", fontWeight: "800", color: "var(--color-primary-dark)" },
-  bookBtn: { padding: "8px 16px", fontSize: "13px", boxShadow: "none" },
-  backWrapper: { textAlign: "center", marginTop: "40px" },
-};

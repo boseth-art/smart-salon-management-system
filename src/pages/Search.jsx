@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  Search as SearchIcon,
+  Clock,
+  Scissors,
+  Palette,
+  Droplets,
+  Heart,
+} from "lucide-react";
+
+const serviceIconMap = {
+  "Hair Styling": Scissors,
+  "Hair Coloring": Palette,
+  "Hair Treatment": Droplets,
+  "Bridal Makeup": Heart,
+};
 
 const services = [
   {
     id: 1,
-    icon: "💇",
     service: "Hair Styling",
     category: "Basic Hair Cut",
     price: "Rs. 2,000",
@@ -14,7 +28,6 @@ const services = [
   },
   {
     id: 2,
-    icon: "💇",
     service: "Hair Styling",
     category: "Layer Cut",
     price: "Rs. 3,500",
@@ -24,7 +37,6 @@ const services = [
   },
   {
     id: 3,
-    icon: "💇",
     service: "Hair Styling",
     category: "Blow Dry",
     price: "Rs. 2,500",
@@ -34,7 +46,6 @@ const services = [
   },
   {
     id: 4,
-    icon: "💇",
     service: "Hair Styling",
     category: "Party Hair Style",
     price: "Rs. 6,000",
@@ -44,7 +55,6 @@ const services = [
   },
   {
     id: 5,
-    icon: "🎨",
     service: "Hair Coloring",
     category: "Root Touch-up",
     price: "Rs. 4,500",
@@ -54,7 +64,6 @@ const services = [
   },
   {
     id: 6,
-    icon: "🎨",
     service: "Hair Coloring",
     category: "Full Hair Color",
     price: "Rs. 8,500",
@@ -64,7 +73,6 @@ const services = [
   },
   {
     id: 7,
-    icon: "🎨",
     service: "Hair Coloring",
     category: "Hair Highlights",
     price: "Rs. 10,000",
@@ -74,7 +82,6 @@ const services = [
   },
   {
     id: 8,
-    icon: "🎨",
     service: "Hair Coloring",
     category: "Balayage Color",
     price: "Rs. 18,000",
@@ -84,7 +91,6 @@ const services = [
   },
   {
     id: 9,
-    icon: "🧴",
     service: "Hair Treatment",
     category: "Hair Spa Treatment",
     price: "Rs. 8,500",
@@ -94,7 +100,6 @@ const services = [
   },
   {
     id: 10,
-    icon: "🧴",
     service: "Hair Treatment",
     category: "Keratin Treatment",
     price: "Rs. 18,000",
@@ -104,7 +109,6 @@ const services = [
   },
   {
     id: 11,
-    icon: "🧴",
     service: "Hair Treatment",
     category: "Protein Treatment",
     price: "Rs. 12,000",
@@ -114,7 +118,6 @@ const services = [
   },
   {
     id: 12,
-    icon: "🧴",
     service: "Hair Treatment",
     category: "Scalp Treatment",
     price: "Rs. 7,500",
@@ -124,7 +127,6 @@ const services = [
   },
   {
     id: 13,
-    icon: "👰",
     service: "Bridal Makeup",
     category: "Simple Bridal Makeup",
     price: "Rs. 18,000",
@@ -134,7 +136,6 @@ const services = [
   },
   {
     id: 14,
-    icon: "👰",
     service: "Bridal Makeup",
     category: "Traditional Bridal Makeup",
     price: "Rs. 25,000",
@@ -144,7 +145,6 @@ const services = [
   },
   {
     id: 15,
-    icon: "👰",
     service: "Bridal Makeup",
     category: "Kandyan Bridal Makeup",
     price: "Rs. 35,000",
@@ -154,7 +154,6 @@ const services = [
   },
   {
     id: 16,
-    icon: "👰",
     service: "Bridal Makeup",
     category: "Full Bridal Package",
     price: "Rs. 55,000",
@@ -200,37 +199,43 @@ export default function Search() {
   });
 
   return (
-    <div className="page-container" style={styles.page}>
-      <section style={styles.hero}>
+    <div className="page-container min-h-[80vh]">
+      <section className="text-center pt-[60px] pb-10 px-5">
         <span className="badge">Explore</span>
-        <h1 style={styles.heroTitle}>Search Services</h1>
-        <p style={styles.heroSubtext}>
-          Quickly find and book exactly what you are looking for by treatment name, keyword, or category.
+        <h1 className="text-[42px] font-extrabold text-text mb-4 tracking-tight">
+          Search Services
+        </h1>
+        <p className="text-base text-text-muted max-w-[600px] mx-auto">
+          Quickly find and book exactly what you are looking for by treatment
+          name, keyword, or category.
         </p>
       </section>
 
-      <section style={styles.searchSection}>
-        <div style={styles.searchContainer}>
-          <span style={styles.searchIcon}>🔍</span>
+      <section className="max-w-[800px] mx-auto mb-10">
+        <div className="relative flex items-center shadow-sm rounded-full bg-bg-alt border border-border">
+          <SearchIcon
+            size={18}
+            className="absolute left-5 text-text-muted pointer-events-none"
+          />
           <input
             type="text"
             placeholder="Search for haircut, coloring, keratin, bridal..."
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
-            style={styles.searchInput}
+            className="w-full py-4 pr-5 pl-[50px] border-none rounded-full text-base bg-transparent outline-none"
           />
         </div>
 
-        <div style={styles.filterButtons}>
+        <div className="flex gap-2.5 justify-center flex-wrap mt-6">
           {serviceTypes.map((type) => (
             <button
               key={type}
               onClick={() => setSelectedService(type)}
-              style={
+              className={`px-5 py-2 rounded-full cursor-pointer font-semibold text-sm border ${
                 selectedService === type
-                  ? styles.activeFilterButton
-                  : styles.filterButton
-              }
+                  ? "bg-text text-text-light border-text"
+                  : "bg-bg-alt text-text border-border"
+              }`}
             >
               {type}
             </button>
@@ -238,261 +243,84 @@ export default function Search() {
         </div>
       </section>
 
-      <section style={styles.resultInfo}>
-        <h2 style={styles.resultTitle}>Search Results</h2>
-        <p style={styles.resultCount}>{filteredServices.length} {filteredServices.length === 1 ? 'service' : 'services'} found</p>
+      <section className="max-w-[1200px] mx-auto mb-6 flex justify-between items-end border-b border-border pb-4">
+        <h2 className="m-0 text-2xl font-bold">Search Results</h2>
+        <p className="m-0 text-text-muted font-semibold">
+          {filteredServices.length}{" "}
+          {filteredServices.length === 1 ? "service" : "services"} found
+        </p>
       </section>
 
-      <section style={styles.grid}>
-        {filteredServices.map((item) => (
-          <div style={styles.card} key={item.id}>
-            <div style={styles.cardTop}>
-              <div style={styles.icon}>{item.icon}</div>
-              <p style={styles.serviceCategory}>{item.service}</p>
-            </div>
-
-            <h3 style={styles.serviceTitle}>{item.category}</h3>
-            <p style={styles.description}>{item.description}</p>
-
-            <div style={styles.detailsBox}>
-              <div style={styles.detailItem}>
-                <span style={styles.detailLabel}>Price</span>
-                <span style={styles.detailValueGold}>{item.price}</span>
+      <section className="max-w-[1200px] mx-auto mb-[50px] grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
+        {filteredServices.map((item) => {
+          const IconComponent = serviceIconMap[item.service] || Scissors;
+          return (
+            <div
+              className="p-6 border border-border rounded-[--radius-lg] bg-bg-alt shadow-sm flex flex-col transition-all duration-300 hover:shadow-md"
+              key={item.id}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-bg border border-border flex items-center justify-center">
+                  <IconComponent size={24} className="text-text-muted" />
+                </div>
+                <p className="m-0 text-[13px] text-text-muted uppercase font-bold tracking-wider">
+                  {item.service}
+                </p>
               </div>
-              <div style={styles.detailItem}>
-                <span style={styles.detailLabel}>Duration</span>
-                <span style={styles.detailValue}>{item.duration}</span>
+
+              <h3 className="m-0 mb-2 text-xl font-bold">{item.category}</h3>
+              <p className="text-text-muted text-sm grow m-0 mb-5">
+                {item.description}
+              </p>
+
+              <div className="flex justify-between p-4 bg-bg rounded-xl border border-border mb-5">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-text-muted uppercase font-semibold">
+                    Price
+                  </span>
+                  <span className="text-sm font-extrabold text-primary-dark">
+                    {item.price}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-text-muted uppercase font-semibold">
+                    Duration
+                  </span>
+                  <span className="text-sm font-semibold text-text flex items-center gap-1.5">
+                    <Clock size={14} />
+                    {item.duration}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Link
+                  to={item.page}
+                  className="btn-outline py-2.5 text-[13px] text-center"
+                >
+                  Details
+                </Link>
+                <Link
+                  to={bookingLink(item)}
+                  className="btn-primary py-2.5 text-[13px] shadow-none text-center"
+                >
+                  Book
+                </Link>
               </div>
             </div>
-
-            <div style={styles.buttonGroup}>
-              <Link to={item.page} className="btn-outline" style={styles.viewBtn}>
-                Details
-              </Link>
-              <Link to={bookingLink(item)} className="btn-primary" style={styles.bookBtn}>
-                Book
-              </Link>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       {filteredServices.length === 0 && (
-        <section style={styles.noResult}>
-          <h2 style={styles.noResultTitle}>No Services Found</h2>
-          <p style={styles.noResultText}>We couldn't find anything matching "{searchText}". Try another keyword.</p>
+        <section className="text-center py-[60px] px-5 bg-bg-alt rounded-[--radius-lg] border border-dashed border-border max-w-[600px] mx-auto">
+          <h2 className="text-[22px] m-0 mb-2.5">No Services Found</h2>
+          <p className="text-text-muted m-0">
+            We couldn't find anything matching &quot;{searchText}&quot;. Try
+            another keyword.
+          </p>
         </section>
       )}
     </div>
   );
 }
-
-const styles = {
-  page: {
-    minHeight: "80vh",
-  },
-  hero: {
-    textAlign: "center",
-    padding: "60px 20px 40px",
-  },
-  heroTitle: {
-    fontSize: "42px",
-    fontWeight: "800",
-    color: "var(--color-text)",
-    margin: "0 0 16px",
-    letterSpacing: "-0.5px",
-  },
-  heroSubtext: {
-    fontSize: "16px",
-    color: "var(--color-text-muted)",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  searchSection: {
-    maxWidth: "800px",
-    margin: "0 auto 40px",
-  },
-  searchContainer: {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    boxShadow: "var(--shadow-sm)",
-    borderRadius: "var(--radius-pill)",
-    background: "#FFF",
-    border: "1px solid var(--color-border)",
-  },
-  searchIcon: {
-    position: "absolute",
-    left: "20px",
-    fontSize: "18px",
-    color: "#A8A29E",
-  },
-  searchInput: {
-    width: "100%",
-    padding: "16px 20px 16px 50px",
-    border: "none",
-    borderRadius: "var(--radius-pill)",
-    fontSize: "16px",
-    fontFamily: "var(--font-sans)",
-    outline: "none",
-    background: "transparent",
-  },
-  filterButtons: {
-    display: "flex",
-    gap: "10px",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    marginTop: "24px",
-  },
-  filterButton: {
-    padding: "8px 20px",
-    background: "white",
-    color: "var(--color-text)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-pill)",
-    cursor: "pointer",
-    fontWeight: "600",
-    fontSize: "14px",
-  },
-  activeFilterButton: {
-    padding: "8px 20px",
-    background: "var(--color-text)",
-    color: "white",
-    border: "1px solid var(--color-text)",
-    borderRadius: "var(--radius-pill)",
-    cursor: "pointer",
-    fontWeight: "600",
-    fontSize: "14px",
-  },
-  resultInfo: {
-    maxWidth: "1200px",
-    margin: "0 auto 24px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    borderBottom: "1px solid var(--color-border)",
-    paddingBottom: "16px",
-  },
-  resultTitle: {
-    margin: 0,
-    fontSize: "24px",
-  },
-  resultCount: {
-    margin: 0,
-    color: "var(--color-text-muted)",
-    fontWeight: "600",
-  },
-  grid: {
-    maxWidth: "1200px",
-    margin: "0 auto 50px",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "24px",
-  },
-  card: {
-    padding: "24px",
-    border: "1px solid var(--color-border)",
-    borderRadius: "var(--radius-lg)",
-    background: "#FFFFFF",
-    boxShadow: "var(--shadow-sm)",
-    display: "flex",
-    flexDirection: "column",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  },
-  cardTop: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    marginBottom: "16px",
-  },
-  icon: {
-    width: "48px",
-    height: "48px",
-    borderRadius: "12px",
-    background: "var(--color-bg)",
-    border: "1px solid var(--color-border)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "24px",
-  },
-  serviceCategory: {
-    margin: 0,
-    fontSize: "13px",
-    color: "var(--color-text-muted)",
-    textTransform: "uppercase",
-    fontWeight: "700",
-    letterSpacing: "0.5px",
-  },
-  serviceTitle: {
-    margin: "0 0 8px",
-    fontSize: "20px",
-  },
-  description: {
-    color: "var(--color-text-muted)",
-    fontSize: "14px",
-    flexGrow: 1,
-    margin: "0 0 20px",
-  },
-  detailsBox: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "16px",
-    background: "var(--color-bg)",
-    borderRadius: "12px",
-    border: "1px solid var(--color-border)",
-    marginBottom: "20px",
-  },
-  detailItem: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "4px",
-  },
-  detailLabel: {
-    fontSize: "12px",
-    color: "var(--color-text-muted)",
-    textTransform: "uppercase",
-    fontWeight: "600",
-  },
-  detailValue: {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: "var(--color-text)",
-  },
-  detailValueGold: {
-    fontSize: "14px",
-    fontWeight: "800",
-    color: "var(--color-primary-dark)",
-  },
-  buttonGroup: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "12px",
-  },
-  viewBtn: {
-    padding: "10px",
-    fontSize: "13px",
-  },
-  bookBtn: {
-    padding: "10px",
-    fontSize: "13px",
-    boxShadow: "none",
-  },
-  noResult: {
-    textAlign: "center",
-    padding: "60px 20px",
-    background: "#FFFFFF",
-    borderRadius: "var(--radius-lg)",
-    border: "1px dashed var(--color-border)",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  noResultTitle: {
-    fontSize: "22px",
-    margin: "0 0 10px",
-  },
-  noResultText: {
-    color: "var(--color-text-muted)",
-    margin: 0,
-  }
-};

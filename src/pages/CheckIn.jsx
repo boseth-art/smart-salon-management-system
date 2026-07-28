@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout.jsx";
+import { ScanLine, Phone, Search, CheckCircle, Clock, AlertTriangle, Info } from "lucide-react";
 
 const STORAGE_KEY = "salonBookings";
 
@@ -14,7 +15,7 @@ export default function CheckIn() {
   const [phoneError, setPhoneError] = useState("");
   const [bookings, setBookings] = useState(getBookings);
   const [matched, setMatched] = useState([]);
-  const [message, setMessage] = useState(null); // { type: 'success'|'error'|'info', text }
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   function validatePhone(val) {
@@ -29,7 +30,7 @@ export default function CheckIn() {
     if (err) { setPhoneError(err); setMatched([]); setMessage(null); return; }
     setPhoneError("");
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 500)); // UX delay
+    await new Promise((r) => setTimeout(r, 500));
     setLoading(false);
     const results = bookings.filter((b) => b.phone === phone.trim());
     if (results.length === 0) {
@@ -46,113 +47,151 @@ export default function CheckIn() {
     setBookings(updated);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     setMatched(updated.filter((b) => b.phone === phone.trim()));
-    setMessage({ type: "success", text: "✅ Check-in successful! Your stylist has been notified. Please take a seat." });
+    setMessage({ type: "success", text: "Check-in successful! Your stylist has been notified. Please take a seat." });
   }
 
-  const msgColors = {
-    success: { bg: "#ECFDF5", border: "#A7F3D0", color: "#065F46" },
-    error:   { bg: "#FEF2F2", border: "#FECACA", color: "#B91C1C" },
-    info:    { bg: "#EFF6FF", border: "#BFDBFE", color: "#1D4ED8" },
+  const msgStyles = {
+    success: "bg-success-bg border-success-border text-success-text",
+    error: "bg-error-bg border-error-border text-error-text",
+    info: "bg-info-bg border-info-border text-info-text",
   };
+
+  const msgIcons = {
+    success: <CheckCircle className="w-4 h-4 flex-shrink-0" />,
+    error: <AlertTriangle className="w-4 h-4 flex-shrink-0" />,
+    info: <Info className="w-4 h-4 flex-shrink-0" />,
+  };
+
+  const stats = [
+    { label: "Total Bookings", value: bookings.length, icon: Clock },
+    { label: "Checked In Today", value: bookings.filter((b) => b.status === "Arrived / Checked-In").length, icon: CheckCircle },
+    { label: "Pending", value: bookings.filter((b) => b.status !== "Arrived / Checked-In").length, icon: Clock },
+  ];
 
   return (
     <DashboardLayout>
-      <div style={styles.pageHeader}>
+      <div className="flex justify-between items-start mb-6 flex-wrap gap-4">
         <div>
-          <h1 style={styles.pageTitle}>Self Check-In Kiosk</h1>
-          <p style={styles.pageSub}>Customers enter their phone number to find and confirm their appointment.</p>
+          <h1 className="text-2xl font-extrabold m-0 mb-1">Self Check-In Kiosk</h1>
+          <p className="text-text-muted m-0 text-sm">Customers enter their phone number to find and confirm their appointment.</p>
         </div>
-        <div style={styles.liveIndicator}>
-          <span style={styles.liveDot} />
-          <span style={styles.liveText}>Kiosk Live</span>
+        <div className="flex items-center gap-2 px-4 py-2 bg-success-bg border border-success-border rounded-full">
+          <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+          <span className="text-[13px] font-bold text-success-text">Kiosk Live</span>
         </div>
       </div>
 
       {/* Stats */}
-      <div style={styles.statsRow}>
-        {[
-          { label: "Total Bookings", value: bookings.length, icon: "📅" },
-          { label: "Checked In Today", value: bookings.filter((b) => b.status === "Arrived / Checked-In").length, icon: "✅" },
-          { label: "Pending", value: bookings.filter((b) => b.status !== "Arrived / Checked-In").length, icon: "⏳" },
-        ].map((s) => (
-          <div key={s.label} style={styles.statCard}>
-            <span style={styles.statIcon}>{s.icon}</span>
-            <div style={styles.statValue}>{s.value}</div>
-            <div style={styles.statLabel}>{s.label}</div>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {stats.map((s) => {
+          const Icon = s.icon;
+          return (
+            <div key={s.label} className="bg-white border border-border rounded-[14px] p-5 text-center shadow-sm">
+              <Icon className="w-6 h-6 text-primary mx-auto mb-2" />
+              <div className="text-[28px] font-extrabold text-text">{s.value}</div>
+              <div className="text-xs text-text-muted font-semibold uppercase mt-1">{s.label}</div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Kiosk Panel */}
-      <div style={styles.kioskCard} className="glass-panel">
-        <div style={styles.kioskHeader}>
-          <span style={styles.kioskIcon}>📱</span>
+      <div className="bg-white/85 backdrop-blur-xl border border-white/50 rounded-2xl p-8 mb-8 shadow-md">
+        <div className="flex gap-4 items-start mb-7">
+          <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center flex-shrink-0">
+            <ScanLine className="w-6 h-6 text-primary" />
+          </div>
           <div>
-            <h2 style={styles.kioskTitle}>Enter Your Phone Number</h2>
-            <p style={styles.kioskSub}>Use the phone number you provided when booking your appointment.</p>
+            <h2 className="m-0 mb-1.5 text-xl font-extrabold">Enter Your Phone Number</h2>
+            <p className="m-0 text-sm text-text-muted">Use the phone number you provided when booking your appointment.</p>
           </div>
         </div>
 
-        <form onSubmit={handleSearch} style={styles.form} noValidate>
-          <div style={styles.inputGroup}>
-            <div style={styles.inputRow}>
-              <div style={styles.inputWrapper}>
-                <span style={styles.inputIcon}>📞</span>
+        <form onSubmit={handleSearch} noValidate>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-3 items-stretch flex-wrap">
+              <div className="relative flex items-center flex-1 min-w-[200px]">
+                <Phone className="absolute left-3.5 w-5 h-5 text-text-muted pointer-events-none" />
                 <input
                   type="tel"
                   placeholder="e.g. 0771234567"
                   value={phone}
                   onChange={(e) => { setPhone(e.target.value); if (phoneError) setPhoneError(""); }}
-                  style={{ ...styles.input, ...(phoneError ? styles.inputErr : {}) }}
+                  className={`w-full py-4 pl-12 pr-4 border-[1.5px] rounded-[14px] text-lg font-sans outline-none bg-[#FAFAF9] tracking-wider box-border ${
+                    phoneError ? "border-error bg-error-bg" : "border-border"
+                  }`}
                   maxLength={10}
                 />
               </div>
-              <button type="submit" className="btn-primary" style={styles.searchBtn} disabled={loading}>
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-7 py-4 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-[15px] shadow-lg shadow-primary/25 cursor-pointer border-none whitespace-nowrap disabled:opacity-70 hover:-translate-y-0.5 transition-all"
+              >
                 {loading ? "Searching..." : "Find Appointment →"}
               </button>
             </div>
-            {phoneError && <span style={styles.fieldError}>⚠️ {phoneError}</span>}
+            {phoneError && <span className="text-error text-[13px] font-semibold flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" /> {phoneError}</span>}
           </div>
         </form>
 
         {/* Message */}
         {message && (
-          <div style={{ ...styles.messageBanner, ...msgColors[message.type] }} className="animate-fade-in">
-            {message.text}
+          <div className={`mt-5 p-4 rounded-xl border font-semibold text-[15px] flex items-center gap-2.5 animate-fade-in ${msgStyles[message.type]}`}>
+            {msgIcons[message.type]} {message.text}
           </div>
         )}
       </div>
 
       {/* Results */}
       {matched.length > 0 && (
-        <section style={styles.resultsSection}>
-          <h2 style={styles.resultsTitle}>Your Appointments</h2>
-          <div style={styles.cardGrid}>
+        <section className="mb-8">
+          <h2 className="text-xl font-extrabold m-0 mb-4">Your Appointments</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {matched.map((b) => {
               const isCheckedIn = b.status === "Arrived / Checked-In";
               return (
-                <div key={b.id} style={{ ...styles.appointmentCard, ...(isCheckedIn ? styles.checkedInCard : {}) }} className="animate-fade-in">
-                  <div style={styles.aptHeader}>
-                    <h3 style={styles.aptName}>{b.customerName}</h3>
-                    <span style={isCheckedIn ? styles.pillSuccess : styles.pillPending}>
-                      {isCheckedIn ? "✅ Checked In" : "⏳ Pending"}
+                <div
+                  key={b.id}
+                  className={`bg-white border rounded-2xl p-6 shadow-sm animate-fade-in ${
+                    isCheckedIn ? "border-success-border bg-success-bg/30" : "border-border"
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-4 flex-wrap gap-2">
+                    <h3 className="m-0 text-lg font-extrabold">{b.customerName}</h3>
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${isCheckedIn ? "bg-success-bg text-success-text" : "bg-warning-bg text-warning-text"}`}>
+                      {isCheckedIn ? "✓ Checked In" : "⏳ Pending"}
                     </span>
                   </div>
-                  <div style={styles.aptDetails}>
-                    <div style={styles.aptDetail}><span style={styles.aptDetailLabel}>Service</span><span style={styles.aptDetailVal}>{b.category || b.service}</span></div>
-                    <div style={styles.aptDetail}><span style={styles.aptDetailLabel}>Stylist</span><span style={styles.aptDetailVal}>{b.stylist || "Any available"}</span></div>
-                    <div style={styles.aptDetail}><span style={styles.aptDetailLabel}>Date</span><span style={styles.aptDetailVal}>{b.date}</span></div>
-                    <div style={styles.aptDetail}><span style={styles.aptDetailLabel}>Time</span><span style={styles.aptDetailVal}>{b.time}</span></div>
-                    {b.price && <div style={styles.aptDetail}><span style={styles.aptDetailLabel}>Price</span><span style={{ ...styles.aptDetailVal, color: "var(--color-primary-dark)", fontWeight: "800" }}>{b.price}</span></div>}
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    {[
+                      { label: "Service", value: b.category || b.service },
+                      { label: "Stylist", value: b.stylist || "Any available" },
+                      { label: "Date", value: b.date },
+                      { label: "Time", value: b.time },
+                    ].map(({ label, value }) => (
+                      <div key={label} className="flex flex-col gap-0.5">
+                        <span className="text-[11px] text-text-muted uppercase font-semibold">{label}</span>
+                        <span className="text-sm font-bold">{value}</span>
+                      </div>
+                    ))}
+                    {b.price && (
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[11px] text-text-muted uppercase font-semibold">Price</span>
+                        <span className="text-sm font-extrabold text-primary-dark">{b.price}</span>
+                      </div>
+                    )}
                   </div>
-                  {!isCheckedIn && (
-                    <button className="btn-primary" style={styles.checkInBtn} onClick={() => handleCheckIn(b.id)}>
+                  {!isCheckedIn ? (
+                    <button
+                      className="w-full py-3.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/25 cursor-pointer border-none hover:-translate-y-0.5 transition-all"
+                      onClick={() => handleCheckIn(b.id)}
+                    >
                       Confirm Check-In ✓
                     </button>
-                  )}
-                  {isCheckedIn && (
-                    <div style={styles.checkedBanner}>
-                      Your stylist has been notified. Please take a seat. 🪑
+                  ) : (
+                    <div className="p-3.5 bg-success-bg rounded-xl text-sm font-semibold text-success-text text-center">
+                      Your stylist has been notified. Please take a seat.
                     </div>
                   )}
                 </div>
@@ -163,75 +202,26 @@ export default function CheckIn() {
       )}
 
       {/* How it works */}
-      <section style={styles.howSection}>
-        <h2 style={styles.howTitle}>How Check-In Works</h2>
-        <div style={styles.howGrid}>
+      <section className="bg-white border border-border rounded-2xl p-8 shadow-sm">
+        <h2 className="text-xl font-extrabold m-0 mb-6 text-center">How Check-In Works</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {[
-            { step: "1", icon: "📱", title: "Enter Phone", desc: "Type the 10-digit number you used when booking." },
-            { step: "2", icon: "🔍", title: "Find Appointment", desc: "We look up your booking details instantly." },
-            { step: "3", icon: "✅", title: "Confirm Arrival", desc: "Click Check-In and your stylist is notified." },
-          ].map((s) => (
-            <div key={s.step} style={styles.howCard}>
-              <div style={styles.howStepBadge}>{s.step}</div>
-              <div style={styles.howIcon}>{s.icon}</div>
-              <h3 style={styles.howCardTitle}>{s.title}</h3>
-              <p style={styles.howCardDesc}>{s.desc}</p>
-            </div>
-          ))}
+            { step: "1", icon: Phone, title: "Enter Phone", desc: "Type the 10-digit number you used when booking." },
+            { step: "2", icon: Search, title: "Find Appointment", desc: "We look up your booking details instantly." },
+            { step: "3", icon: CheckCircle, title: "Confirm Arrival", desc: "Click Check-In and your stylist is notified." },
+          ].map((s) => {
+            const Icon = s.icon;
+            return (
+              <div key={s.step} className="text-center p-5">
+                <div className="w-8 h-8 rounded-full bg-primary text-white font-extrabold text-sm flex items-center justify-center mx-auto mb-3">{s.step}</div>
+                <Icon className="w-8 h-8 text-primary mx-auto mb-3" />
+                <h3 className="m-0 mb-2 text-base font-extrabold">{s.title}</h3>
+                <p className="m-0 text-sm text-text-muted">{s.desc}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
     </DashboardLayout>
   );
 }
-
-const styles = {
-  pageHeader: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px", flexWrap: "wrap", gap: "16px" },
-  pageTitle: { fontSize: "24px", fontWeight: "800", margin: "0 0 4px" },
-  pageSub: { color: "var(--color-text-muted)", margin: 0, fontSize: "14px" },
-  liveIndicator: { display: "flex", alignItems: "center", gap: "8px", padding: "8px 16px", background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "var(--radius-pill)" },
-  liveDot: { width: "8px", height: "8px", borderRadius: "50%", background: "#059669", animation: "pulse 1.5s ease infinite" },
-  liveText: { fontSize: "13px", fontWeight: "700", color: "#065F46" },
-  statsRow: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "16px", marginBottom: "24px" },
-  statCard: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "14px", padding: "20px", textAlign: "center", boxShadow: "var(--shadow-sm)" },
-  statIcon: { fontSize: "26px", display: "block", marginBottom: "8px" },
-  statValue: { fontSize: "28px", fontWeight: "800", color: "var(--color-text)" },
-  statLabel: { fontSize: "12px", color: "var(--color-text-muted)", fontWeight: "600", textTransform: "uppercase", marginTop: "4px" },
-  kioskCard: { padding: "32px", marginBottom: "32px" },
-  kioskHeader: { display: "flex", gap: "16px", alignItems: "flex-start", marginBottom: "28px" },
-  kioskIcon: { fontSize: "36px", flexShrink: 0 },
-  kioskTitle: { margin: "0 0 6px", fontSize: "20px", fontWeight: "800" },
-  kioskSub: { margin: 0, color: "var(--color-text-muted)", fontSize: "14px" },
-  form: {},
-  inputGroup: { display: "flex", flexDirection: "column", gap: "8px" },
-  inputRow: { display: "flex", gap: "12px", alignItems: "stretch", flexWrap: "wrap" },
-  inputWrapper: { position: "relative", display: "flex", alignItems: "center", flex: 1, minWidth: "200px" },
-  inputIcon: { position: "absolute", left: "14px", fontSize: "18px", pointerEvents: "none" },
-  input: { width: "100%", padding: "16px 16px 16px 48px", border: "1.5px solid var(--color-border)", borderRadius: "14px", fontSize: "18px", fontFamily: "var(--font-sans)", outline: "none", background: "#FAFAF9", letterSpacing: "2px", boxSizing: "border-box" },
-  inputErr: { borderColor: "#EF4444", background: "#FEF2F2" },
-  fieldError: { color: "#EF4444", fontSize: "13px", fontWeight: "600" },
-  searchBtn: { padding: "16px 28px", fontSize: "15px", whiteSpace: "nowrap" },
-  messageBanner: { marginTop: "20px", padding: "16px 20px", borderRadius: "12px", border: "1px solid", fontSize: "15px", fontWeight: "600" },
-  resultsSection: { marginBottom: "32px" },
-  resultsTitle: { fontSize: "20px", fontWeight: "800", margin: "0 0 16px" },
-  cardGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "20px" },
-  appointmentCard: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "20px", padding: "24px", boxShadow: "var(--shadow-sm)" },
-  checkedInCard: { border: "1px solid #A7F3D0", background: "#F0FDF4" },
-  aptHeader: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", flexWrap: "wrap", gap: "8px" },
-  aptName: { margin: 0, fontSize: "18px", fontWeight: "800" },
-  pillSuccess: { background: "#ECFDF5", color: "#065F46", padding: "4px 12px", borderRadius: "var(--radius-pill)", fontSize: "12px", fontWeight: "700" },
-  pillPending: { background: "#FEF3C7", color: "#92400E", padding: "4px 12px", borderRadius: "var(--radius-pill)", fontSize: "12px", fontWeight: "700" },
-  aptDetails: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "20px" },
-  aptDetail: { display: "flex", flexDirection: "column", gap: "2px" },
-  aptDetailLabel: { fontSize: "11px", color: "var(--color-text-muted)", textTransform: "uppercase", fontWeight: "600" },
-  aptDetailVal: { fontSize: "14px", fontWeight: "700" },
-  checkInBtn: { width: "100%", padding: "14px" },
-  checkedBanner: { padding: "14px", background: "#ECFDF5", borderRadius: "10px", fontSize: "14px", fontWeight: "600", color: "#065F46", textAlign: "center" },
-  howSection: { background: "#FFF", border: "1px solid var(--color-border)", borderRadius: "20px", padding: "32px", boxShadow: "var(--shadow-sm)" },
-  howTitle: { fontSize: "20px", fontWeight: "800", margin: "0 0 24px", textAlign: "center" },
-  howGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" },
-  howCard: { textAlign: "center", padding: "20px" },
-  howStepBadge: { width: "32px", height: "32px", borderRadius: "50%", background: "var(--color-primary)", color: "#FFF", fontWeight: "800", fontSize: "14px", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" },
-  howIcon: { fontSize: "32px", marginBottom: "12px" },
-  howCardTitle: { margin: "0 0 8px", fontSize: "16px", fontWeight: "800" },
-  howCardDesc: { margin: 0, fontSize: "14px", color: "var(--color-text-muted)" },
-};
