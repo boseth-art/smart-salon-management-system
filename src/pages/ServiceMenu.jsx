@@ -11,25 +11,25 @@ const serviceMenu = [
       {
         name: "Basic Hair Cut",
         price: "Rs. 2,000",
-        duration: "30 minutes",
+        duration: "30 mins",
         description: "Simple haircut and finishing for everyday style.",
       },
       {
         name: "Layer Cut",
         price: "Rs. 3,500",
-        duration: "45 minutes",
+        duration: "45 mins",
         description: "Modern layered haircut with professional finishing.",
       },
       {
         name: "Blow Dry",
         price: "Rs. 2,500",
-        duration: "30 minutes",
+        duration: "30 mins",
         description: "Smooth blow dry styling for a polished salon look.",
       },
       {
         name: "Party Hair Style",
         price: "Rs. 6,000",
-        duration: "1 hour",
+        duration: "1 hr",
         description: "Special hairstyle for parties, functions and events.",
       },
     ],
@@ -43,25 +43,25 @@ const serviceMenu = [
       {
         name: "Root Touch-up",
         price: "Rs. 4,500",
-        duration: "1 hour",
+        duration: "1 hr",
         description: "Color touch-up service for hair roots.",
       },
       {
         name: "Full Hair Color",
         price: "Rs. 8,500",
-        duration: "2 hours",
+        duration: "2 hrs",
         description: "Complete hair coloring service using quality products.",
       },
       {
         name: "Hair Highlights",
         price: "Rs. 10,000",
-        duration: "2.5 hours",
+        duration: "2.5 hrs",
         description: "Stylish highlights to enhance your hair appearance.",
       },
       {
         name: "Balayage Color",
         price: "Rs. 18,000",
-        duration: "3 hours",
+        duration: "3 hrs",
         description: "Premium balayage color service for a modern look.",
       },
     ],
@@ -75,25 +75,25 @@ const serviceMenu = [
       {
         name: "Hair Spa Treatment",
         price: "Rs. 8,500",
-        duration: "1.5 hours",
+        duration: "1.5 hrs",
         description: "Relaxing hair spa treatment for smooth and healthy hair.",
       },
       {
         name: "Keratin Treatment",
         price: "Rs. 18,000",
-        duration: "3 hours",
+        duration: "3 hrs",
         description: "Keratin treatment for smooth and frizz-free hair.",
       },
       {
         name: "Protein Treatment",
         price: "Rs. 12,000",
-        duration: "2 hours",
+        duration: "2 hrs",
         description: "Strengthening treatment for weak and damaged hair.",
       },
       {
         name: "Scalp Treatment",
         price: "Rs. 7,500",
-        duration: "1 hour",
+        duration: "1 hr",
         description: "Treatment for scalp care and healthy hair growth.",
       },
     ],
@@ -107,25 +107,25 @@ const serviceMenu = [
       {
         name: "Simple Bridal Makeup",
         price: "Rs. 18,000",
-        duration: "2 hours",
+        duration: "2 hrs",
         description: "Simple bridal makeup with basic hair setting.",
       },
       {
         name: "Traditional Bridal Makeup",
         price: "Rs. 25,000",
-        duration: "3 hours",
+        duration: "3 hrs",
         description: "Traditional bridal makeup with hair styling.",
       },
       {
         name: "Kandyan Bridal Makeup",
         price: "Rs. 35,000",
-        duration: "4 hours",
+        duration: "4 hrs",
         description: "Kandyan bridal dressing, makeup and hair arrangement.",
       },
       {
         name: "Full Bridal Package",
         price: "Rs. 55,000",
-        duration: "5 hours",
+        duration: "5 hrs",
         description: "Complete bridal package with makeup, hair and dressing.",
       },
     ],
@@ -180,26 +180,27 @@ export default function ServiceMenu() {
     .filter((categoryItem) => categoryItem.services.length > 0);
 
   return (
-    <div style={styles.page}>
+    <div className="page-container" style={styles.page}>
       <section style={styles.hero}>
-        <span style={styles.badge}>Orchid Salon</span>
-
-        <h1>Service Menu</h1>
-
-        <p>
-          Browse our salon services, prices and duration. Choose a service and
-          book your appointment easily.
+        <span className="badge">Service Menu</span>
+        <h1 style={styles.heroTitle}>Premium Salon Services</h1>
+        <p style={styles.heroSubtext}>
+          Explore our curated collection of luxury hair, beauty, and bridal services. 
+          Find your perfect treatment and book instantly.
         </p>
       </section>
 
       <section style={styles.searchSection}>
-        <input
-          type="text"
-          placeholder="Search service, price, treatment, bridal, haircut..."
-          value={searchText}
-          onChange={(event) => setSearchText(event.target.value)}
-          style={styles.searchInput}
-        />
+        <div style={styles.searchContainer}>
+          <span style={styles.searchIcon}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search by treatment, keyword, or price..."
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            style={styles.searchInput}
+          />
+        </div>
 
         <div style={styles.filterButtons}>
           {categories.map((category) => (
@@ -222,43 +223,41 @@ export default function ServiceMenu() {
         {filteredMenu.map((categoryItem) => (
           <div style={styles.categoryBox} key={categoryItem.id}>
             <div style={styles.categoryHeader}>
-              <div>
-                <h2>
-                  {categoryItem.icon} {categoryItem.category}
-                </h2>
-                <p>
-                  View available {categoryItem.category.toLowerCase()} services.
-                </p>
+              <div style={styles.categoryTitleBox}>
+                <span style={styles.categoryIcon}>{categoryItem.icon}</span>
+                <div>
+                  <h2 style={styles.categoryTitle}>{categoryItem.category}</h2>
+                  <p style={styles.categorySub}>Signature {categoryItem.category.toLowerCase()} treatments</p>
+                </div>
               </div>
 
-              <Link to={categoryItem.page} style={styles.viewCategoryBtn}>
-                View Category
+              <Link to={categoryItem.page} className="btn-outline" style={styles.viewCategoryBtn}>
+                View Category details
               </Link>
             </div>
 
             <div style={styles.serviceGrid}>
               {categoryItem.services.map((service) => (
                 <div style={styles.serviceCard} key={service.name}>
-                  <h3>{service.name}</h3>
+                  <div style={styles.serviceHeader}>
+                    <h3 style={styles.serviceName}>{service.name}</h3>
+                    <span style={styles.servicePrice}>{service.price}</span>
+                  </div>
 
                   <p style={styles.description}>{service.description}</p>
 
-                  <div style={styles.details}>
-                    <p>
-                      <strong>Price:</strong> {service.price}
-                    </p>
-
-                    <p>
-                      <strong>Duration:</strong> {service.duration}
-                    </p>
+                  <div style={styles.serviceFooter}>
+                    <span style={styles.duration}>
+                      ⏱ {service.duration}
+                    </span>
+                    <Link
+                      to={bookingLink(categoryItem.category, service)}
+                      className="btn-primary"
+                      style={styles.bookBtn}
+                    >
+                      Book Now
+                    </Link>
                   </div>
-
-                  <Link
-                    to={bookingLink(categoryItem.category, service)}
-                    style={styles.bookBtn}
-                  >
-                    Book Now
-                  </Link>
                 </div>
               ))}
             </div>
@@ -268,8 +267,8 @@ export default function ServiceMenu() {
 
       {filteredMenu.length === 0 && (
         <section style={styles.noResult}>
-          <h2>No Services Found</h2>
-          <p>Please try another search keyword.</p>
+          <h2 style={styles.noResultTitle}>No Services Found</h2>
+          <p style={styles.noResultText}>We couldn't find anything matching "{searchText}". Try another keyword.</p>
         </section>
       )}
     </div>
@@ -278,154 +277,199 @@ export default function ServiceMenu() {
 
 const styles = {
   page: {
-    padding: "50px",
-    background: "white",
     minHeight: "80vh",
-    textAlign: "center",
   },
-
   hero: {
-    maxWidth: "900px",
+    textAlign: "center",
+    padding: "60px 20px",
+    background: "linear-gradient(to bottom, #FDFBF7, #FFFFFF)",
+    borderRadius: "var(--radius-lg)",
+    marginBottom: "40px",
+  },
+  heroTitle: {
+    fontSize: "42px",
+    fontWeight: "800",
+    color: "var(--color-text)",
+    margin: "0 0 16px",
+    letterSpacing: "-0.5px",
+  },
+  heroSubtext: {
+    fontSize: "16px",
+    color: "var(--color-text-muted)",
+    maxWidth: "600px",
     margin: "0 auto",
-    padding: "40px",
-    background: "#f8f4f0",
-    borderRadius: "18px",
-    border: "1px solid #ddd",
   },
-
-  badge: {
-    display: "inline-block",
-    padding: "8px 15px",
-    background: "#c59d5f",
-    color: "white",
-    borderRadius: "20px",
-    fontWeight: "bold",
-    marginBottom: "12px",
-  },
-
   searchSection: {
-    maxWidth: "950px",
-    margin: "35px auto",
-    padding: "25px",
-    border: "1px solid #ddd",
-    borderRadius: "14px",
-    boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
+    maxWidth: "800px",
+    margin: "0 auto 50px",
   },
-
+  searchContainer: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    boxShadow: "var(--shadow-sm)",
+    borderRadius: "var(--radius-pill)",
+    background: "#FFF",
+    border: "1px solid var(--color-border)",
+  },
+  searchIcon: {
+    position: "absolute",
+    left: "20px",
+    fontSize: "18px",
+    color: "#A8A29E",
+  },
   searchInput: {
     width: "100%",
-    padding: "14px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
+    padding: "16px 20px 16px 50px",
+    border: "none",
+    borderRadius: "var(--radius-pill)",
     fontSize: "16px",
-    boxSizing: "border-box",
+    fontFamily: "var(--font-sans)",
+    outline: "none",
+    background: "transparent",
   },
-
   filterButtons: {
     display: "flex",
-    gap: "12px",
+    gap: "10px",
     justifyContent: "center",
     flexWrap: "wrap",
-    marginTop: "20px",
+    marginTop: "24px",
   },
-
   filterButton: {
-    padding: "10px 16px",
+    padding: "8px 20px",
     background: "white",
-    color: "#111",
-    border: "1px solid #ccc",
-    borderRadius: "20px",
+    color: "var(--color-text)",
+    border: "1px solid var(--color-border)",
+    borderRadius: "var(--radius-pill)",
     cursor: "pointer",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "14px",
   },
-
   activeFilterButton: {
-    padding: "10px 16px",
-    background: "#111",
+    padding: "8px 20px",
+    background: "var(--color-text)",
     color: "white",
-    border: "1px solid #111",
-    borderRadius: "20px",
+    border: "1px solid var(--color-text)",
+    borderRadius: "var(--radius-pill)",
     cursor: "pointer",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "14px",
   },
-
   menuSection: {
-    maxWidth: "1200px",
-    margin: "40px auto",
+    maxWidth: "1100px",
+    margin: "0 auto",
   },
-
   categoryBox: {
-    marginBottom: "45px",
-    padding: "30px",
-    border: "1px solid #ddd",
-    borderRadius: "18px",
-    background: "#fff",
-    boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-    textAlign: "left",
+    marginBottom: "50px",
   },
-
   categoryHeader: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
-    gap: "20px",
+    alignItems: "flex-end",
+    borderBottom: "2px solid var(--color-border)",
+    paddingBottom: "16px",
+    marginBottom: "30px",
     flexWrap: "wrap",
-    borderBottom: "1px solid #ddd",
-    paddingBottom: "18px",
-    marginBottom: "25px",
+    gap: "20px",
   },
-
+  categoryTitleBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+  },
+  categoryIcon: {
+    fontSize: "36px",
+    background: "var(--color-bg)",
+    width: "60px",
+    height: "60px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "16px",
+    border: "1px solid var(--color-border)",
+  },
+  categoryTitle: {
+    margin: "0 0 4px",
+    fontSize: "28px",
+    fontWeight: "800",
+  },
+  categorySub: {
+    margin: 0,
+    color: "var(--color-text-muted)",
+    fontSize: "14px",
+  },
   viewCategoryBtn: {
-    padding: "11px 18px",
-    background: "#111",
-    color: "white",
-    textDecoration: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
+    padding: "8px 20px",
+    fontSize: "13px",
   },
-
   serviceGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "20px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: "24px",
   },
-
   serviceCard: {
-    padding: "22px",
-    border: "1px solid #ddd",
-    borderRadius: "14px",
-    background: "#f8f4f0",
+    padding: "28px",
+    border: "1px solid var(--color-border)",
+    borderRadius: "20px",
+    background: "#FFFFFF",
+    display: "flex",
+    flexDirection: "column",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
   },
-
+  serviceHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: "12px",
+  },
+  serviceName: {
+    margin: 0,
+    fontSize: "18px",
+    fontWeight: "700",
+  },
+  servicePrice: {
+    fontSize: "16px",
+    fontWeight: "800",
+    color: "var(--color-primary)",
+  },
   description: {
-    color: "#555",
-    minHeight: "50px",
+    color: "var(--color-text-muted)",
+    fontSize: "14px",
+    flexGrow: 1,
+    margin: "0 0 24px",
   },
-
-  details: {
-    marginTop: "15px",
-    padding: "12px",
-    background: "white",
-    borderRadius: "10px",
+  serviceFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderTop: "1px solid #F5F5F4",
+    paddingTop: "16px",
   },
-
+  duration: {
+    fontSize: "13px",
+    color: "#A8A29E",
+    fontWeight: "600",
+  },
   bookBtn: {
-    display: "inline-block",
-    marginTop: "15px",
-    padding: "11px 18px",
-    background: "#c59d5f",
-    color: "white",
-    textDecoration: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
+    padding: "8px 20px",
+    fontSize: "13px",
+    boxShadow: "none",
   },
-
   noResult: {
-    maxWidth: "650px",
-    margin: "40px auto",
-    padding: "30px",
-    background: "#f8f4f0",
-    borderRadius: "14px",
-    border: "1px solid #ddd",
+    textAlign: "center",
+    padding: "60px 20px",
+    background: "#FFFFFF",
+    borderRadius: "var(--radius-lg)",
+    border: "1px dashed var(--color-border)",
+    maxWidth: "600px",
+    margin: "0 auto",
   },
+  noResultTitle: {
+    fontSize: "22px",
+    margin: "0 0 10px",
+  },
+  noResultText: {
+    color: "var(--color-text-muted)",
+    margin: 0,
+  }
 };

@@ -151,26 +151,41 @@ export default function TeamPortfolio() {
   });
 
   return (
-    <div style={styles.page}>
+    <div className="page-container" style={styles.page}>
       <section style={styles.hero}>
-        <span style={styles.badge}>Orchid Salon Team</span>
-
-        <h1>Stylist & Team Portfolio</h1>
-
-        <p>
-          Meet our chairman, salon manager and professional salon team. View
-          staff specialties, experience levels, skills and reviews from clients.
+        <span className="badge">Our Expertise</span>
+        <h1 style={styles.heroTitle}>Meet the Artists</h1>
+        <p style={styles.heroSubtext}>
+          Discover the passionate professionals behind Orchid Salon. Browse our master stylists, color specialists, and dedicated management team.
         </p>
       </section>
 
+      <section style={styles.summarySection}>
+        <div style={styles.summaryCard}>
+          <h2 style={styles.summaryValue}>{teamMembers.length}</h2>
+          <p style={styles.summaryLabel}>Total Experts</p>
+        </div>
+        <div style={styles.summaryCard}>
+          <h2 style={styles.summaryValue}>4+</h2>
+          <p style={styles.summaryLabel}>Specialty Areas</p>
+        </div>
+        <div style={styles.summaryCard}>
+          <h2 style={styles.summaryValue}>4.8</h2>
+          <p style={styles.summaryLabel}>Average Rating</p>
+        </div>
+      </section>
+
       <section style={styles.searchSection}>
-        <input
-          type="text"
-          placeholder="Search chairman, manager, stylist, specialty, skill or role..."
-          value={searchText}
-          onChange={(event) => setSearchText(event.target.value)}
-          style={styles.searchInput}
-        />
+        <div style={styles.searchContainer}>
+          <span style={styles.searchIcon}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search by name, role, or skill..."
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            style={styles.searchInput}
+          />
+        </div>
 
         <div style={styles.filterButtons}>
           {specialties.map((specialty) => (
@@ -189,28 +204,6 @@ export default function TeamPortfolio() {
         </div>
       </section>
 
-      <section style={styles.summarySection}>
-        <div style={styles.summaryCard}>
-          <h2>{teamMembers.length}</h2>
-          <p>Total Team Members</p>
-        </div>
-
-        <div style={styles.summaryCard}>
-          <h2>2</h2>
-          <p>Management Members</p>
-        </div>
-
-        <div style={styles.summaryCard}>
-          <h2>4+</h2>
-          <p>Specialty Areas</p>
-        </div>
-
-        <div style={styles.summaryCard}>
-          <h2>4.8</h2>
-          <p>Average Rating</p>
-        </div>
-      </section>
-
       <section style={styles.teamGrid}>
         {filteredTeam.map((member) => (
           <div
@@ -223,34 +216,29 @@ export default function TeamPortfolio() {
           >
             <div style={styles.profileTop}>
               <div style={styles.avatar}>{member.icon}</div>
-
               <div>
-                <h2>{member.name}</h2>
+                <h2 style={styles.name}>{member.name}</h2>
                 <p style={styles.role}>{member.role}</p>
               </div>
             </div>
 
-            <div style={styles.infoBox}>
-              <p>
-                <strong>Department:</strong> {member.specialty}
-              </p>
-
-              <p>
-                <strong>Experience:</strong> {member.experience}
-              </p>
-
-              <p>
-                <strong>Work Area:</strong> {member.completedServices}
-              </p>
-
-              <p>
-                <strong>Rating:</strong> ⭐ {member.rating}
-              </p>
+            <div style={styles.infoGrid}>
+              <div style={styles.infoItem}>
+                <span style={styles.infoLabel}>Department</span>
+                <span style={styles.infoValue}>{member.specialty}</span>
+              </div>
+              <div style={styles.infoItem}>
+                <span style={styles.infoLabel}>Experience</span>
+                <span style={styles.infoValue}>{member.experience}</span>
+              </div>
+              <div style={styles.infoItem}>
+                <span style={styles.infoLabel}>Rating</span>
+                <span style={styles.infoValueGold}>★ {member.rating}</span>
+              </div>
             </div>
 
             <div style={styles.skillsBox}>
-              <h3>Skills & Responsibilities</h3>
-
+              <h3 style={styles.sectionHeader}>Expertise</h3>
               <div style={styles.skillList}>
                 {member.skills.map((skill) => (
                   <span style={styles.skillTag} key={skill}>
@@ -261,25 +249,26 @@ export default function TeamPortfolio() {
             </div>
 
             <div style={styles.reviewBox}>
-              <h3>Client / Staff Review</h3>
-              <p>"{member.review}"</p>
+              <p style={styles.reviewText}>"{member.review}"</p>
             </div>
 
-            {member.bookable ? (
-              <Link to={stylistBookingLink(member)} style={styles.bookBtn}>
-                Book With {member.name.split(" ")[0]}
-              </Link>
-            ) : (
-              <p style={styles.managementText}>Management Profile</p>
-            )}
+            <div style={styles.cardFooter}>
+              {member.bookable ? (
+                <Link to={stylistBookingLink(member)} className="btn-primary" style={styles.bookBtn}>
+                  Book {member.name.split(" ")[0]}
+                </Link>
+              ) : (
+                <span style={styles.managementBadge}>Management</span>
+              )}
+            </div>
           </div>
         ))}
       </section>
 
       {filteredTeam.length === 0 && (
         <section style={styles.noResult}>
-          <h2>No Team Members Found</h2>
-          <p>Please try another search keyword or specialty.</p>
+          <h2 style={styles.noResultTitle}>No Team Members Found</h2>
+          <p style={styles.noResultText}>Please try another search keyword or specialty.</p>
         </section>
       )}
     </div>
@@ -288,206 +277,263 @@ export default function TeamPortfolio() {
 
 const styles = {
   page: {
-    padding: "50px",
-    background: "white",
     minHeight: "80vh",
-    textAlign: "center",
   },
-
   hero: {
-    maxWidth: "900px",
-    margin: "0 auto",
-    padding: "40px",
-    background: "#f8f4f0",
-    borderRadius: "18px",
-    border: "1px solid #ddd",
+    textAlign: "center",
+    padding: "60px 20px 40px",
   },
-
-  badge: {
-    display: "inline-block",
-    padding: "8px 15px",
-    background: "#c59d5f",
-    color: "white",
-    borderRadius: "20px",
-    fontWeight: "bold",
-    marginBottom: "12px",
+  heroTitle: {
+    fontSize: "42px",
+    fontWeight: "800",
+    color: "var(--color-text)",
+    margin: "0 0 16px",
+    letterSpacing: "-0.5px",
   },
-
-  searchSection: {
-    maxWidth: "950px",
-    margin: "35px auto",
-    padding: "25px",
-    border: "1px solid #ddd",
-    borderRadius: "14px",
-    boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-  },
-
-  searchInput: {
-    width: "100%",
-    padding: "14px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
+  heroSubtext: {
     fontSize: "16px",
-    boxSizing: "border-box",
+    color: "var(--color-text-muted)",
+    maxWidth: "600px",
+    margin: "0 auto",
   },
-
-  filterButtons: {
-    display: "flex",
-    gap: "12px",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    marginTop: "20px",
-  },
-
-  filterButton: {
-    padding: "10px 16px",
-    background: "white",
-    color: "#111",
-    border: "1px solid #ccc",
-    borderRadius: "20px",
-    cursor: "pointer",
-    fontWeight: "bold",
-  },
-
-  activeFilterButton: {
-    padding: "10px 16px",
-    background: "#111",
-    color: "white",
-    border: "1px solid #111",
-    borderRadius: "20px",
-    cursor: "pointer",
-    fontWeight: "bold",
-  },
-
   summarySection: {
     display: "flex",
     justifyContent: "center",
-    gap: "20px",
+    gap: "24px",
     flexWrap: "wrap",
-    marginTop: "30px",
+    marginBottom: "50px",
   },
-
   summaryCard: {
-    width: "220px",
-    padding: "22px",
-    borderRadius: "14px",
-    background: "#111",
-    color: "white",
+    background: "var(--color-bg-dark)",
+    color: "var(--color-text-light)",
+    padding: "24px 32px",
+    borderRadius: "var(--radius-lg)",
+    textAlign: "center",
+    minWidth: "200px",
+    boxShadow: "var(--shadow-md)",
   },
-
-  teamGrid: {
-    maxWidth: "1200px",
-    margin: "45px auto",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-    gap: "25px",
+  summaryValue: {
+    fontSize: "36px",
+    color: "var(--color-primary)",
+    margin: "0 0 8px",
   },
-
-  profileCard: {
-    padding: "28px",
-    border: "1px solid #ddd",
-    borderRadius: "18px",
+  summaryLabel: {
+    fontSize: "14px",
+    margin: 0,
+    color: "rgba(255,255,255,0.7)",
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: "1px",
+  },
+  searchSection: {
+    maxWidth: "800px",
+    margin: "0 auto 50px",
+  },
+  searchContainer: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    boxShadow: "var(--shadow-sm)",
+    borderRadius: "var(--radius-pill)",
+    background: "#FFF",
+    border: "1px solid var(--color-border)",
+  },
+  searchIcon: {
+    position: "absolute",
+    left: "20px",
+    fontSize: "18px",
+    color: "#A8A29E",
+  },
+  searchInput: {
+    width: "100%",
+    padding: "16px 20px 16px 50px",
+    border: "none",
+    borderRadius: "var(--radius-pill)",
+    fontSize: "16px",
+    fontFamily: "var(--font-sans)",
+    outline: "none",
+    background: "transparent",
+  },
+  filterButtons: {
+    display: "flex",
+    gap: "10px",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    marginTop: "24px",
+  },
+  filterButton: {
+    padding: "8px 20px",
     background: "white",
-    boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-    textAlign: "left",
+    color: "var(--color-text)",
+    border: "1px solid var(--color-border)",
+    borderRadius: "var(--radius-pill)",
+    cursor: "pointer",
+    fontWeight: "600",
+    fontSize: "14px",
   },
-
+  activeFilterButton: {
+    padding: "8px 20px",
+    background: "var(--color-text)",
+    color: "white",
+    border: "1px solid var(--color-text)",
+    borderRadius: "var(--radius-pill)",
+    cursor: "pointer",
+    fontWeight: "600",
+    fontSize: "14px",
+  },
+  teamGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+    gap: "30px",
+  },
+  profileCard: {
+    background: "#FFFFFF",
+    padding: "32px",
+    border: "1px solid var(--color-border)",
+    borderRadius: "var(--radius-lg)",
+    boxShadow: "var(--shadow-sm)",
+    display: "flex",
+    flexDirection: "column",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  },
   managementCard: {
-    padding: "28px",
-    border: "2px solid #c59d5f",
-    borderRadius: "18px",
-    background: "#f8f4f0",
-    boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-    textAlign: "left",
+    background: "linear-gradient(to bottom, #FDFBF7, #FFFFFF)",
+    padding: "32px",
+    border: "1px solid var(--color-primary)",
+    borderRadius: "var(--radius-lg)",
+    boxShadow: "0 10px 25px rgba(212, 175, 55, 0.1)",
+    display: "flex",
+    flexDirection: "column",
   },
-
   profileTop: {
     display: "flex",
-    gap: "18px",
+    gap: "20px",
     alignItems: "center",
-    borderBottom: "1px solid #ddd",
-    paddingBottom: "18px",
+    borderBottom: "1px solid var(--color-border)",
+    paddingBottom: "20px",
     marginBottom: "20px",
   },
-
   avatar: {
-    width: "75px",
-    height: "75px",
+    width: "70px",
+    height: "70px",
     borderRadius: "50%",
-    background: "white",
+    background: "var(--color-bg)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "36px",
-    flexShrink: 0,
+    fontSize: "32px",
+    border: "1px solid var(--color-border)",
   },
-
+  name: {
+    margin: "0 0 4px",
+    fontSize: "20px",
+    fontWeight: "800",
+  },
   role: {
-    color: "#8b5a2b",
-    fontWeight: "bold",
+    margin: 0,
+    color: "var(--color-primary-dark)",
+    fontWeight: "700",
+    fontSize: "14px",
   },
-
-  infoBox: {
-    padding: "15px",
-    background: "white",
-    borderRadius: "12px",
+  infoGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "16px",
+    marginBottom: "24px",
   },
-
+  infoItem: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+  },
+  infoLabel: {
+    fontSize: "12px",
+    color: "var(--color-text-muted)",
+    textTransform: "uppercase",
+    fontWeight: "600",
+  },
+  infoValue: {
+    fontSize: "14px",
+    fontWeight: "600",
+  },
+  infoValueGold: {
+    fontSize: "14px",
+    fontWeight: "700",
+    color: "var(--color-primary-dark)",
+  },
   skillsBox: {
-    marginTop: "20px",
+    marginBottom: "24px",
   },
-
+  sectionHeader: {
+    fontSize: "13px",
+    textTransform: "uppercase",
+    color: "var(--color-text-muted)",
+    margin: "0 0 12px",
+  },
   skillList: {
     display: "flex",
-    gap: "10px",
+    gap: "8px",
     flexWrap: "wrap",
-    marginTop: "10px",
   },
-
   skillTag: {
-    padding: "7px 12px",
-    background: "#111",
-    color: "white",
-    borderRadius: "20px",
-    fontSize: "14px",
-    fontWeight: "bold",
+    padding: "6px 12px",
+    background: "var(--color-bg)",
+    border: "1px solid var(--color-border)",
+    color: "var(--color-text)",
+    borderRadius: "var(--radius-pill)",
+    fontSize: "12px",
+    fontWeight: "600",
   },
-
   reviewBox: {
-    marginTop: "20px",
-    padding: "15px",
-    border: "1px solid #ddd",
-    borderRadius: "12px",
-    background: "white",
+    padding: "16px",
+    background: "rgba(212, 175, 55, 0.05)",
+    borderLeft: "3px solid var(--color-primary)",
+    borderRadius: "0 8px 8px 0",
+    flexGrow: 1,
+    marginBottom: "24px",
   },
-
+  reviewText: {
+    margin: 0,
+    fontSize: "14px",
+    fontStyle: "italic",
+    color: "var(--color-text-muted)",
+    lineHeight: "1.6",
+  },
+  cardFooter: {
+    marginTop: "auto",
+    paddingTop: "20px",
+    borderTop: "1px solid var(--color-border)",
+    textAlign: "center",
+  },
   bookBtn: {
-    display: "inline-block",
-    marginTop: "18px",
-    padding: "12px 18px",
-    background: "#c59d5f",
-    color: "white",
-    textDecoration: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
+    width: "100%",
+    padding: "12px",
+    fontSize: "14px",
   },
-
-  managementText: {
+  managementBadge: {
     display: "inline-block",
-    marginTop: "18px",
-    padding: "12px 18px",
-    background: "#111",
-    color: "white",
-    borderRadius: "6px",
-    fontWeight: "bold",
+    padding: "10px 20px",
+    background: "var(--color-bg-dark)",
+    color: "var(--color-text-light)",
+    borderRadius: "var(--radius-pill)",
+    fontSize: "13px",
+    fontWeight: "700",
   },
-
   noResult: {
-    maxWidth: "650px",
-    margin: "40px auto",
-    padding: "30px",
-    background: "#f8f4f0",
-    borderRadius: "14px",
-    border: "1px solid #ddd",
+    textAlign: "center",
+    padding: "60px 20px",
+    background: "#FFFFFF",
+    borderRadius: "var(--radius-lg)",
+    border: "1px dashed var(--color-border)",
+    maxWidth: "600px",
+    margin: "0 auto",
   },
+  noResultTitle: {
+    fontSize: "22px",
+    margin: "0 0 10px",
+  },
+  noResultText: {
+    color: "var(--color-text-muted)",
+    margin: 0,
+  }
 };
