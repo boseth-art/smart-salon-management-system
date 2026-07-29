@@ -215,7 +215,7 @@ export default function ServiceMenu() {
               onClick={() => setSelectedCategory(category)}
               className={`px-5 py-2 rounded-full cursor-pointer font-semibold text-sm border ${
                 selectedCategory === category
-                  ? "bg-text text-text-light border-text"
+                  ? "bg-text-dark text-white border-text-dark"
                   : "bg-bg-alt text-text border-border"
               }`}
             >
