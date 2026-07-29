@@ -40,7 +40,7 @@ export default function DashboardLayout({ children }) {
   const currentLabel = NAV_ITEMS.find((i) => i.path === location.pathname)?.label || "Dashboard";
 
   return (
-    <div className="flex min-h-screen bg-[#F4F4F7]">
+    <div className="flex min-h-screen bg-bg-alt">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }) {
             <Scissors className="w-7 h-7 text-primary" />
             <div>
               <div className="text-text-dark font-extrabold text-base tracking-tight">Orchid Salon</div>
-              <div className="text-slate-500 text-[11px] font-semibold uppercase">Dashboard</div>
+              <div className="text-text-muted text-[11px] font-semibold uppercase">Dashboard</div>
             </div>
           </Link>
 
@@ -94,7 +94,7 @@ export default function DashboardLayout({ children }) {
                 className={`flex items-center gap-3 px-3.5 py-2.5 no-underline rounded-[10px] text-sm font-semibold transition-all duration-200 relative ${
                   active
                     ? "text-text-dark bg-primary/15 border border-primary/20 font-bold"
-                    : "text-slate-500 hover:bg-white/60 hover:text-slate-500"
+                    : "text-text-muted hover:bg-white/60 hover:text-text-muted"
                 }`}
               >
                 <Icon className="w-[18px] h-[18px] flex-shrink-0" />
@@ -108,8 +108,8 @@ export default function DashboardLayout({ children }) {
         {/* Session timer */}
         <div className="mx-3 my-4 p-3.5 bg-white/3 rounded-[10px] border border-white/5">
           <div className="flex items-center gap-2 mb-1">
-            <Clock className="w-3 h-3 text-slate-500" />
-            <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Session expires in</span>
+            <Clock className="w-3 h-3 text-text-muted" />
+            <span className="text-[11px] text-text-muted font-semibold uppercase tracking-wider">Session expires in</span>
           </div>
           <div className="text-xl font-extrabold text-primary">{timeRemaining} min</div>
         </div>

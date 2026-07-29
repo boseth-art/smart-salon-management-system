@@ -117,7 +117,7 @@ export default function CheckIn() {
                   placeholder="e.g. 0771234567"
                   value={phone}
                   onChange={(e) => { setPhone(e.target.value); if (phoneError) setPhoneError(""); }}
-                  className={`w-full py-4 pl-12 pr-4 border-[1.5px] rounded-[14px] text-lg font-sans outline-none bg-[#FAFAF9] tracking-wider box-border ${
+                  className={`w-full py-4 pl-12 pr-4 border-[1.5px] rounded-[14px] text-lg font-sans outline-none bg-bg-alt tracking-wider box-border ${
                     phoneError ? "border-error bg-error-bg" : "border-border"
                   }`}
                   maxLength={10}

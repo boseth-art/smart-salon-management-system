@@ -186,19 +186,19 @@ export default function TeamPortfolio() {
           <h2 className="text-[36px] text-primary m-0 mb-2">
             {teamMembers.length}
           </h2>
-          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-text-muted font-semibold uppercase tracking-widest">
             Total Experts
           </p>
         </div>
         <div className="bg-primary-light text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
           <h2 className="text-[36px] text-primary m-0 mb-2">4+</h2>
-          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-text-muted font-semibold uppercase tracking-widest">
             Specialty Areas
           </p>
         </div>
         <div className="bg-primary-light text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
           <h2 className="text-[36px] text-primary m-0 mb-2">4.8</h2>
-          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-text-muted font-semibold uppercase tracking-widest">
             Average Rating
           </p>
         </div>

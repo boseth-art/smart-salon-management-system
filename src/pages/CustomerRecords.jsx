@@ -100,19 +100,19 @@ export default function CustomerRecords() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field label="Customer Name *" error={errors.name}>
                 <input name="name" value={formData.name} onChange={handleChange} placeholder="Full name"
-                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.name ? "border-error bg-error-bg" : "border-border"}`} />
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border ${errors.name ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Phone Number *" error={errors.phone}>
                 <input name="phone" value={formData.phone} onChange={handleChange} placeholder="10 digit mobile"
-                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.phone ? "border-error bg-error-bg" : "border-border"}`} />
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border ${errors.phone ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Email Address" error={errors.email}>
                 <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Optional"
-                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.email ? "border-error bg-error-bg" : "border-border"}`} />
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border ${errors.email ? "border-error bg-error-bg" : "border-border"}`} />
               </Field>
               <Field label="Service *" error={errors.service}>
                 <select name="service" value={formData.service} onChange={handleChange}
-                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border ${errors.service ? "border-error bg-error-bg" : "border-border"}`}>
+                  className={`w-full py-2.5 px-3.5 border-[1.5px] rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border ${errors.service ? "border-error bg-error-bg" : "border-border"}`}>
                   <option value="">Select Service</option>
                   <option>Hair Styling</option>
                   <option>Hair Coloring</option>
@@ -122,7 +122,7 @@ export default function CustomerRecords() {
               </Field>
               <Field label="Stylist">
                 <select name="stylist" value={formData.stylist} onChange={handleChange}
-                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border">
+                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border">
                   <option value="">Select Stylist</option>
                   <option>Imasha</option>
                   <option>Nethmi</option>
@@ -132,12 +132,12 @@ export default function CustomerRecords() {
               </Field>
               <Field label="Appointment Date">
                 <input name="date" type="date" value={formData.date} onChange={handleChange}
-                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] box-border" />
+                  className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-bg-alt box-border" />
               </Field>
             </div>
             <Field label="Special Notes">
               <textarea name="notes" value={formData.notes} onChange={handleChange} placeholder="Allergy notes, preferences..."
-                className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-[#FAFAF9] min-h-[80px] resize-vertical box-border" />
+                className="w-full py-2.5 px-3.5 border-[1.5px] border-border rounded-[10px] text-sm font-sans outline-none bg-bg-alt min-h-[80px] resize-vertical box-border" />
             </Field>
             <button type="submit" className="self-start px-7 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-sm shadow-lg shadow-primary/25 cursor-pointer border-none hover:-translate-y-0.5 transition-all">
               Save Customer Record
@@ -157,7 +157,7 @@ export default function CustomerRecords() {
               placeholder="Search name, phone, service..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="py-2.5 px-3 pl-9 border border-border rounded-[10px] text-sm font-sans outline-none w-60 bg-[#FAFAF9]"
+              className="py-2.5 px-3 pl-9 border border-border rounded-[10px] text-sm font-sans outline-none w-60 bg-bg-alt"
             />
           </div>
         </div>
