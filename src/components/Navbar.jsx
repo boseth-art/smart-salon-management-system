@@ -52,7 +52,7 @@ export default function Navbar() {
               key={to}
               to={to}
               className={`relative font-semibold text-sm transition-colors duration-200 ${
-                pathname === to ? "text-primary" : "text-text-muted hover:text-primary-dark"
+                pathname === to ? "text-text-dark" : "text-text-muted hover:text-primary-dark"
               }`}
             >
               {label}
@@ -105,7 +105,7 @@ export default function Navbar() {
               </Link>
               <Link
                 to="/booking"
-                className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-sm shadow-lg shadow-primary/25 hover:-translate-y-0.5 hover:shadow-primary/40 transition-all duration-200"
+                className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-sm shadow-lg shadow-primary/25 hover:-translate-y-0.5 hover:shadow-primary/40 transition-all duration-200"
               >
                 Book Now
               </Link>

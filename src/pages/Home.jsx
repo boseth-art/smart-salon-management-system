@@ -172,8 +172,8 @@ export default function Home() {
       className="font-sans text-text bg-bg overflow-x-hidden"
     >
       {/* ================= HERO SECTION ================= */}
-      <section className="min-h-screen bg-[url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-fixed bg-center relative flex items-center px-6 py-24 lg:px-10 text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#050507]/95 via-[#0A0A0C]/85 to-[#000000]/90 backdrop-blur-[2px]" />
+      <section className="min-h-screen bg-[url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-fixed bg-center relative flex items-center px-6 py-24 lg:px-10 text-text-dark">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-[#FAFAF9]/85 to-[#FCE7F3]/90 backdrop-blur-[2px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full mt-10">
           {/* Hero Text */}
@@ -219,12 +219,12 @@ export default function Home() {
                 </div>
 
                 <div className="flex gap-5 items-center">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20 animate-float">
-                    <PromoIcon className="w-8 h-8 text-bg-darker" />
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-light to-primary flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/20 animate-float">
+                    <PromoIcon className="w-8 h-8 text-primary-dark" />
                   </div>
                   <div>
-                    <h3 className="m-0 text-xl font-bold text-white mb-1">{promotions[currentPromotion].title}</h3>
-                    <p className="m-0 text-sm text-slate-400 leading-snug">{promotions[currentPromotion].text}</p>
+                    <h3 className="m-0 text-xl font-bold text-text-dark mb-1">{promotions[currentPromotion].title}</h3>
+                    <p className="m-0 text-sm text-text-muted leading-snug">{promotions[currentPromotion].text}</p>
                   </div>
                 </div>
 
@@ -235,7 +235,7 @@ export default function Home() {
                       onClick={() => setCurrentPromotion(idx)}
                       aria-label={`Go to slide ${idx + 1}`}
                       className={`h-2.5 rounded-full border-none cursor-pointer transition-all duration-300 ${
-                        idx === currentPromotion ? "w-10 bg-primary" : "w-3 bg-white/20"
+                        idx === currentPromotion ? "w-10 bg-primary" : "w-3 bg-primary/20"
                       }`}
                     />
                   ))}
@@ -246,14 +246,14 @@ export default function Home() {
             <motion.div variants={fadeUpItem} className="flex gap-5 flex-wrap mt-6">
               <Link
                 to="/booking"
-                className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-bg-darker rounded-full font-bold text-base shadow-xl shadow-primary/20 inline-flex items-center gap-2 hover:scale-105 hover:shadow-primary/40 transition-all duration-300"
+                className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold text-base shadow-xl shadow-primary/20 inline-flex items-center gap-2 hover:scale-105 hover:shadow-primary/40 transition-all duration-300"
               >
                 <span>Book Appointment</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 to="/service-menu"
-                className="px-8 py-4 glass text-white rounded-full font-semibold text-base hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                className="px-8 py-4 bg-white text-text-dark rounded-full font-semibold text-base hover:bg-bg-alt border border-border shadow-md transition-all duration-300"
               >
                 Explore Menu
               </Link>
@@ -267,35 +267,35 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             className="flex justify-center lg:justify-end relative"
           >
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/30 to-transparent blur-2xl rounded-full opacity-50 animate-pulse" />
-            <div className="w-full max-w-md glass-card rounded-3xl overflow-hidden relative z-10 border border-white/10">
+            <div className="absolute -inset-4 bg-gradient-to-br from-primary-light/50 to-transparent blur-2xl rounded-full opacity-50 animate-pulse" />
+            <div className="w-full max-w-md bg-white rounded-3xl overflow-hidden relative z-10 border border-border shadow-[0_20px_50px_rgba(244,114,182,0.15)]">
               <div className="relative h-72 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80"
                   alt="Orchid Salon Sanctuary"
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-4 right-4 glass text-primary-light px-4 py-2 rounded-full text-xs font-bold border border-white/10">
+                <div className="absolute top-4 right-4 bg-white/70 backdrop-blur-sm text-text-dark px-4 py-2 rounded-full text-xs font-bold border border-primary/20">
                   Modern Sanctuary
                 </div>
               </div>
               <div className="p-8 bg-bg-alt/50 backdrop-blur-md">
-                <h3 className="m-0 mb-3 text-2xl font-bold text-white">Luxury Atmosphere</h3>
-                <p className="text-sm text-slate-400 leading-relaxed m-0 mb-6">
+                <h3 className="m-0 mb-3 text-2xl font-bold text-text-dark">Luxury Atmosphere</h3>
+                <p className="text-sm text-text-muted leading-relaxed m-0 mb-6">
                   Equipped with ergonomic wash chairs, premium organic formulas, and private bridal dressing suites.
                 </p>
-                <div className="flex gap-8 pt-5 border-t border-white/10">
+                <div className="flex gap-8 pt-5 border-t border-border">
                   <div>
-                    <strong className="text-xl bg-gradient-to-r from-primary-light to-primary bg-clip-text text-transparent">
+                    <strong className="text-xl bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
                       100%
                     </strong>
-                    <span className="block text-xs text-slate-500 uppercase tracking-wider mt-1">Organic Care</span>
+                    <span className="block text-xs text-text-muted uppercase tracking-wider mt-1">Organic Care</span>
                   </div>
                   <div>
-                    <strong className="text-xl bg-gradient-to-r from-primary-light to-primary bg-clip-text text-transparent">
+                    <strong className="text-xl bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
                       VIP
                     </strong>
-                    <span className="block text-xs text-slate-500 uppercase tracking-wider mt-1">Private Rooms</span>
+                    <span className="block text-xs text-text-muted uppercase tracking-wider mt-1">Private Rooms</span>
                   </div>
                 </div>
               </div>
