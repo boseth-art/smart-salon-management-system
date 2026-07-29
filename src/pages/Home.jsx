@@ -432,13 +432,13 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }}
               >
                 <Link to={feat.link} className="no-underline group block h-full">
-                  <div className="bg-[#78716C] text-white rounded-2xl p-8 border border-transparent h-full flex flex-col gap-4 transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-[#57534E]">
-                    <FeatIcon className="w-9 h-9 text-primary-light mb-2" strokeWidth={1.5} />
-                    <span className="text-[10px] font-bold text-primary-dark bg-primary/30 px-3 py-1.5 rounded-lg w-fit uppercase tracking-wider border border-primary/20">
+                  <div className="bg-white/60 backdrop-blur-md text-text-dark rounded-2xl p-8 border border-primary/20 h-full flex flex-col gap-4 transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-white/90 group-hover:border-primary/50 group-hover:shadow-lg group-hover:shadow-primary/10">
+                    <FeatIcon className="w-9 h-9 text-primary mb-2 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                    <span className="text-[10px] font-bold text-primary-dark bg-primary/10 px-3 py-1.5 rounded-lg w-fit uppercase tracking-wider border border-primary/20">
                       {feat.role}
                     </span>
-                    <h3 className="text-xl font-bold text-white m-0">{feat.title}</h3>
-                    <p className="text-sm text-slate-200 leading-relaxed m-0">{feat.description}</p>
+                    <h3 className="text-xl font-bold text-text-dark m-0">{feat.title}</h3>
+                    <p className="text-sm text-text-muted leading-relaxed m-0">{feat.description}</p>
                   </div>
                 </Link>
               </motion.div>
