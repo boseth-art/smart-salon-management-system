@@ -528,8 +528,8 @@ export default function Home() {
               <span className="text-xs font-extrabold text-primary uppercase tracking-[2px] bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
                 Visit Our Studio
               </span>
-              <h2 className="text-4xl md:text-6xl font-extrabold m-0 tracking-tight text-white">Orchid Salon & Day Spa</h2>
-              <p className="text-lg text-primary-light/90 m-0 max-w-2xl font-medium">We look forward to welcoming you into our sanctuary of beauty and relaxation.</p>
+              <h2 className="text-4xl md:text-6xl font-extrabold m-0 tracking-tight text-text-dark">Orchid Salon & Day Spa</h2>
+              <p className="text-lg text-text-muted m-0 max-w-2xl font-medium">We look forward to welcoming you into our sanctuary of beauty and relaxation.</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-10 text-left">
                 <div className="flex flex-col gap-4 bg-white/20 backdrop-blur-md shadow-sm border border-white/30 p-8 rounded-3xl group hover:border-primary/50 transition-colors">
