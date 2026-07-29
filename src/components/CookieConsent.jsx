@@ -20,12 +20,12 @@ export default function CookieConsent() {
   if (!showCookieBox) return null;
 
   return (
-    <div className="fixed left-6 right-6 bottom-6 z-[9999] p-5 bg-bg-dark text-white rounded-[14px] shadow-[0_6px_25px_rgba(0,0,0,0.35)] flex justify-between items-center gap-5 flex-wrap animate-slide-up">
+    <div className="fixed left-6 right-6 bottom-6 z-[9999] p-5 bg-primary-light text-text-dark rounded-[14px] shadow-[0_6px_25px_rgba(0,0,0,0.35)] flex justify-between items-center gap-5 flex-wrap animate-slide-up">
       <div className="max-w-[800px]">
         <h3 className="m-0 mb-2 text-base font-bold flex items-center gap-2">
           🍪 This website uses cookies
         </h3>
-        <p className="m-0 text-sm text-white/70 leading-relaxed">
+        <p className="m-0 text-sm text-slate-500 leading-relaxed">
           We use cookies to improve your browsing experience, remember your
           preferences and support salon booking features.
         </p>
@@ -34,7 +34,7 @@ export default function CookieConsent() {
       <div className="flex gap-3 flex-wrap">
         <button
           onClick={handleAccept}
-          className="px-5 py-2.5 bg-primary text-white border-none rounded-lg cursor-pointer font-bold text-sm hover:bg-primary-dark transition-colors"
+          className="px-5 py-2.5 bg-primary text-text-dark border-none rounded-lg cursor-pointer font-bold text-sm hover:bg-primary-dark transition-colors"
         >
           Accept
         </button>

@@ -51,7 +51,7 @@ export default function DashboardLayout({ children }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 w-[260px] flex-shrink-0 bg-bg-dark flex flex-col h-screen overflow-y-auto transition-transform duration-300 ${
+        className={`fixed lg:sticky top-0 left-0 z-50 w-[260px] flex-shrink-0 bg-primary-light flex flex-col h-screen overflow-y-auto transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -59,8 +59,8 @@ export default function DashboardLayout({ children }) {
           <Link to="/" className="flex items-center gap-2.5 no-underline mb-5">
             <Scissors className="w-7 h-7 text-primary" />
             <div>
-              <div className="text-white font-extrabold text-base tracking-tight">Orchid Salon</div>
-              <div className="text-white/40 text-[11px] font-semibold uppercase">Dashboard</div>
+              <div className="text-text-dark font-extrabold text-base tracking-tight">Orchid Salon</div>
+              <div className="text-slate-500 text-[11px] font-semibold uppercase">Dashboard</div>
             </div>
           </Link>
 
@@ -70,7 +70,7 @@ export default function DashboardLayout({ children }) {
               {user?.name?.charAt(0) || "U"}
             </div>
             <div className="flex flex-col gap-1 min-w-0">
-              <div className="text-white font-bold text-sm truncate">{user?.name}</div>
+              <div className="text-text-dark font-bold text-sm truncate">{user?.name}</div>
               <span
                 className="inline-block px-2 py-0.5 rounded-full text-[11px] font-bold w-fit"
                 style={{ background: roleConfig.bg, color: roleConfig.color }}
@@ -93,8 +93,8 @@ export default function DashboardLayout({ children }) {
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-3.5 py-2.5 no-underline rounded-[10px] text-sm font-semibold transition-all duration-200 relative ${
                   active
-                    ? "text-white bg-primary/15 border border-primary/20 font-bold"
-                    : "text-white/50 hover:bg-white/7 hover:text-white/90"
+                    ? "text-text-dark bg-primary/15 border border-primary/20 font-bold"
+                    : "text-slate-500 hover:bg-white/60 hover:text-slate-500"
                 }`}
               >
                 <Icon className="w-[18px] h-[18px] flex-shrink-0" />
@@ -108,8 +108,8 @@ export default function DashboardLayout({ children }) {
         {/* Session timer */}
         <div className="mx-3 my-4 p-3.5 bg-white/3 rounded-[10px] border border-white/5">
           <div className="flex items-center gap-2 mb-1">
-            <Clock className="w-3 h-3 text-white/35" />
-            <span className="text-[11px] text-white/35 font-semibold uppercase tracking-wider">Session expires in</span>
+            <Clock className="w-3 h-3 text-slate-500" />
+            <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Session expires in</span>
           </div>
           <div className="text-xl font-extrabold text-primary">{timeRemaining} min</div>
         </div>

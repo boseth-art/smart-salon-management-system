@@ -182,23 +182,23 @@ export default function TeamPortfolio() {
       </section>
 
       <section className="flex justify-center gap-6 flex-wrap mb-[50px]">
-        <div className="bg-bg-dark text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
+        <div className="bg-primary-light text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
           <h2 className="text-[36px] text-primary m-0 mb-2">
             {teamMembers.length}
           </h2>
-          <p className="text-sm m-0 text-white/70 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
             Total Experts
           </p>
         </div>
-        <div className="bg-bg-dark text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
+        <div className="bg-primary-light text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
           <h2 className="text-[36px] text-primary m-0 mb-2">4+</h2>
-          <p className="text-sm m-0 text-white/70 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
             Specialty Areas
           </p>
         </div>
-        <div className="bg-bg-dark text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
+        <div className="bg-primary-light text-text-light py-6 px-8 rounded-[--radius-lg] text-center min-w-[200px] shadow-md">
           <h2 className="text-[36px] text-primary m-0 mb-2">4.8</h2>
-          <p className="text-sm m-0 text-white/70 font-semibold uppercase tracking-widest">
+          <p className="text-sm m-0 text-slate-500 font-semibold uppercase tracking-widest">
             Average Rating
           </p>
         </div>
@@ -321,7 +321,7 @@ export default function TeamPortfolio() {
                     Book {member.name.split(" ")[0]}
                   </Link>
                 ) : (
-                  <span className="inline-block py-2.5 px-5 bg-bg-dark text-text-light rounded-full text-[13px] font-bold">
+                  <span className="inline-block py-2.5 px-5 bg-primary-light text-text-light rounded-full text-[13px] font-bold">
                     Management
                   </span>
                 )}

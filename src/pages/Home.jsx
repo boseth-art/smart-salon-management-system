@@ -184,33 +184,33 @@ export default function Home() {
             className="flex flex-col gap-6"
           >
             <motion.div variants={fadeUpItem} className="flex flex-wrap gap-3 items-center">
-              <span className="inline-block px-5 py-2 bg-gradient-to-r from-primary-dark to-primary text-bg-darker rounded-full font-bold text-sm tracking-wide shadow-lg shadow-primary/20">
+              <span className="inline-block px-5 py-2 bg-gradient-to-r from-primary-dark to-primary text-white rounded-full font-bold text-sm tracking-wide shadow-lg shadow-primary/20">
                 <Sparkles className="w-4 h-4 inline mr-1 -mt-0.5" />
                 Orchid Luxury Smart Salon
               </span>
-              <span className="inline-flex items-center gap-1 px-4 py-2 glass text-primary-light rounded-full text-xs font-semibold">
-                <Star className="w-3 h-3 fill-primary-light" /> 4.9 Premium Rated
+              <span className="inline-flex items-center gap-1 px-4 py-2 bg-white/60 text-text-dark rounded-full text-xs font-semibold border border-primary/20">
+                <Star className="w-3 h-3 fill-primary" /> 4.9 Premium Rated
               </span>
             </motion.div>
 
-            <motion.h1 variants={fadeUpItem} className="text-5xl md:text-6xl lg:text-[64px] leading-[1.1] font-extrabold text-white m-0 tracking-tight">
+            <motion.h1 variants={fadeUpItem} className="text-5xl md:text-6xl lg:text-[64px] leading-[1.1] font-extrabold text-text-dark m-0 tracking-tight">
               Elevate Your Natural{" "}
-              <span className="block mt-2 bg-gradient-to-r from-primary-light via-primary to-primary-dark bg-clip-text text-transparent">
+              <span className="block mt-2 bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
                 Beauty & Style
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeUpItem} className="text-lg lg:text-xl leading-relaxed text-slate-300 m-0 max-w-[580px] font-medium">
+            <motion.p variants={fadeUpItem} className="text-lg lg:text-xl leading-relaxed text-text-muted m-0 max-w-[580px] font-medium">
               Step into a world of personalized hair care, master styling, and effortless
               smart appointment management tailored to your lifestyle.
             </motion.p>
 
             {/* Dynamic Glassmorphism Promo Box */}
-            <motion.div variants={fadeUpItem} className="mt-4 p-6 glass-card rounded-2xl relative overflow-hidden group">
+            <motion.div variants={fadeUpItem} className="mt-4 p-6 bg-white/70 backdrop-blur-md rounded-2xl relative overflow-hidden group border border-border">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10 flex flex-col gap-5">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold uppercase px-3 py-1 bg-primary/20 text-primary-light rounded-xl border border-primary/30">
+                  <span className="text-xs font-bold uppercase px-3 py-1 bg-primary/20 text-primary-dark rounded-xl border border-primary/30">
                     {promotions[currentPromotion].badge}
                   </span>
                   <span className="text-sm font-extrabold text-primary tracking-wide">

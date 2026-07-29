@@ -14,7 +14,7 @@ export default function NotFound() {
       </p>
       <Link
         to="/"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-white transition-all duration-300"
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-text-dark transition-all duration-300"
         style={{
           background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)",
           boxShadow: "0 10px 25px rgba(212, 175, 55, 0.35)",

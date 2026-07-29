@@ -1,7 +1,9 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import IntroQuote from "./components/IntroQuote.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import CookieConsent from "./components/CookieConsent.jsx";
 
@@ -35,6 +37,25 @@ function isDashboardPath(pathname) {
 
 export default function App() {
   const location = useLocation();
+  const [hasSeenIntro, setHasSeenIntro] = useState(
+    sessionStorage.getItem("hasSeenIntro") === "true"
+  );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  if (!hasSeenIntro) {
+    return (
+      <IntroQuote
+        onComplete={() => {
+          sessionStorage.setItem("hasSeenIntro", "true");
+          setHasSeenIntro(true);
+        }}
+      />
+    );
+  }
+
   const showPublicLayout = !isDashboardPath(location.pathname);
 
   return (

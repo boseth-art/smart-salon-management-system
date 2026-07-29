@@ -60,13 +60,13 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-bg-darker via-bg-dark to-[#1a1a2e] px-5 py-10 relative overflow-hidden">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-primary-light via-white to-bg-alt px-5 py-10 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.08)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute -bottom-36 -left-24 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.06)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(244,114,182,0.15)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute -bottom-36 -left-24 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(251,191,36,0.15)_0%,transparent_70%)] pointer-events-none" />
 
       <div
-        className={`w-full max-w-[460px] bg-white/97 rounded-3xl p-11 shadow-[0_30px_80px_rgba(0,0,0,0.4)] relative z-10 ${shake ? "shake-error" : ""}`}
+        className={`w-full max-w-[460px] bg-white rounded-3xl p-11 shadow-[0_20px_60px_rgba(244,114,182,0.15)] border border-primary/10 relative z-10 ${shake ? "shake-error" : ""}`}
         style={{ animation: "slideUp 0.5s ease forwards" }}
       >
         {/* Header */}
@@ -138,7 +138,7 @@ export default function Login() {
             className="w-full py-4 text-[15px] mt-1 font-bold text-white rounded-full border-none cursor-pointer transition-all duration-300 disabled:opacity-70"
             style={{
               background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)",
-              boxShadow: "0 10px 25px rgba(212, 175, 55, 0.35)",
+              boxShadow: "0 10px 25px rgba(244, 114, 182, 0.35)",
             }}
           >
             {loading ? (

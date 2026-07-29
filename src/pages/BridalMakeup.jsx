@@ -110,17 +110,17 @@ export default function BridalMakeup() {
 
       {/* Stats */}
       <section className="flex justify-center gap-5 flex-wrap mb-14">
-        <div className="w-56 p-5 rounded-2xl bg-bg-dark text-white text-center">
+        <div className="w-56 p-5 rounded-2xl bg-primary-light text-text-dark text-center">
           <h2 className="text-3xl font-extrabold m-0 mb-1">12+</h2>
-          <p className="m-0 text-sm text-white/70">Bridal Packages</p>
+          <p className="m-0 text-sm text-slate-500">Bridal Packages</p>
         </div>
-        <div className="w-56 p-5 rounded-2xl bg-bg-dark text-white text-center">
+        <div className="w-56 p-5 rounded-2xl bg-primary-light text-text-dark text-center">
           <h2 className="text-3xl font-extrabold m-0 mb-1">Premium</h2>
-          <p className="m-0 text-sm text-white/70">Makeup Quality</p>
+          <p className="m-0 text-sm text-slate-500">Makeup Quality</p>
         </div>
-        <div className="w-56 p-5 rounded-2xl bg-bg-dark text-white text-center">
+        <div className="w-56 p-5 rounded-2xl bg-primary-light text-text-dark text-center">
           <h2 className="text-3xl font-extrabold m-0 mb-1">Home Visit</h2>
-          <p className="m-0 text-sm text-white/70">Available</p>
+          <p className="m-0 text-sm text-slate-500">Available</p>
         </div>
       </section>
 
@@ -156,7 +156,7 @@ export default function BridalMakeup() {
 
                 <Link
                   to={bookingLink(item.name, item.price)}
-                  className="block text-center mt-5 px-5 py-2.5 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-colors duration-200"
+                  className="block text-center mt-5 px-5 py-2.5 bg-primary hover:bg-primary-dark text-text-dark font-bold rounded-lg transition-colors duration-200"
                 >
                   Book Now
                 </Link>

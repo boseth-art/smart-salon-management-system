@@ -213,7 +213,7 @@ export default function CheckIn() {
             const Icon = s.icon;
             return (
               <div key={s.step} className="text-center p-5">
-                <div className="w-8 h-8 rounded-full bg-primary text-white font-extrabold text-sm flex items-center justify-center mx-auto mb-3">{s.step}</div>
+                <div className="w-8 h-8 rounded-full bg-primary text-text-dark font-extrabold text-sm flex items-center justify-center mx-auto mb-3">{s.step}</div>
                 <Icon className="w-8 h-8 text-primary mx-auto mb-3" />
                 <h3 className="m-0 mb-2 text-base font-extrabold">{s.title}</h3>
                 <p className="m-0 text-sm text-text-muted">{s.desc}</p>

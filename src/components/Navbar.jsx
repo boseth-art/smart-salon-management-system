@@ -39,7 +39,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center gap-5">
         <Link to="/" className="no-underline group">
-          <h2 className="m-0 text-xl font-extrabold text-white flex items-center gap-2 tracking-tight group-hover:text-primary-light transition-colors">
+          <h2 className="m-0 text-xl font-extrabold text-text-dark flex items-center gap-2 tracking-tight group-hover:text-primary-light transition-colors">
             <Scissors className="w-6 h-6 text-primary group-hover:rotate-12 transition-transform duration-300" />
             Orchid Salon
           </h2>
@@ -52,7 +52,7 @@ export default function Navbar() {
               key={to}
               to={to}
               className={`relative font-semibold text-sm transition-colors duration-200 ${
-                pathname === to ? "text-primary" : "text-text-muted hover:text-white"
+                pathname === to ? "text-primary" : "text-text-muted hover:text-primary-dark"
               }`}
             >
               {label}
@@ -72,7 +72,7 @@ export default function Navbar() {
               <Link
                 to="/customers"
                 className={`font-semibold text-sm ${
-                  pathname === "/customers" ? "text-primary" : "text-text-muted hover:text-white"
+                  pathname === "/customers" ? "text-primary" : "text-text-muted hover:text-primary-dark"
                 }`}
               >
                 Customers
@@ -80,7 +80,7 @@ export default function Navbar() {
               <Link
                 to="/check-in"
                 className={`font-semibold text-sm ${
-                  pathname === "/check-in" ? "text-primary" : "text-text-muted hover:text-white"
+                  pathname === "/check-in" ? "text-primary" : "text-text-muted hover:text-primary-dark"
                 }`}
               >
                 Kiosk
@@ -90,7 +90,7 @@ export default function Navbar() {
               </span>
               <button
                 onClick={logout}
-                className="px-4 py-2 bg-transparent text-white border border-border rounded-full font-semibold text-xs cursor-pointer hover:bg-white/10 hover:border-white/30 transition-all"
+                className="px-4 py-2 bg-transparent text-text-dark border border-border rounded-full font-semibold text-xs cursor-pointer hover:bg-white/50 hover:border-primary/30 transition-all"
               >
                 Logout
               </button>
@@ -99,7 +99,7 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="font-semibold text-sm text-text-muted hover:text-white transition-colors"
+                className="font-semibold text-sm text-text-muted hover:text-primary-dark transition-colors"
               >
                 Staff Login
               </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden p-2 text-white bg-transparent border-none cursor-pointer"
+          className="md:hidden p-2 text-text-dark bg-transparent border-none cursor-pointer"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -139,7 +139,7 @@ export default function Navbar() {
                   to={to}
                   onClick={() => setMobileOpen(false)}
                   className={`font-semibold text-lg ${
-                    pathname === to ? "text-primary" : "text-white"
+                    pathname === to ? "text-primary" : "text-text-dark"
                   }`}
                 >
                   {label}

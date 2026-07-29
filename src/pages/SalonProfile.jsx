@@ -93,11 +93,11 @@ export default function SalonProfile() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 to-transparent" />
         <div className="absolute bottom-0 left-0 p-8 md:p-12">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-white text-xs font-bold tracking-wider uppercase mb-3 border border-white/20">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-text-dark text-xs font-bold tracking-wider uppercase mb-3 border border-white/20">
             Est. 2016
           </span>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white m-0 mb-2">Orchid Salon</h1>
-          <p className="text-white/80 text-sm md:text-base m-0">Premium Hair & Beauty Salon — Colombo, Sri Lanka</p>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-text-dark m-0 mb-2">Orchid Salon</h1>
+          <p className="text-slate-500 text-sm md:text-base m-0">Premium Hair & Beauty Salon — Colombo, Sri Lanka</p>
         </div>
       </section>
 
@@ -120,10 +120,10 @@ export default function SalonProfile() {
             {stats.map((s) => {
               const Icon = s.icon;
               return (
-                <div className="p-5 bg-bg-dark text-white rounded-2xl text-center" key={s.label}>
+                <div className="p-5 bg-primary-light text-text-dark rounded-2xl text-center" key={s.label}>
                   <Icon className="w-5 h-5 text-primary mx-auto mb-2" />
                   <h3 className="text-2xl font-extrabold m-0 mb-1">{s.value}</h3>
-                  <p className="text-white/60 text-xs font-semibold m-0">{s.label}</p>
+                  <p className="text-slate-500 text-xs font-semibold m-0">{s.label}</p>
                 </div>
               );
             })}

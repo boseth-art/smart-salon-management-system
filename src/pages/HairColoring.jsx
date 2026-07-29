@@ -93,7 +93,7 @@ export default function HairColoring() {
                     <span className="text-[15px] font-extrabold text-primary-dark">{item.price}</span>
                     <Link
                       to={bookingLink(item.name, item.price)}
-                      className="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200 shadow-none"
+                      className="bg-primary hover:bg-primary-dark text-text-dark text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200 shadow-none"
                     >
                       Book
                     </Link>
@@ -108,7 +108,7 @@ export default function HairColoring() {
       <div className="text-center mt-16 mb-16">
         <Link
           to="/service-menu"
-          className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-xl text-text font-semibold text-sm hover:bg-bg-dark hover:text-white hover:border-bg-dark transition-all duration-200"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-xl text-text font-semibold text-sm hover:bg-primary-light hover:text-primary-dark hover:border-bg-dark transition-all duration-200"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Service Menu

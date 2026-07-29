@@ -89,7 +89,7 @@ export default function Gallery() {
               onClick={() => setActiveCategory(cat)}
               className={`px-6 py-2.5 rounded-full font-semibold text-sm cursor-pointer border-none ${
                 activeCategory === cat
-                  ? "bg-bg-dark text-white shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                  ? "bg-primary-light text-text-dark shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
                   : "bg-transparent text-text-muted"
               }`}
             >
